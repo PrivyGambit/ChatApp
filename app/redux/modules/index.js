@@ -1,6 +1,4 @@
 export users from './users'
-export modal from './modal'
-export decisions from './decisions'
 export rooms from './rooms'
 export roomInput from './roomInput'
 export listeners from './listeners'

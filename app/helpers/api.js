@@ -32,7 +32,6 @@ export function turnOffListener () {
 }
 
 export function listenToChats (roomId, cb, error) {
-  // console.log('ts');
   return ref.child(`rooms/${roomId}/chats`).on('value', (snapshot) => {
     return cb(snapshot.val() || {})
   }, error)

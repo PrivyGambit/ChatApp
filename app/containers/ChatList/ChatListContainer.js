@@ -10,17 +10,11 @@ class ChatsListContainer extends React.Component {
   }
 
   componentDidMount () {
-    // console.log(this.props);
-    this.props.updateChats()
+    // this.props.updateChats()
     this.props.setAndHandleChatsListener(this.props.roomId)
   }
 
-  componentWillUnmount () {
-    // this.props.chats = []
-  }
-
   render () {
-    console.log(this.props);
     return (
       <ChatsList
         user={this.props.user}
@@ -40,9 +34,9 @@ const mapStateToProps = ({users, chatsList}) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = ( dispatch ) => {
   return {
-    setAndHandleChatsListener: (params) => dispatch(setAndHandleChatsListener(params)),
+    setAndHandleChatsListener: ( params ) => dispatch(setAndHandleChatsListener( params )),
     updateChats: () => dispatch(updateChats())
   }
 }

@@ -27,7 +27,7 @@ const MainContainer = React.createClass({
           .then(() => this.props.fetchingUserSuccess(user.uid, userInfo, Date.now()))
           .then(() => {
             if (this.props.location.pathname === '/') {
-              this.context.router.replace('results')
+              this.context.router.replace('login')
             }
           })
       } else {

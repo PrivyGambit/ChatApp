@@ -4,7 +4,8 @@ import getRoutes from 'config/routes'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import { browserHistory } from 'react-router'
+// import { browserHistory } from 'react-router'
+import { hashHistory } from 'react-router'
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
 import * as reducers from 'redux/modules'
 
@@ -13,7 +14,7 @@ const store = createStore(combineReducers({...reducers, routing: routerReducer})
   window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ))
 
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(hashHistory, store)
 
 function checkAuth (nextState, replace) {
   const { isAuthed, isFetching } = store.getState().users
@@ -25,7 +26,7 @@ function checkAuth (nextState, replace) {
   const nextPathName = nextState.location.pathname
   if (nextPathName === '/' || nextPathName === '/auth') {
     if (isAuthed === true) {
-      replace('/results')
+      replace('/login')
     }
   } else {
     if (isAuthed !== true) {
@@ -36,7 +37,7 @@ function checkAuth (nextState, replace) {
 
 ReactDOM.render(
   <Provider store={store}>
-    {getRoutes(checkAuth, history)}
+      {getRoutes(checkAuth, history)}
   </Provider>,
   document.getElementById('app')
 )
