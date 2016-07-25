@@ -12,14 +12,20 @@ export default function RoomInput ( props ) {
   }
 
   return (
-    <div>
+    <div className="input-group">
       <input
+        className="form-control"
+        type="text"
         onChange={ handleChange }
-        placeholder="Room name" />
-      <button
-        onClick={ handleSubmit }>
-          {'Submit'}
-      </button>
+        placeholder="Enter Room name" />
+      <span className="input-group-btn">
+          <button
+            className="btn btn-default"
+            type="button"
+            onClick={ handleSubmit }>
+              {'Submit'}
+          </button>
+      </span>
     </div>
   )
 }
