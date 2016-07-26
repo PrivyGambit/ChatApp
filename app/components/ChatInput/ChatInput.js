@@ -1,14 +1,40 @@
 import React, { PropTypes } from 'react'
-import { formatRoomName } from 'helpers/utils'
+import { formatChat, formatFile } from 'helpers/utils'
+import style from './styles.css'
 
 export default function ChatInput ( props ) {
 
+  const allowedFileTypes = ['jpeg', 'jpg', 'png', 'gif']
+
   const handleSubmit = () => {
-    props.initiateSaveChat(props.chatText, props.roomId)
+    let chat = {
+      type: 'text',
+      text: props.chatText,
+      user: props.user.name,
+      avatar: props.user.avatar
+    }
+    props.initiateSaveChat(formatChat(chat), props.roomId)
   }
 
   const handleChange = ( e ) => {
     props.updateChatText( e.target.value )
+  }
+
+  const handleUpload = ( e ) => {
+    let image = e.target.files[0];
+    if ( !image.type.match('image.*') ) {
+      let error = {
+        message: 'File type not allowed.'
+      }
+      return false
+    } else {
+      let chat = {
+        type: 'image',
+        user: props.user.name,
+        avatar: props.user.avatar
+      }
+      props.initiateUploadFile(image, formatFile(chat), props.roomId)
+    }
   }
 
   return (
@@ -19,11 +45,18 @@ export default function ChatInput ( props ) {
         onChange={ handleChange }
         placeholder="Type a message" />
       <span className="input-group-btn">
+        <label className="btn btn-default btn-file">
+          <span className="glyphicon glyphicon-upload"></span>
+          <input
+            type="file"
+            className={`btn btn-default ${style.noDisplay}`}
+            onChange={ handleUpload }/>
+        </label>
           <button
-          className="btn btn-default"
-          type="button"
+            className="btn btn-default"
+            type="button"
             onClick={ handleSubmit }>
-              {'Submit'}
+            {'Submit'}
           </button>
       </span>
     </div>

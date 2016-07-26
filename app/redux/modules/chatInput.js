@@ -1,4 +1,4 @@
-import { saveChat } from 'helpers/api'
+import { saveChat, uploadFile } from 'helpers/api'
 
 const UPDATE_CHAT_TEXT = 'UPDATE_CHAT_TEXT';
 
@@ -9,10 +9,16 @@ export function updateChatText (chatText) {
   }
 }
 
-export function initiateSaveChat ( chatText, roomId ) {
+export function initiateSaveChat ( chat, roomId ) {
   return function (dispatch) {
-    saveChat( chatText, roomId )
+    saveChat( chat, roomId )
       .catch((error) => console.warn('Error saving chat', error))
+  }
+}
+
+export function initiateUploadFile ( file, chat, roomId ) {
+  return function ( dispatch ) {
+    uploadFile ( file, chat, roomId )
   }
 }
 

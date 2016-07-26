@@ -1,19 +1,29 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { RoomsListContainer } from 'containers'
+import style from './styles.css'
 
 export default function ChatsList ( props ) {
   return (
-    <div>
+    <div className={style.chatListContainer}>
       <RoomsListContainer />
-      <div>
+      <div className={style.chatContent}>
         {props.chats.map(( chat ) => {
           const id = chat.chatId
-          return (
-            <div key={id}>
-                <p>{chat.chatText}</p>
-            </div>
-          )
+          const type = chat.type
+          if ( type == 'text' ) {
+            return (
+              <div key={id}>
+                  <p>{chat.content}</p>
+              </div>
+            )
+          } else {
+            return (
+              <div key={id}>
+                <img className={style.image} src={`${chat.url}`} />
+              </div>
+            )
+          }
         })}
       </div>
     </div>

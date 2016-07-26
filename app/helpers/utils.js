@@ -39,6 +39,30 @@ export function decisionsAreStale (timestamp) {
 
 export function formatRoomName ( roomName ) {
   return {
-    roomName: roomName
+    roomName: roomName,
+    latestUpdateTime: Date.now(),
+    newContent: {
+      user: '',
+      chat: '',
+    }
+  }
+}
+
+export function formatChat ( chat ) {
+  return {
+    type: chat.type,
+    content: chat.text,
+    user: chat.user,
+    avatar: chat.avatar,
+    timestamp: Date.now()
+  }
+}
+
+export function formatFile ( chat ) {
+  return {
+    type: chat.type,
+    user: chat.user,
+    avatar: chat.avatar,
+    timestamp: Date.now()
   }
 }
