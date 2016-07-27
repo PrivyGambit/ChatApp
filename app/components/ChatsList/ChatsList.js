@@ -11,19 +11,33 @@ export default function ChatsList ( props ) {
         {props.chats.map(( chat ) => {
           const id = chat.chatId
           const type = chat.type
-          if ( type == 'text' ) {
-            return (
-              <div key={id}>
-                  <p>{chat.content}</p>
+          return (
+            <div key={id} className={style.chatItem}>
+              <div className={style.userInfo}>
+                <div className={style.userImage}>
+                  <img className={style.userImageContent} src={chat.user.avatar}/>
+                </div>
+                <div className={style.userName}>
+                  <p>{chat.user.name}</p>
+                </div>
               </div>
-            )
-          } else {
-            return (
-              <div key={id}>
-                <img className={style.image} src={`${chat.url}`} />
-              </div>
-            )
-          }
+              {(() => {
+                if ( type == 'text' ) {
+                  return (
+                    <div className={style.content}>
+                      <p>{chat.content}</p>
+                    </div>
+                  )
+                } else {
+                  return (
+                    <div className={style.content}>
+                      <img className={style.image} src={`${chat.url}`} />
+                    </div>
+                  )
+                }
+              })()}
+            </div>
+          )
         })}
       </div>
     </div>

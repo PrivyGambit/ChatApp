@@ -10,8 +10,13 @@ class ChatsListContainer extends React.Component {
   }
 
   componentDidMount () {
-    // this.props.updateChats()
+    this.props.updateChats()
     this.props.setAndHandleChatsListener(this.props.roomId)
+  }
+
+  componentWillReceiveProps () {
+    // this.props.updateChats()
+    // this.props.setAndHandleChatsListener(this.props.roomId)
   }
 
   render () {

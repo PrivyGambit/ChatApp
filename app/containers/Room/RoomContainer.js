@@ -18,8 +18,3 @@ export default class RoomContainer extends React.Component {
     )
   }
 }
-
-
-// RoomContainer.PropTypes = {
-//
-// }

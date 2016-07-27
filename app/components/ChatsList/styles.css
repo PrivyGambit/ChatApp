@@ -11,3 +11,40 @@
   width: 150px;
   height: 150px;
 }
+
+.chatItem {
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px dotted #ccc;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  padding: 10px 0 10px 20px;
+}
+
+.userInfo {
+
+}
+
+.userImage {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.userName {
+  font-size: 11px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.userImageContent {
+  width: 100%;
+  max-height: 100%;
+}

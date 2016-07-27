@@ -36,7 +36,6 @@ export default class RoomsList extends React.Component {
   }
 
   handleToggle () {
-    this.filterByTime()
     this.setState({
       filteredData: this.props.rooms,
       isPressed: !this.state.isPressed
@@ -47,10 +46,12 @@ export default class RoomsList extends React.Component {
     let type = e.target.value
     switch (type) {
       case 'name':
+        document.getElementById('radioName').checked
         this.filterByName()
       break;
 
       case 'time':
+        document.getElementById('radioTime').checked
         this.filterByTime()
       break
 
@@ -99,7 +100,8 @@ export default class RoomsList extends React.Component {
               name="radioBtn"
               className={style.radio}
               type="radio"
-              aria-label="labelName" />
+              aria-label="labelName"
+              id="radioName"/>
             Name
           </label>
         </div>
@@ -112,7 +114,7 @@ export default class RoomsList extends React.Component {
               className={style.radio}
               type="radio"
               aria-label="labelName"
-              checked="checked" />
+              id="radioTime" />
             Latest Update
           </label>
         </div>
