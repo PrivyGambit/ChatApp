@@ -1,4 +1,5 @@
 import { decisionsExpirationLength } from 'config/constants'
+import restrictions from 'config/restrictions'
 
 export function formatUserInfo (name, avatar, uid) {
   return {
@@ -65,4 +66,9 @@ export function formatFile ( chat ) {
     avatar: chat.avatar,
     timestamp: Date.now()
   }
+}
+
+export function filterText ( str ) {
+  const rgx = new RegExp(restrictions.join("|"), "gi");
+  return str.replace(rgx, "****");
 }

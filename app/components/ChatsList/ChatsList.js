@@ -2,8 +2,10 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { RoomsListContainer } from 'containers'
 import style from './styles.css'
+import { filterText } from 'helpers/utils'
 
 export default function ChatsList ( props ) {
+
   return (
     <div className={style.chatListContainer}>
       <RoomsListContainer />
@@ -15,7 +17,7 @@ export default function ChatsList ( props ) {
             <div key={id} className={style.chatItem}>
               <div className={style.userInfo}>
                 <div className={style.userImage}>
-                  <img className={style.userImageContent} src={chat.user.avatar}/>
+                  <img className={style.userImageContent} src={chat.user.avatar} />
                 </div>
                 <div className={style.userName}>
                   <p>{chat.user.name}</p>
@@ -23,15 +25,20 @@ export default function ChatsList ( props ) {
               </div>
               {(() => {
                 if ( type == 'text' ) {
+                  let text = filterText(chat.content)
                   return (
                     <div className={style.content}>
-                      <p>{chat.content}</p>
+                      <p>{text}</p>
                     </div>
                   )
                 } else {
                   return (
                     <div className={style.content}>
-                      <img className={style.image} src={`${chat.url}`} />
+                      <Link to={chat.url} target="_blank">
+                        <div className={style.chatImageWrapper}>
+                          <img className={style.image} src={`${chat.url}`} />
+                        </div>
+                      </Link>
                     </div>
                   )
                 }

@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react'
 import { formatChat, formatFile } from 'helpers/utils'
 import style from './styles.css'
+import string from 'lodash/string'
+import _ from 'lodash'
+import restrictions from 'config/restrictions'
 
 export default function ChatInput ( props ) {
 
@@ -15,6 +18,12 @@ export default function ChatInput ( props ) {
     }
     props.initiateSaveChat(formatChat(chat), props.roomId)
   }
+
+  // const rgx = new RegExp(restrictions.join("|"), "gi");
+  //
+  // const filter = ( str ) => {
+  //     return str.replace(rgx, "****");
+  // }
 
   const handleChange = ( e ) => {
     props.updateChatText( e.target.value )
