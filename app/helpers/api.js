@@ -10,7 +10,7 @@ export function saveRoom (room) {
   return ref.child(`rooms/${roomId}`).set({...room, roomId})
 }
 
-export function saveChat ( chat, roomId ) {
+export function saveChat ( chat, roomId, quote ) {
   ref.child(`rooms/${roomId}`).update({
     latestUpdateTime: chat.timestamp
   })
@@ -27,7 +27,8 @@ export function saveChat ( chat, roomId ) {
       name: chat.user,
       avatar: chat.avatar
     },
-    chatId: chatId
+    chatId: chatId,
+    quote: quote
   })
 }
 
@@ -98,7 +99,7 @@ export function decrementSelectedCount (decisionId, option) {
     .transaction((currentValue = 0) => currentValue <= 0 ? 0 : currentValue - 1)
 }
 
-export function uploadFile ( file, chat, roomId ) {
+export function uploadFile ( file, chat, roomId, quote ) {
   console.log();
   // Create the file metadata
   let metadata = {
@@ -151,7 +152,8 @@ export function uploadFile ( file, chat, roomId ) {
       },
       timestamp: chat.timestamp,
       url: downloadURL,
-      chatId: chatId
+      chatId: chatId,
+      quote: quote
     })
   });
 }

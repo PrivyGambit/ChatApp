@@ -4,59 +4,116 @@ import { RoomsListContainer } from 'containers'
 import style from './styles.css'
 import { filterText, formatChat, formatFile } from 'helpers/utils'
 
-export default function ChatsList ( props ) {
-  const quoteChat = ( chat ) => {
-    props.chatInputActions.updateQuote(props.chatInput.chatText, chat.chatId)
+export default class ChatsList extends React.Component {
+
+  constructor ( props ) {
+    super(props)
   }
-  return (
-    <div>
-        <div className={style.chatListContainer}>
-          <RoomsListContainer />
-          <div className={style.chatContent}>
-            {props.chats.map(( chat ) => {
-              const id = chat.chatId
-              const type = chat.type
-              return (
-                <div key={id} className={style.chatItem}>
-                  <div className={style.userInfo}>
-                    <div className={style.userImage}>
-                      <img className={style.userImageContent} src={chat.user.avatar} />
+
+  quoteChat = ( chat ) => {
+    this.props.chatInputActions.updateQuote(this.props.chatInput.chatText, chat.chatId)
+  }
+
+  getQuote = ( id ) => {
+    let value = {}
+    this.props.chats.map((chat)=> {
+      if ( chat.chatId == id ) {
+        value = chat;
+      }
+    })
+    return value;
+  }
+
+  displayContent = ( chat ) => {
+
+  }
+
+  render () {
+    return (
+      <div>
+          <div className={style.chatListContainer}>
+            <RoomsListContainer />
+            <div className={style.chatContent}>
+              {this.props.chats.map(( chat ) => {
+                const id = chat.chatId
+                const type = chat.type
+                return (
+                  <div key={id} className={style.chatItem}>
+                    <div className={style.userInfo}>
+                      <div className={style.userImage}>
+                        <img className={style.userImageContent} src={chat.user.avatar} />
+                      </div>
+                      <div className={style.userName}>
+                        <p>{chat.user.name}</p>
+                      </div>
                     </div>
-                    <div className={style.userName}>
-                      <p>{chat.user.name}</p>
-                    </div>
-                  </div>
-                  {(() => {
-                    if ( type == 'text' ) {
-                      let text = filterText(chat.content)
-                      return (
-                        <div className={style.content}>
-                          <p>{text}</p>
-                          <div className={style.quote} onClick={() => quoteChat(chat)}>
-                             <p className={style.quoteText}>Quote user</p>
-                          </div>
-                        </div>
-                      )
-                    } else {
-                      return (
-                        <div className={style.content}>
-                          <Link to={chat.url} target="_blank">
-                            <div className={style.chatImageWrapper}>
-                              <img className={style.image} src={`${chat.url}`} />
+                    {(() => {
+                      if ( chat.quote ) {
+                        let quoteContent = this.getQuote( chat.quote )
+                        if ( type == 'text' ) {
+                          let text = filterText(quoteContent.content)
+                          return (
+                            <div>
+                              <div className={style.content}>
+                                <p>{text}</p>
+                              </div>
+                              <div className={style.content}>
+                                <p>{filterText(chat.content)}</p>
+                              </div>
                             </div>
-                          </Link>
-                        </div>
-                      )
-                    }
-                  })()}
-                </div>
-              )
-            })}
+                          )
+                        } else {
+                          return (
+                            <div>
+                              <div className={style.content}>
+                                <Link to={quoteContent.url} target="_blank">
+                                  <div className={style.chatImageWrapper}>
+                                    <img className={style.image} src={`${quoteContent.url}`} />
+                                  </div>
+                                </Link>
+                              </div>
+                              <div className={style.content}>
+                                <Link to={chat.url} target="_blank">
+                                  <div className={style.chatImageWrapper}>
+                                    <img className={style.image} src={`${chat.url}`} />
+                                  </div>
+                                </Link>
+                              </div>
+                            </div>
+                          )
+                        }
+                      }
+                      if ( type == 'text' ) {
+                        let text = filterText(chat.content)
+                        return (
+                          <div className={style.content}>
+                            <p>{text}</p>
+                            <div className={style.quote} onClick={() => this.quoteChat(chat)}>
+                               <p className={style.quoteText}>Quote user</p>
+                            </div>
+                          </div>
+                        )
+                      } else {
+                        return (
+                          <div className={style.content}>
+                            <Link to={chat.url} target="_blank">
+                              <div className={style.chatImageWrapper}>
+                                <img className={style.image} src={`${chat.url}`} />
+                              </div>
+                            </Link>
+                          </div>
+                        )
+                      }
+                    })()}
+                  </div>
+                )
+              })}
+            </div>
           </div>
-        </div>
-        <ChatInput {...props}/>
-    </div>
-  )
+          <ChatInput {...this.props}/>
+      </div>
+    )
+  }
 }
 
 class ChatInput extends React.Component {
@@ -72,7 +129,7 @@ class ChatInput extends React.Component {
       user: this.props.user.name,
       avatar: this.props.user.avatar
     }
-    this.props.chatInputActions.initiateSaveChat(formatChat(chat), this.props.roomId)
+    this.props.chatInputActions.initiateSaveChat(formatChat(chat), this.props.roomId, this.props.chatInput.quote)
   }
 
   handleChange = ( e ) => {
@@ -93,32 +150,38 @@ class ChatInput extends React.Component {
         user: this.props.user.name,
         avatar: this.props.user.avatar
       }
-      this.props.chatInputActions.initiateUploadFile(image, formatFile(chat), this.props.roomId)
+      this.props.chatInputActions.initiateUploadFile(image, formatFile(chat), this.props.roomId, this.props.chatInput.quote)
     }
   }
   render () {
       return (
-        <div className="input-group">
-          <input
-            className="form-control"
-            type="text"
-            onChange={ this.handleChange.bind(this) }
-            placeholder="Type a message" />
-          <span className="input-group-btn">
-            <label className="btn btn-default btn-file">
-              <span className="glyphicon glyphicon-upload"></span>
-              <input
-                type="file"
-                className={`btn btn-default ${style.noDisplay}`}
-                onChange={ this.handleUpload.bind(this) }/>
-            </label>
-              <button
-                className="btn btn-default"
-                type="button"
-                onClick={ this.handleSubmit.bind(this) }>
-                {'Submit'}
-              </button>
-          </span>
+        <div className={style.inputWrapper}>
+          <div className={style.quoteWrapper}>
+            <span className={style.quoteIndicator}>quoted: {this.props.chatInput.quote}</span>
+          </div>
+          <div className="input-group">
+            <input
+              className="form-control"
+              type="text"
+              onChange={ this.handleChange.bind(this) }
+              placeholder="Type a message" />
+            <span className="input-group-btn">
+              <label className="btn btn-default btn-file">
+                <span className="glyphicon glyphicon-upload"></span>
+                <input
+                  type="file"
+                  className={`btn btn-default ${style.noDisplay}`}
+                  onChange={ this.handleUpload.bind(this) }/>
+              </label>
+                <button
+                  className="btn btn-default"
+                  type="button"
+                  onClick={ this.handleSubmit.bind(this) }>
+                  {'Submit'}
+                </button>
+            </span>
+
+          </div>
         </div>
       )
   }

@@ -19,16 +19,16 @@ export function updateQuote ( chatText, quote ) {
   }
 }
 
-export function initiateSaveChat ( chat, roomId ) {
+export function initiateSaveChat ( chat, roomId, quote ) {
   return function (dispatch) {
-    saveChat( chat, roomId )
+    saveChat( chat, roomId, quote )
       .catch((error) => console.warn('Error saving chat', error))
   }
 }
 
-export function initiateUploadFile ( file, chat, roomId ) {
+export function initiateUploadFile ( file, chat, roomId, quote ) {
   return function ( dispatch ) {
-    uploadFile ( file, chat, roomId )
+    uploadFile ( file, chat, roomId, quote )
   }
 }
 

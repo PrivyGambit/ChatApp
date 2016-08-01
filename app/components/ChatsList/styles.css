@@ -72,3 +72,17 @@
   color: #337ab7;
   font-style: italic;
 }
+
+.noDisplay {
+  display: none !important;
+}
+
+.image {
+  width: 150px;
+  height: 150px;
+}
+
+.quoteWrapper {
+  padding: 10px 5px;
+  background-color: #ccc;
+}
