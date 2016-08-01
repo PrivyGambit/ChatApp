@@ -1,11 +1,21 @@
 import { saveChat, uploadFile } from 'helpers/api'
 
 const UPDATE_CHAT_TEXT = 'UPDATE_CHAT_TEXT';
+const UPDATE_QUOTE = 'UPDATE_QUOTE';
 
-export function updateChatText (chatText) {
+export function updateChatText ( chatText, quote ) {
   return {
     type: UPDATE_CHAT_TEXT,
-    chatText
+    chatText,
+    quote
+  }
+}
+
+export function updateQuote ( chatText, quote ) {
+  return {
+    type: UPDATE_QUOTE,
+    chatText,
+    quote
   }
 }
 
@@ -23,7 +33,8 @@ export function initiateUploadFile ( file, chat, roomId ) {
 }
 
 const initialState = {
-  chatText: ''
+  chatText: '',
+  quote: ''
 }
 
 export default function chatInput (state = initialState, action) {
@@ -31,7 +42,14 @@ export default function chatInput (state = initialState, action) {
     case UPDATE_CHAT_TEXT :
       return {
         ...state,
-        chatText: action.chatText
+        chatText: action.chatText,
+        quote: action.quote
+      }
+    case UPDATE_QUOTE :
+      return {
+        ...state,
+        chatText: action.chatText,
+        quote: action.quote
       }
 
     default:

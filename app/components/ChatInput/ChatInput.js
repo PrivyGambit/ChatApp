@@ -6,7 +6,6 @@ import _ from 'lodash'
 import restrictions from 'config/restrictions'
 
 export default function ChatInput ( props ) {
-
   const allowedFileTypes = ['jpeg', 'jpg', 'png', 'gif']
 
   const handleSubmit = () => {
@@ -18,12 +17,6 @@ export default function ChatInput ( props ) {
     }
     props.initiateSaveChat(formatChat(chat), props.roomId)
   }
-
-  // const rgx = new RegExp(restrictions.join("|"), "gi");
-  //
-  // const filter = ( str ) => {
-  //     return str.replace(rgx, "****");
-  // }
 
   const handleChange = ( e ) => {
     props.updateChatText( e.target.value )

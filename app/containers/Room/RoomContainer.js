@@ -13,7 +13,7 @@ export default class RoomContainer extends React.Component {
     return (
       <div>
         <ChatListContainer roomId={this.props.params.roomId} />
-        <ChatInputContainer roomId={this.props.params.roomId} />
+        {/*<ChatInputContainer roomId={this.props.params.roomId} />*/}
       </div>
     )
   }
