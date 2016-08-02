@@ -42,7 +42,6 @@ class RoomContainer extends React.Component {
             chatInputActions={this.props.actions.chatInputActions}
             roomId={this.props.params.roomId}
             {...this.props} />
-        {/*<ChatInputContainer roomId={this.props.params.roomId} />*/}
       </div>
     )
   }
