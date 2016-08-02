@@ -23,8 +23,9 @@ const MainContainer = React.createClass({
         const userData = user.providerData[0]
         const userInfo = formatUserInfo(userData.displayName, userData.photoURL, user.uid)
         this.props.authUser(user.uid)
-        this.props.fetchAndAddUsersMadeDecisions(user.uid)
-          .then(() => this.props.fetchingUserSuccess(user.uid, userInfo, Date.now()))
+        // this.props.fetchAndAddUsersMadeDecisions(user.uid)
+        //   .then(() => this.props.fetchingUserSuccess(user.uid, userInfo, Date.now()))
+          this.props.fetchingUserSuccess(user.uid, userInfo, Date.now())
           .then(() => {
             if (this.props.location.pathname === '/') {
               this.context.router.replace('login')

@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
-import { ChatsList } from 'components'
+import { ChatInput } from 'components'
 import { connect } from 'react-redux'
-
+import { ChatsList } from 'components'
 
 import { setAndHandleChatsListener, updateChats } from 'redux/modules/chatsList'
-import * as inputActionCreators from 'redux/modules/chatInput'
 
-class ChatsListContainer extends React.Component {
+class ModerateContainer extends React.Component {
   constructor ( props ) {
     super( props )
   }
@@ -19,19 +18,21 @@ class ChatsListContainer extends React.Component {
 
   render () {
     return (
-      <ChatsList
-        user={this.props.user}
-        chats={this.props.chats}
-        error={this.props.error}
-        chatInputActions={this.props.actions.chatInputActions}
-        {...this.props} />
+      <div>
+        <ChatsList
+          user={this.props.user}
+          chats={this.props.chats}
+          error={this.props.error}
+          chatInputActions={this.props.actions.chatInputActions}
+          {...this.props} />
+      </div>
     )
   }
 }
 
 const mapStateToProps = ({users, chatsList, chatInput}) => {
   const rms = chatsList.chats
-  return {
+   return {
     user: users[users.authedId] ? users[users.authedId].info : {},
     isFetching: chatsList.isFetching,
     error: chatsList.error,
@@ -46,9 +47,8 @@ const mapStateToProps = ({users, chatsList, chatInput}) => {
 const mapDispatchToProps = ( dispatch ) => {
   return {
     actions: {
-        setAndHandleChatsListener: ( params ) => dispatch(setAndHandleChatsListener( params )),
-        updateChats: () => dispatch(updateChats()),
-        chatInputActions: bindActionCreators(inputActionCreators, dispatch)
+      setAndHandleChatsListener: ( params ) => dispatch(setAndHandleChatsListener( params )),
+      updateChats: () => dispatch(updateChats()),
     }
   }
 }
@@ -56,4 +56,4 @@ const mapDispatchToProps = ( dispatch ) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)( ChatsListContainer )
+)( ModerateContainer )

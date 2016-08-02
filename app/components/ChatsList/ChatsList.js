@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import { RoomsListContainer } from 'containers'
+// import { RoomsListContainer } from 'containers'
 import style from './styles.css'
 import { filterText, formatChat, formatFile } from 'helpers/utils'
 
@@ -8,6 +8,12 @@ export default class ChatsList extends React.Component {
 
   constructor ( props ) {
     super(props)
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+    this.props.actions.updateChats()
+    this.props.actions.setAndHandleChatsListener(this.props.roomId)
   }
 
   quoteChat = ( chat ) => {
@@ -32,7 +38,7 @@ export default class ChatsList extends React.Component {
     return (
       <div>
           <div className={style.chatListContainer}>
-            <RoomsListContainer />
+            {/*<RoomsListContainer />*/}
             <div className={style.chatContent}>
               {this.props.chats.map(( chat ) => {
                 const id = chat.chatId
@@ -41,7 +47,7 @@ export default class ChatsList extends React.Component {
                   <div key={id} className={style.chatItem}>
                     <div className={style.userInfo}>
                       <div className={style.userImage}>
-                        <img className={style.userImageContent} src={chat.user.avatar} />
+                        {/*<img className={style.userImageContent} src={chat.user.avatar} />*/}
                       </div>
                       <div className={style.userName}>
                         <p>{chat.user.name}</p>
@@ -53,8 +59,9 @@ export default class ChatsList extends React.Component {
                         if ( type == 'text' ) {
                           let text = filterText(quoteContent.content)
                           return (
-                            <div>
-                              <div className={style.content}>
+                            <div className={style.mainContent}>
+                              <div className={style.content, style.quoteContent}>
+                                <p className={style.quoteUser}>{quoteContent.user.name}</p>
                                 <p>{text}</p>
                               </div>
                               <div className={style.content}>
@@ -64,7 +71,7 @@ export default class ChatsList extends React.Component {
                           )
                         } else {
                           return (
-                            <div>
+                            <div className={style.mainContent}>
                               <div className={style.content}>
                                 <Link to={quoteContent.url} target="_blank">
                                   <div className={style.chatImageWrapper}>
@@ -101,6 +108,9 @@ export default class ChatsList extends React.Component {
                                 <img className={style.image} src={`${chat.url}`} />
                               </div>
                             </Link>
+                            <div className={style.quote} onClick={() => this.quoteChat(chat)}>
+                               <p className={style.quoteText}>Quote user</p>
+                            </div>
                           </div>
                         )
                       }

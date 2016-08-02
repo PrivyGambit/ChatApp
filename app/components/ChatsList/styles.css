@@ -25,7 +25,7 @@
 .content {
   position: relative;
   flex: 1;
-  padding: 10px 0 10px 20px;
+  padding: 10px 0 40px 20px;
 }
 
 .userInfo {
@@ -38,6 +38,7 @@
   height: 60px;
   overflow: hidden;
   margin: 0 auto;
+  background-color: #ccc;
 }
 
 .userName {
@@ -85,4 +86,22 @@
 .quoteWrapper {
   padding: 10px 5px;
   background-color: #ccc;
+}
+
+.quoteContent {
+  background-color: #b7b7b7;
+  padding: 10px 10px;
+  font-size: 10px;
+  font-style: italic;
+  border-radius: 5px;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 10px 0 10px 20px;
+  position: relative;
+}
+
+.quoteUser {
+  font-weight: bold;
 }

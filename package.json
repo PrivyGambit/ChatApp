@@ -1,24 +1,16 @@
 {
-  "name": "wouldYouRather",
+  "name": "chatapp",
   "version": "1.0.0",
-  "description": "<img src=\"http://www.reactjsprogram.com/images/reactjsprogram-500.png\" width=\"250\" align=\"right\">",
+  "description": "chatapp",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
     "dev": "node src/server/index.js",
     "production": "webpack -p"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ReactjsProgram/Redux-Immutable-Curriculum.git"
-  },
   "keywords": [],
-  "author": "Tyler McGinnis <tylermcginnis33@gmail.com> (http://tylermcginnis.com)",
+  "author": "Sheenan Tenepre",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ReactjsProgram/Redux-Immutable-Curriculum/issues"
-  },
-  "homepage": "https://github.com/ReactjsProgram/Redux-Immutable-Curriculum#readme",
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",

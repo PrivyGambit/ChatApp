@@ -20,7 +20,8 @@ class RoomsListContainer extends React.Component {
         user={this.props.user}
         rooms={this.props.rooms}
         roomInput={this.props.roomInput}
-        error={this.props.error} />
+        error={this.props.error}
+        handleChangeRoom={this.props.handleChangeRoom} />
     )
   }
 }

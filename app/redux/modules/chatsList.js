@@ -38,13 +38,13 @@ export function setAndHandleChatsListener (roomId) {
     // if (getState().listeners.chats === true) {
     //   return
     // }
-    // turnOffListener()
+
     dispatch(addListener('chats'))
     dispatch(settingChatsListener())
 
     listenToChats(roomId, (chats) => {
       dispatch(settingChatsListenerSuccess(chats))
-    }, (error) => dispatch(settingChatsListenerError(error)))
+    }, (error) => dispatch(settingChatListenerError(error)))
   }
 }
 

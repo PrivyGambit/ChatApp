@@ -87,7 +87,7 @@ export default class RoomsList extends React.Component {
   render () {
     let list = ''
     if ( this.state.isPressed )
-    list = <DisplayRoomsList data={this.state.filteredData}/>
+    list = <DisplayRoomsList data={this.state.filteredData} {...this.props}/>
 
     return (
       <div className={style.wrapper}>
@@ -174,6 +174,10 @@ class DisplayRoomsList extends React.Component {
     return string
   }
 
+  handleChangeRoom () {
+      console.log('test');
+  }
+
   render () {
     return (
       <ul className={`${style.btnPressed} ${style.list} list-group`}>
@@ -189,6 +193,14 @@ class DisplayRoomsList extends React.Component {
                   <TimeAgo date={room.latestUpdateTime} className={style.timeAgo}/>
                 </div>
               </Link>
+              {/*<div className={`${style.anchor} list-group-item`} onClick={this.props.handleChangeRoom(this.props)}>
+                {room.roomName}
+                <div className={style.updateGroup}>
+                  <p className={`${style.updateLabel} ${style.author}`}>{room.newContent.user ? room.newContent.user : 'Anonymous'}: </p>
+                  <p className={style.updateLabel}>{room.newContent.chat ? this.formatContentChat( room.newContent.chat ) : 'Text here'} - </p>
+                  <TimeAgo date={room.latestUpdateTime} className={style.timeAgo}/>
+                </div>
+              </div>*/}
             </li>
           )
         })}
