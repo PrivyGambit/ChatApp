@@ -34,7 +34,7 @@ export function listenToRooms (cb, error) {
 }
 
 export function turnOffListener (roomId) {
-  return ref.off('value', cb);
+  return ref.child(`rooms/${roomId}/chats`).off();
 }
 
 export function listenToChats (roomId, cb, error) {

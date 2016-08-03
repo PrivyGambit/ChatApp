@@ -1,5 +1,5 @@
 import { listenToChats, turnOffListener } from 'helpers/api'
-import { addListener } from 'redux/modules/listeners'
+import { addListener, removeListener } from 'redux/modules/listeners'
 
 const SETTINGS_CHATS_LISTENER = 'SETTINGS_CHATS_LISTENER'
 const SETTINGS_CHATS_LISTENER_ERROR = 'SETTINGS_CHATS_LISTENER_ERROR'
@@ -26,24 +26,29 @@ export function updateChats(data=[]) {
   }
 }
 
-function settingChatsListenerSuccess (chats) {
+function settingChatsListenerSuccess (chats, roomId) {
   return {
     type: SETTINGS_CHATS_LISTENER_SUCCESS,
     chats,
+    roomId,
+  }
+}
+
+export function removeChatsListener ( roomId ) {
+  return function ( dispatch, getState ) {
+    dispatch(removeListener('chats'))
+    turnOffListener(roomId)
+    updateChats()
   }
 }
 
 export function setAndHandleChatsListener (roomId) {
   return function (dispatch, getState) {
-    // if (getState().listeners.chats === true) {
-    //   return
-    // }
-
     dispatch(addListener('chats'))
     dispatch(settingChatsListener())
 
     listenToChats(roomId, (chats) => {
-      dispatch(settingChatsListenerSuccess(chats))
+      dispatch(settingChatsListenerSuccess(chats, roomId))
     }, (error) => dispatch(settingChatListenerError(error)))
   }
 }
@@ -52,6 +57,8 @@ const initialState = {
   isFetching: true,
   error: '',
   chats: {},
+  roomId: ''
+
 }
 
 export default function chatsList (state = initialState, action) {
@@ -73,17 +80,18 @@ export default function chatsList (state = initialState, action) {
         isFetching: false,
         error: '',
         chats: {
-          ...state.chats,
+        //   ...state.chats,
           ...action.chats,
         },
+        roomId: action.roomId
       }
-
     case RESET_CHATSLIST:
       return {
         ...state,
         isFetching: false,
-        erro: '',
-        chats: {}
+        error: '',
+        chats: {},
+        roomId: ''
       }
 
     default:

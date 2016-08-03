@@ -174,8 +174,13 @@ class DisplayRoomsList extends React.Component {
     return string
   }
 
-  handleChangeRoom () {
-      console.log('test');
+  componentWillReceiveProps () {
+    //   console.log(this.props);
+  }
+
+  handleChangeRoom (id) {
+    this.props.actions.removeChatsListener(id)
+    this.props.actions.setAndHandleChatsListener(id)
   }
 
   render () {
@@ -185,22 +190,22 @@ class DisplayRoomsList extends React.Component {
           const id = room.roomId
           return (
             <li key={id} className={style.listItem}>
-              <Link to={`rooms/${id}`} className={`${style.anchor} list-group-item`}>
+              {/*<Link to={`rooms/${id}`} className={`${style.anchor} list-group-item`}>
                 {room.roomName}
                 <div className={style.updateGroup}>
                   <p className={`${style.updateLabel} ${style.author}`}>{room.newContent.user ? room.newContent.user : 'Anonymous'}: </p>
                   <p className={style.updateLabel}>{room.newContent.chat ? this.formatContentChat( room.newContent.chat ) : 'Text here'} - </p>
                   <TimeAgo date={room.latestUpdateTime} className={style.timeAgo}/>
                 </div>
-              </Link>
-              {/*<div className={`${style.anchor} list-group-item`} onClick={this.props.handleChangeRoom(this.props)}>
+              </Link>*/}
+              <div className={`${style.anchor} list-group-item`} onClick={()=> {this.handleChangeRoom(id)}}>
                 {room.roomName}
                 <div className={style.updateGroup}>
                   <p className={`${style.updateLabel} ${style.author}`}>{room.newContent.user ? room.newContent.user : 'Anonymous'}: </p>
                   <p className={style.updateLabel}>{room.newContent.chat ? this.formatContentChat( room.newContent.chat ) : 'Text here'} - </p>
                   <TimeAgo date={room.latestUpdateTime} className={style.timeAgo}/>
                 </div>
-              </div>*/}
+              </div>
             </li>
           )
         })}

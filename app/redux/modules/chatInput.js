@@ -22,6 +22,7 @@ export function updateQuote ( chatText, quote ) {
 export function initiateSaveChat ( chat, roomId, quote ) {
   return function (dispatch) {
     saveChat( chat, roomId, quote )
+      .then(dispatch(updateChatText('', '')))
       .catch((error) => console.warn('Error saving chat', error))
   }
 }

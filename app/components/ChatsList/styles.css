@@ -2,6 +2,10 @@
 
 }
 
+.mainContainer {
+  position: relative;
+}
+
 .chatContent {
   background: #ececec;
   padding: 20px;
