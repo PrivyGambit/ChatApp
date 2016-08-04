@@ -6,6 +6,7 @@ export function formatUserInfo (name, avatar, uid) {
     name,
     avatar,
     uid,
+    type: 'normal'
   }
 }
 

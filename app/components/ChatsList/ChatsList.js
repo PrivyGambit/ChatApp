@@ -11,12 +11,17 @@ export default class ChatsList extends React.Component {
     }
 
     componentDidMount() {
+        // console.log(this.refs.chatContainer);
         this.props.actions.updateChats()
         this.props.actions.setAndHandleChatsListener(this.props.roomId)
     }
 
     quoteChat = ( chat ) => {
         this.props.chatInputActions.updateQuote(this.props.chatInput.chatText, chat.chatId)
+    }
+
+    componentDidUpdate() {
+      this.refs.chatListContent.scrollTop = this.refs.chatListContent.scrollHeight;
     }
 
     getQuote = ( id ) => {
@@ -33,7 +38,7 @@ export default class ChatsList extends React.Component {
         return (
             <div className={style.mainContainer}>
                 <div className={style.chatListContainer}>
-                    <div className={style.chatContent}>
+                    <div className={style.chatContent} ref="chatListContent">
                         {this.props.chats.map(( chat ) => {
                             const id = chat.chatId
                             const type = chat.type
