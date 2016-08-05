@@ -5,6 +5,8 @@ const SETTINGS_CHATS_LISTENER = 'SETTINGS_CHATS_LISTENER'
 const SETTINGS_CHATS_LISTENER_ERROR = 'SETTINGS_CHATS_LISTENER_ERROR'
 const SETTINGS_CHATS_LISTENER_SUCCESS = 'SETTINGS_CHATS_LISTENER_SUCCESS'
 const RESET_CHATSLIST = 'RESET_CHATSLIST'
+const SEARCH_CHATS = 'SEARCH_CHATS'
+const CHAT_CALL_QUERY = 'CHAT_CALL_QUERY'
 
 function settingChatsListener () {
   return {
@@ -32,6 +34,30 @@ function settingChatsListenerSuccess (chats, roomId) {
     chats,
     roomId,
   }
+}
+
+function displaySearchChats (query, chats) {
+    return {
+        type: SEARCH_CHATS,
+        chats,
+        query
+    }
+}
+
+export function searchChat ( params ) {
+    return function (dispatch, getState) {
+        listenToChats(params.roomId, (chats) => {
+            let queryResult = []
+            chats.forEach(( chat )=>{
+                console.log(chat);
+            // if ( chat.roomName.toLocaleLowerCase().indexOf(params.query) !=-1 )
+            //     queryResult.push(chat)
+            //
+            //     console.log(queryResult);
+                // dispatch( displaySearchChats(query, chats) )
+            })
+        }, (error) => dispatch(settingChatListenerError(error)))
+    }
 }
 
 export function removeChatsListener ( roomId ) {
@@ -68,6 +94,11 @@ export default function chatsList (state = initialState, action) {
         ...state,
         isFetching: true,
       }
+    case CHAT_CALL_QUERY:
+        return {
+            ...state,
+            isFetching: true
+        }
     case SETTINGS_CHATS_LISTENER_ERROR :
       return {
         ...state,
@@ -85,6 +116,19 @@ export default function chatsList (state = initialState, action) {
         },
         roomId: action.roomId
       }
+
+    case SEARCH_CHATS :
+    return {
+        ...state,
+        isFetching: false,
+        error: '',
+        chats: {
+        //   ...state.chats,
+          ...action.chats,
+        },
+        query:action.query
+    }
+
     case RESET_CHATSLIST:
       return {
         ...state,

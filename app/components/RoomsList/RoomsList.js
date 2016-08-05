@@ -183,6 +183,13 @@ class DisplayRoomsList extends React.Component {
     this.props.actions.setAndHandleChatsListener(id)
   }
 
+  handleSearch (id) {
+    this.props.actions.searchChat({
+        query: 'tester',
+        roomId: id
+    })
+  }
+
   render () {
     return (
       <ul className={`${style.btnPressed} ${style.list} list-group`}>
@@ -199,6 +206,7 @@ class DisplayRoomsList extends React.Component {
                 </div>
               </Link>*/}
               <div className={`${style.anchor} list-group-item`} onClick={()=> {this.handleChangeRoom(id)}}>
+                 <button  onClick={()=> {this.handleSearch(id)}}>tester</button>
                 {room.roomName}
                 <div className={style.updateGroup}>
                   <p className={`${style.updateLabel} ${style.author}`}>{room.newContent.user ? room.newContent.user : 'Anonymous'}: </p>

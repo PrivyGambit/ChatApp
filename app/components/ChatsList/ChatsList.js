@@ -10,12 +10,6 @@ export default class ChatsList extends React.Component {
         super(props)
     }
 
-    componentDidMount() {
-        // console.log(this.refs.chatContainer);
-        this.props.actions.updateChats()
-        this.props.actions.setAndHandleChatsListener(this.props.roomId)
-    }
-
     quoteChat = ( chat ) => {
         this.props.chatInputActions.updateQuote(this.props.chatInput.chatText, chat.chatId)
     }

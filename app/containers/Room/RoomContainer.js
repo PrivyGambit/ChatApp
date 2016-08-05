@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ChatsList, RoomsList } from 'components'
 
-import { setAndHandleChatsListener, updateChats, removeChatsListener } from 'redux/modules/chatsList'
+import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from 'redux/modules/chatsList'
 import * as inputActionCreators from 'redux/modules/chatInput'
 import * as roomsActionCreators from 'redux/modules/rooms'
 import { setAndHandleRoomsListener } from 'redux/modules/rooms'
@@ -66,6 +66,7 @@ const mapDispatchToProps = ( dispatch ) => {
         updateChats: () => dispatch(updateChats()),
         chatInputActions: bindActionCreators(inputActionCreators, dispatch),
         removeChatsListener: (id) => dispatch(removeChatsListener(id)),
+        searchChat: (params) => dispatch(searchChat(params))
     }
   }
 }
