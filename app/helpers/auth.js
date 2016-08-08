@@ -13,3 +13,12 @@ export function saveUser (user) {
     .set(user)
     .then(() => user)
 }
+
+export function createFirebaseUser(email, password) {
+  return firebaseAuth().createUserWithEmailAndPassword(email, password)
+}
+
+export function saveUserToDatabase (user) {
+  const userId = ref.child('users').push().key
+  return ref.child(`users/${userId}/info`).set({...user, userId})
+}

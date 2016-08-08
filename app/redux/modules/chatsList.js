@@ -36,27 +36,16 @@ function settingChatsListenerSuccess (chats, roomId) {
   }
 }
 
-function displaySearchChats (query, chats) {
+function displaySearchChats (query) {
     return {
         type: SEARCH_CHATS,
-        chats,
         query
     }
 }
 
 export function searchChat ( params ) {
     return function (dispatch, getState) {
-        listenToChats(params.roomId, (chats) => {
-            let queryResult = []
-            chats.forEach(( chat )=>{
-                console.log(chat);
-            // if ( chat.roomName.toLocaleLowerCase().indexOf(params.query) !=-1 )
-            //     queryResult.push(chat)
-            //
-            //     console.log(queryResult);
-                // dispatch( displaySearchChats(query, chats) )
-            })
-        }, (error) => dispatch(settingChatListenerError(error)))
+        dispatch( displaySearchChats(params.query) )
     }
 }
 
@@ -118,16 +107,13 @@ export default function chatsList (state = initialState, action) {
       }
 
     case SEARCH_CHATS :
-    return {
-        ...state,
-        isFetching: false,
-        error: '',
-        chats: {
-        //   ...state.chats,
-          ...action.chats,
-        },
-        query:action.query
-    }
+      return {
+          // ...state,
+          isFetching: false,
+          error: '',
+          chatList: queryResult,
+          query:action.query
+      }
 
     case RESET_CHATSLIST:
       return {

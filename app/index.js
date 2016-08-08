@@ -7,6 +7,7 @@ import thunk from 'redux-thunk'
 // import { browserHistory } from 'react-router'
 import { hashHistory } from 'react-router'
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
+
 import * as reducers from 'redux/modules'
 
 const store = createStore(combineReducers({...reducers, routing: routerReducer}), compose(
