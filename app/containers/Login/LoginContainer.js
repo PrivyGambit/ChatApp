@@ -4,11 +4,11 @@ import { Top } from 'components'
 import { decisionsAreStale } from 'helpers/utils'
 
 class LoginContainer extends React.Component {
-  render () {
-    return (
-      <Top />
-    )
-  }
+    render () {
+        return (
+            <Top />
+        )
+    }
 }
 
-export default connect()(LoginContainer)
+export default connect()( LoginContainer )

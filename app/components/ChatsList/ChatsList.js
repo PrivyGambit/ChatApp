@@ -15,7 +15,7 @@ export default class ChatsList extends React.Component {
     }
 
     componentDidUpdate() {
-      this.refs.chatListContent.scrollTop = this.refs.chatListContent.scrollHeight;
+        this.refs.chatListContent.scrollTop = this.refs.chatListContent.scrollHeight;
     }
 
     getQuote = ( id ) => {
