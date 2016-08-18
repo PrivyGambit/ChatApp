@@ -10,11 +10,11 @@ class SignupContainer extends Component {
         super( props )
     }
 
-  render () {
-    return (
-      <Signup {...this.props} />
-    )
-  }
+    render () {
+        return (
+            <Signup {...this.props} />
+        )
+    }
 }
 
 const mapDispatchToProps = ( dispatch ) => {

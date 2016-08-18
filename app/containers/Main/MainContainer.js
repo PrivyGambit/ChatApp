@@ -55,5 +55,5 @@ export default connect(
         isAuthed: users.isAuthed,
         isFetching: users.isFetching
     }),
-    (dispatch) => bindActionCreators(userActionCreators, dispatch)
+    ( dispatch ) => bindActionCreators(userActionCreators, dispatch)
 )( MainContainer )
