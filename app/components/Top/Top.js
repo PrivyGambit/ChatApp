@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import { formatTimestamp } from 'helpers/utils'
 import { Spinner } from 'components'
-import { RoomsListContainer, RoomInputContainer, RoomContainer } from 'containers'
+import { RoomInputContainer, RoomContainer } from 'containers'
+import style from './styles.css'
 
 Results.propTypes = {
   // isFetching: PropTypes.bool.isRequired,
@@ -14,9 +15,8 @@ export default function Results (props) {
   }
   return (
     <div>
-      <RoomInputContainer />
-      <RoomContainer />
-      {/*<RoomsListContainer />*/}
+        <RoomInputContainer />
+        <RoomContainer />
     </div>
   )
 }

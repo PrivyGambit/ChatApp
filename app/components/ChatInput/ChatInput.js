@@ -8,43 +8,12 @@ import restrictions from 'config/restrictions'
 export default function ChatInput ( props ) {
     const allowedFileTypes = ['jpeg', 'jpg', 'png', 'gif']
 
-    const handleSubmit = () => {
-        let chat = {
-            type: 'text',
-            text: props.chatText,
-            user: props.user.name,
-            avatar: props.user.avatar
-        }
-        props.initiateSaveChat(formatChat(chat), props.roomId)
-    }
-
-    const handleChange = ( e ) => {
-        props.updateChatText( e.target.value )
-    }
-
-    const handleUpload = ( e ) => {
-        let image = e.target.files[0];
-        if ( !image.type.match('image.*') ) {
-            let error = {
-                message: 'File type not allowed.'
-            }
-            return false
-        } else {
-            let chat = {
-                type: 'image',
-                user: props.user.name,
-                avatar: props.user.avatar
-            }
-            props.initiateUploadFile(image, formatFile(chat), props.roomId)
-        }
-    }
-
     return (
         <div className="input-group">
             <input
                 className="form-control"
                 type="text"
-                onChange={ handleChange }
+                onChange={ props.handleChange }
                 placeholder="Type a message" />
             <span className="input-group-btn">
                 <label className="btn btn-default btn-file">
@@ -52,12 +21,12 @@ export default function ChatInput ( props ) {
                     <input
                         type="file"
                         className={`btn btn-default ${style.noDisplay}`}
-                        onChange={ handleUpload }/>
+                        onChange={ props.handleUpload }/>
                 </label>
                 <button
                     className="btn btn-default"
                     type="button"
-                    onClick={ handleSubmit }>
+                    onClick={ props.handleSubmit }>
                     {'Submit'}
                 </button>
             </span>
@@ -66,8 +35,7 @@ export default function ChatInput ( props ) {
 }
 
 ChatInput.PropTypes = {
-    roomId: PropTypes.string.isRequired,
-    chatText: PropTypes.string.isRequired,
-    updateChatText: PropTypes.func.isRequired,
-    initiateSaveChat: PropTypes.func.isRequired
+    handleChange: PropTypes.func.isRequired,
+    handleUpload: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
 }

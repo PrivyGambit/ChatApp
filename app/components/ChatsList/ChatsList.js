@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 // import { RoomsListContainer } from 'containers'
 import style from './styles.css'
 import { filterText, formatChat, formatFile } from 'helpers/utils'
+import { ChatInputContainer } from 'containers'
 
 export default class ChatsList extends React.Component {
 
@@ -46,7 +47,7 @@ export default class ChatsList extends React.Component {
                         })}
                     </div>
                 </div>
-                { this.props.currentRoom && <ChatInput {...this.props} /> }
+                { this.props.currentRoom && <ChatInputContainer {...this.props} /> }
             </div>
         )
     }
@@ -152,83 +153,6 @@ const ChatContent = ( props ) => {
     )
 }
 
-class ChatInput extends React.Component {
-    constructor ( props ) {
-        super(props)
-        const allowedFileTypes = ['jpeg', 'jpg', 'png', 'gif']
-    }
-
-    handleSubmit = () => {
-        let chat = {
-            type: 'text',
-            text: this.props.chatInput.chatText,
-            user: this.props.user.name,
-            avatar: this.props.user.avatar
-        }
-        this.props.chatInputActions.initiateSaveChat(formatChat(chat), this.props.currentRoom, this.props.chatInput.quote)
-        // this.props.chatInputActions.updateChatText( '', '' )
-    }
-
-    handleChange = ( e ) => {
-        this.props.chatInputActions.updateChatText( e.target.value, this.props.chatInput.quote )
-    }
-
-    handleUpload = ( e ) => {
-        let image = e.target.files[0];
-        if ( !image.type.match('image.*') ) {
-            let error = {
-                message: 'File type not allowed.'
-            }
-            return false
-        } else {
-            let chat = {
-                type: 'image',
-                user: this.props.user.name,
-                avatar: this.props.user.avatar
-            }
-            this.props.chatInputActions.initiateUploadFile(image, formatFile(chat), this.props.currentRoom, this.props.chatInput.quote)
-        }
-    }
-
-    render () {
-        return (
-            <div className={style.inputWrapper}>
-                <div className={style.quoteWrapper}>
-                    <span className={style.quoteIndicator}>quoted: {this.props.chatInput.quote}</span>
-                </div>
-                <div className="input-group">
-                    <input
-                        className="form-control"
-                        type="text"
-                        onChange={ this.handleChange.bind(this) }
-                        placeholder="Type a message" />
-                    <span className="input-group-btn">
-                    <label className="btn btn-default btn-file">
-                        <span className="glyphicon glyphicon-upload"></span>
-                        <input
-                            type="file"
-                            className={`btn btn-default ${style.noDisplay}`}
-                            onChange={ this.handleUpload.bind(this) }/>
-                    </label>
-                    <button
-                        className="btn btn-default"
-                        type="button"
-                        onClick={ this.handleSubmit.bind(this) }>
-                        {'Submit'}
-                    </button>
-                    </span>
-                </div>
-            </div>
-        )
-    }
-}
-
-ChatInput.PropTypes = {
-    roomId: PropTypes.string.isRequired,
-    chatText: PropTypes.string.isRequired,
-    updateChatText: PropTypes.func.isRequired,
-    initiateSaveChat: PropTypes.func.isRequired
-}
 
 ChatsList.PropTypes = {
     chats: PropTypes.array.isRequired,

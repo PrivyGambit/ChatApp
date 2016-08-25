@@ -22,7 +22,8 @@ class AuthenticateContainer extends React.Component {
             <Authenticate
                 isFetching={this.props.isFetching}
                 error={this.props.error}
-                onAuth={this.handleAuth.bind( this )} />
+                onAuth={this.handleAuth.bind( this )}
+                toggleModal={this.props.toggleModal} />
         )
     }
 }

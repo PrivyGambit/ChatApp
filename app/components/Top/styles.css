@@ -25,3 +25,8 @@
 .header {
     composes: header from 'sharedStyles/styles.css';
 }
+
+.mainContainer {
+    width: 100%;
+    overflow: hidden;
+}

@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ChatsList, RoomsList } from 'components'
+import style from './styles.css'
 
 import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from 'redux/modules/chatsList'
 import * as inputActionCreators from 'redux/modules/chatInput'
@@ -19,8 +20,9 @@ class RoomContainer extends Component {
     }
 
     render () {
+        console.log(this.props);
         return (
-            <div>
+            <div className={style.container}>
                 <RoomsList
                     user={this.props.user}
                     rooms={this.props.rooms}

@@ -10,35 +10,32 @@ import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
 
 import * as reducers from 'redux/modules'
 
-const store = createStore(combineReducers({...reducers, routing: routerReducer}), compose(
-  applyMiddleware(thunk),
-  window.devToolsExtension ? window.devToolsExtension() : (f) => f
-))
+const store = createStore(
+    combineReducers({...reducers, routing: routerReducer}),
+    compose(
+        applyMiddleware(thunk),
+        window.devToolsExtension ? window.devToolsExtension() : (f) => f
+    )
+)
 
 const history = syncHistoryWithStore(hashHistory, store)
 
 function checkAuth (nextState, replace) {
-  const { isAuthed, isFetching } = store.getState().users
+    const { isAuthed, isFetching } = store.getState().users
 
-  if (isFetching === true) {
-    return
-  }
+    if (isFetching === true) return
 
-  const nextPathName = nextState.location.pathname
-  if (nextPathName === '/' || nextPathName === '/auth') {
-    if (isAuthed === true) {
-      replace('/login')
+    const nextPathName = nextState.location.pathname
+    if (nextPathName === '/' || nextPathName === '/auth') {
+        if (isAuthed === true) replace('/login')
+    } else {
+        if (isAuthed !== true) replace('/auth')
     }
-  } else {
-    if (isAuthed !== true) {
-      replace('/auth')
-    }
-  }
 }
 
 ReactDOM.render(
-  <Provider store={store}>
-      {getRoutes(checkAuth, history)}
-  </Provider>,
-  document.getElementById('app')
+    <Provider store={store}>
+        {getRoutes(checkAuth, history)}
+    </Provider>,
+    document.getElementById('app')
 )
