@@ -1,12 +1,13 @@
-import React from 'react'
-import { Home } from 'components'
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Top } from 'components'
 
-const HomeContainer = React.createClass({
+class HomeContainer extends React.Component {
     render () {
         return (
-            <Home />
+            <Top />
         )
     }
-})
+}
 
-export default HomeContainer
+export default connect()( HomeContainer )

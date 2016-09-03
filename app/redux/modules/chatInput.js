@@ -4,56 +4,56 @@ const UPDATE_CHAT_TEXT = 'UPDATE_CHAT_TEXT';
 const UPDATE_QUOTE = 'UPDATE_QUOTE';
 
 export function updateChatText ( chatText, quote ) {
-  return {
-    type: UPDATE_CHAT_TEXT,
-    chatText,
-    quote
-  }
+    return {
+        type: UPDATE_CHAT_TEXT,
+        chatText,
+        quote
+    }
 }
 
 export function updateQuote ( chatText, quote ) {
-  return {
-    type: UPDATE_QUOTE,
-    chatText,
-    quote
-  }
+    return {
+        type: UPDATE_QUOTE,
+        chatText,
+        quote
+    }
 }
 
 export function initiateSaveChat ( chat, roomId, quote ) {
-  return function (dispatch) {
-    saveChat( chat, roomId, quote )
-      .then(dispatch(updateChatText('', '')))
-      .catch((error) => console.warn('Error saving chat', error))
-  }
+    return function (dispatch) {
+        saveChat( chat, roomId, quote )
+            .then(dispatch(updateChatText('', '')))
+            .catch((error) => console.warn('Error saving chat', error))
+    }
 }
 
 export function initiateUploadFile ( file, chat, roomId, quote ) {
-  return function ( dispatch ) {
-    uploadFile ( file, chat, roomId, quote )
-  }
+    return function ( dispatch ) {
+        uploadFile ( file, chat, roomId, quote )
+    }
 }
 
 const initialState = {
-  chatText: '',
-  quote: ''
+    chatText: '',
+    quote: ''
 }
 
 export default function chatInput (state = initialState, action) {
-  switch ( action.type ) {
-    case UPDATE_CHAT_TEXT :
-      return {
-        ...state,
-        chatText: action.chatText,
-        quote: action.quote
-      }
-    case UPDATE_QUOTE :
-      return {
-        ...state,
-        chatText: action.chatText,
-        quote: action.quote
-      }
+    switch ( action.type ) {
+        case UPDATE_CHAT_TEXT :
+            return {
+                ...state,
+                chatText: action.chatText,
+                quote: action.quote
+            }
+        case UPDATE_QUOTE :
+            return {
+                ...state,
+                chatText: action.chatText,
+                quote: action.quote
+            }
 
-    default:
-      return state
-  }
+        default:
+            return state
+    }
 }

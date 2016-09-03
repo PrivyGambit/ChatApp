@@ -9,6 +9,7 @@ import { hashHistory } from 'react-router'
 import { routerReducer, syncHistoryWithStore } from 'react-router-redux'
 
 import * as reducers from 'redux/modules'
+import { checkIfAuthed } from 'helpers/auth'
 
 const store = createStore(
     combineReducers({...reducers, routing: routerReducer}),
