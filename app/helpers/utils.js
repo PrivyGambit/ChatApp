@@ -26,12 +26,12 @@ export function formatDecision (title, firstDecisionText, secondDecisionText, us
     }
 }
 
-export function formatTimestamp ( timestamp ) {
+export function formatTimestamp (timestamp) {
     const date = new Date(timestamp)
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 }
 
-function getMilliseconds ( timestamp ) {
+function getMilliseconds (timestamp) {
     return new Date().getTime() - new Date(timestamp).getTime()
 }
 

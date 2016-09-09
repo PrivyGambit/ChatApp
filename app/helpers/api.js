@@ -1,4 +1,5 @@
 import { ref, storageRef } from 'config/constants'
+import { signInAnonymous, checkIfSigned } from './auth'
 
 export function saveRoom (room) {
     const roomId = ref.child('rooms').push().key
@@ -28,6 +29,10 @@ export function saveChat ( chat, roomId, quote ) {
 }
 
 export function listenToRooms (cb, error) {
+    if ( !checkIfSigned() ) {
+        signInAnonymous()
+    }
+
     return ref.child('rooms').on('value', (snapshot) => {
         return cb(snapshot.val() || {})
     }, error)

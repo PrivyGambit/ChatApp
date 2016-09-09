@@ -18,6 +18,7 @@ class MainContainer extends Component {
             if ( user ) {
                 const userData = user.providerData[0]
                 const userInfo = formatUserInfo( userData.displayName, userData.photoURL, user.uid )
+                this.props.authUser(user.uid)
                 this.props.fetchingUserSuccess(user.uid, userInfo, Date.now())
                 .then(() => {
                     if ( this.props.location.pathname === '/' ) {
@@ -31,16 +32,15 @@ class MainContainer extends Component {
     }
 
     render () {
-        return this.props.isFetching === true
-            ? null
-            : <div className={container}>
+        return (
+            <div className={container}>
                 <Navigation isAuthed={this.props.isAuthed} />
                 <div className={innerContainer}>
                     {this.props.children}
                 </div>
             </div>
+        )
     }
-
 }
 
 MainContainer.propTypes = {
