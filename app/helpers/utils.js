@@ -2,11 +2,19 @@ import { decisionsExpirationLength } from 'config/constants'
 import restrictions from 'config/restrictions'
 
 export function formatUserInfo (name, avatar, uid) {
+    let type
+    if (uid == "zE0bXJZozPSxlq2q0OG9oQ6r98Q2") {
+        type = 'moderate'
+    } else if ( uid = "gVQudQQIqnMkIV7bM9TBUu8c1Pi1" ) {
+        type = 'anonymous'
+    } else {
+        type = 'normal'
+    }
     return {
         name,
         avatar,
         uid,
-        type: 'normal'
+        type: type
     }
 }
 

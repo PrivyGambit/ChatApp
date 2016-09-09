@@ -20,7 +20,6 @@ class RoomContainer extends Component {
     }
 
     render () {
-        console.log(this.props);
         return (
             <div className={style.container}>
                 <RoomsList

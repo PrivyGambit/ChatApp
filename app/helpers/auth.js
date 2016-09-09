@@ -28,10 +28,18 @@ export function saveUserToDatabase (user) {
 }
 
 export function signInAnonymous () {
-    return firebaseAuth().signInAnonymously().catch((error) => {
-        return error.message;
-    })
+    // return firebaseAuth().signInAnonymously().catch((error) => {
+    //     return error.message;
+    // })
+
+    let email = 'test@gmail.com';
+    let password = 'testpassword'
+
+    return firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        return error.message
+    });
 }
+
 
 export function checkIfSigned () {
     firebase.auth().onAuthStateChanged((user) => {

@@ -14,8 +14,7 @@ export default class ChatInputContainer extends React.Component {
         }
     }
 
-    handleSubmit = () => {
-        console.log(this.props.user);
+    handleSubmit = ( e )  => {
         //access denied on unregistered users
         if ( !_.isEmpty(this.props.user) ) {
             let chat = {
@@ -24,6 +23,7 @@ export default class ChatInputContainer extends React.Component {
                 user: this.props.user.name,
                 avatar: this.props.user.avatar
             }
+
             this.props.chatInputActions.initiateSaveChat(formatChat(chat), this.props.currentRoom, this.props.chatInput.quote)
             // this.props.chatInputActions.updateChatText( '', '' )
         } else {
@@ -63,7 +63,8 @@ export default class ChatInputContainer extends React.Component {
                 <ChatInput
                     handleChange = { this.handleChange.bind( this ) }
                     handleUpload = { this.handleUpload.bind( this ) }
-                    handleSubmit = { this.handleSubmit.bind( this ) } />
+                    handleSubmit = { this.handleSubmit.bind( this ) }
+                    chatText = { this.props.chatText } />
                 { this.state.showModal ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
             </div>
         )
