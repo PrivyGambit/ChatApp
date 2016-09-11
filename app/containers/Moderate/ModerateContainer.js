@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { ChatInput } from 'components'
 import { connect } from 'react-redux'
-import { ChatsList } from 'components'
+import { ChatsList, Top } from 'components'
 
 import { setAndHandleChatsListener, updateChats } from 'redux/modules/chatsList'
 
@@ -20,12 +20,7 @@ class ModerateContainer extends React.Component {
     render () {
         return (
             <div>
-                <ChatsList
-                user={this.props.user}
-                chats={this.props.chats}
-                error={this.props.error}
-                chatInputActions={this.props.actions.chatInputActions}
-                {...this.props} />
+                <Top />
             </div>
         )
     }
