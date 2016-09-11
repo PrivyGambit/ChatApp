@@ -23,15 +23,15 @@ export default function Login ({error, isFetching, manualLoginUser}) {
     return (
         <div className={centeredContainer, style.signup}>
             <form className={style.signupForm}>
-            <div className="form-group">
-            <label htmlFor="email">E-mail</label>
-            <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
-            </div>
-            <div className="form-group">
-            <label htmlFor="password">Confirm Password</label>
-            <input type="password" onChange={handleChangeValue} className="form-control" id="password" placeholder="Enter password" />
-            </div>
-            <button type="submit" className="btn btn-default" onClick={handleSubmit}>Submit</button>
+                <div className="form-group">
+                    <label htmlFor="email">E-mail</label>
+                    <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Confirm Password</label>
+                    <input type="password" onChange={handleChangeValue} className="form-control" id="password" placeholder="Enter password" />
+                </div>
+                <button type="submit" className="btn btn-default" onClick={handleSubmit}>Submit</button>
             </form>
             <div>
                 {props.error ? <p className={errorMsg}>{props.error}</p> : null}

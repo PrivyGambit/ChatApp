@@ -32,9 +32,10 @@ class MainContainer extends Component {
     }
 
     render () {
+        const authed = this.props.user.type == 'anonymous' ? false : true;
         return (
             <div className={container}>
-                <Navigation isAuthed={this.props.isAuthed} />
+                <Navigation isAuthed={authed} />
                 <div className={innerContainer}>
                     {this.props.children}
                 </div>
@@ -50,10 +51,20 @@ MainContainer.propTypes = {
     fetchingUserSuccess: PropTypes.func.isRequired
 }
 
+const mapStateToProps = ({ users }) => {
+    return {
+        user: users[users.authedId] ? users[users.authedId].info : {},
+        isFetching: users.isFetching,
+        error: users.error,
+        isAuthed: users.isAuthed
+    }
+}
+
+const mapDispatchToProps = ( dispatch ) => {
+    return bindActionCreators(userActionCreators, dispatch)
+}
+
 export default connect(
-    ({users}) => ({
-        isAuthed: users.isAuthed,
-        isFetching: users.isFetching
-    }),
-    ( dispatch ) => bindActionCreators(userActionCreators, dispatch)
+    mapStateToProps,
+    mapDispatchToProps
 )( MainContainer )

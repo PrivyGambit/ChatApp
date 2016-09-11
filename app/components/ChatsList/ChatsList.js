@@ -42,7 +42,8 @@ export default class ChatsList extends React.Component {
                                     key={id}
                                     chat={chat}
                                     quoteChat={this.quoteChat.bind(this)}
-                                    getQuote={this.getQuote.bind(this)} />
+                                    getQuote={this.getQuote.bind(this)}
+                                    userType={this.props.user.type} />
                             )
                         })}
                     </div>
@@ -72,12 +73,11 @@ const ChatContent = ( props ) => {
                                 if ( props.chat.quote ) {
                                     let quoteContent = props.getQuote( props.chat.quote )
                                     if ( quoteContent.type == 'text' ) {
-                                        let text = filterText(quoteContent.content)
                                         return (
                                             <div className={style.mainContent}>
                                                 <div className={style.content, style.quoteContent}>
                                                     <p className={style.quoteUser}>{quoteContent.user.name}</p>
-                                                    <p>{text}</p>
+                                                    <p>{filterText(quoteContent.content)}</p>
                                                 </div>
                                             </div>
                                         )
@@ -97,7 +97,10 @@ const ChatContent = ( props ) => {
                                 }
                             })()}
                             <div className={style.content}>
-                                <p>{filterText(props.chat.content)}</p>
+                                {props.userType == 'moderate'
+                                    ? <p className="">{props.chat.content}</p>
+                                    : <p>{filterText(props.chat.content)}</p>
+                                }
                                 <div className={style.quote} onClick={() => props.quoteChat(props.chat)}>
                                     <p className={style.quoteText}>Quote user</p>
                                 </div>
@@ -111,12 +114,11 @@ const ChatContent = ( props ) => {
                                 if ( props.chat.quote ) {
                                     let quoteContent = props.getQuote( props.chat.quote )
                                     if ( quoteContent.type == 'text' ) {
-                                        let text = filterText(quoteContent.content)
                                         return (
                                             <div className={style.mainContent}>
                                                 <div className={style.content, style.quoteContent}>
                                                     <p className={style.quoteUser}>{quoteContent.user.name}</p>
-                                                    <p>{text}</p>
+                                                    <p>{filterText(quoteContent.content)}</p>
                                                 </div>
                                             </div>
                                         )

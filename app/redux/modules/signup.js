@@ -61,7 +61,8 @@ export default function signup (state = initialState, action) {
                 firstName: action.firstName,
                 lastName: action.lastName,
                 password: action.password,
-                confirmPassword: action.confirmPassword
+                confirmPassword: action.confirmPassword,
+                type: 'normal'
             }
 
         case SIGNUP_USER_FAILURE :
