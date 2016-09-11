@@ -34,21 +34,8 @@ export function signInAnonymous () {
 
     let email = 'test@gmail.com';
     let password = 'testpassword'
-<<<<<<< HEAD
 
     return firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         return error.message
-=======
-
-    return firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        return error.message
-    });
-}
-
-
-export function checkIfSigned () {
-    firebase.auth().onAuthStateChanged((user) => {
-        return user ? true : false;
->>>>>>> 9a8887879131e65d1a4b0685f4e66855cfa9ec36
     });
 }
