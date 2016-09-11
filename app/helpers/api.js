@@ -1,4 +1,4 @@
-import { ref, storageRef } from 'config/constants'
+import { ref, storageRef, firebaseAuth } from 'config/constants'
 import { signInAnonymous, checkIfSigned } from './auth'
 
 export function saveRoom (room) {
@@ -29,9 +29,12 @@ export function saveChat ( chat, roomId, quote ) {
 }
 
 export function listenToRooms (cb, error) {
-    if ( !checkIfSigned() ) {
-        signInAnonymous()
-    }
+    //check if user is logged or not
+    firebaseAuth().onAuthStateChanged((user) => {
+        if ( !user ) {
+            signInAnonymous() //sign in as anonymous
+        }
+    })
 
     return ref.child('rooms').on('value', (snapshot) => {
         return cb(snapshot.val() || {})

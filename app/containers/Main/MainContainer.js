@@ -32,7 +32,7 @@ class MainContainer extends Component {
     }
 
     render () {
-        const authed = this.props.user.type == 'anonymous' ? false : true;
+        const authed = !this.props.user.type || this.props.user.type == 'anonymous' ? false : true;
         return (
             <div className={container}>
                 <Navigation isAuthed={authed} />

@@ -3,12 +3,13 @@ import { bindActionCreators } from 'redux'
 import { ChatInput } from 'components'
 import { connect } from 'react-redux'
 import { ChatsList, Top } from 'components'
+import { RoomInputContainer } from 'containers'
 
 import { setAndHandleChatsListener, updateChats } from 'redux/modules/chatsList'
 
-class ModerateContainer extends React.Component {
+export default class ModerateContainer extends React.Component {
 
-    constructor ( props ) {
+    constructor ( props, context ) {
         super( props )
     }
 
@@ -17,9 +18,18 @@ class ModerateContainer extends React.Component {
         this.props.actions.setAndHandleChatsListener(this.props.roomId)
     }
 
+    componentWillReceiveProps () {
+        if ( this.props.user.type !== 'moderate' ) {
+            // console.log('not moderate');
+        } else {
+            // console.log('bingo!!!');
+        }
+    }
+
     render () {
         return (
             <div>
+                <RoomInputContainer />
                 <Top />
             </div>
         )
@@ -28,6 +38,11 @@ class ModerateContainer extends React.Component {
 
 const mapStateToProps = ({users, chatsList, chatInput}) => {
     const rms = chatsList.chats
+    if ( users[users.authedId] ) {
+        if ( users[users.authedId].info.type == 'moderate' ) {
+            // console.log(this.context);
+        }
+    }
     return {
         user: users[users.authedId] ? users[users.authedId].info : {},
         isFetching: chatsList.isFetching,

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { formatTimestamp } from 'helpers/utils'
 import { Spinner } from 'components'
-import { RoomInputContainer, RoomContainer } from 'containers'
+import { RoomContainer } from 'containers'
 import style from './styles.css'
 
 Results.propTypes = {
@@ -15,7 +15,6 @@ export default function Results (props) {
   }
   return (
     <div>
-        <RoomInputContainer />
         <RoomContainer />
     </div>
   )

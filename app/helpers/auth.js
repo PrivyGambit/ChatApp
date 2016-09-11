@@ -39,10 +39,3 @@ export function signInAnonymous () {
         return error.message
     });
 }
-
-
-export function checkIfSigned () {
-    firebase.auth().onAuthStateChanged((user) => {
-        return user ? true : false;
-    });
-}
