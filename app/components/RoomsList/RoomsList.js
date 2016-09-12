@@ -140,9 +140,11 @@ class SearchBox extends Component {
     constructor ( props ) {
         super( props )
     }
+
     doSearch ( e ) {
         this.props.doSearch(e.target.value)
     }
+    
     render () {
         return (
             <div className={`input-group ${style.searchInput}`}>

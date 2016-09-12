@@ -9,6 +9,10 @@ export default class ChatsList extends React.Component {
 
     constructor ( props ) {
         super(props)
+        this.state = {
+            query: '',
+            filteredData: this.props.chats
+        }
     }
 
     quoteChat = ( chat ) => {
@@ -17,6 +21,12 @@ export default class ChatsList extends React.Component {
 
     componentDidUpdate() {
         this.refs.chatListContent.scrollTop = this.refs.chatListContent.scrollHeight;
+    }
+
+    componentWillReceiveProps () {
+        this.setState({
+            filteredData: this.props.chats
+        })
     }
 
     getQuote = ( id ) => {
@@ -29,10 +39,23 @@ export default class ChatsList extends React.Component {
         return value;
     }
 
+    doSearch ( queryText ) {
+        let queryResult = []
+        this.props.chats.map(( rm ) => {
+            if ( rm.content.toLocaleLowerCase().indexOf(queryText) !=-1 )
+                queryResult.push(rm)
+            this.setState({
+                query: queryText,
+                filteredData: queryResult
+            })
+        })
+    }
+
     render () {
         return (
             <div className={style.mainContainer}>
                 <div className={style.chatListContainer}>
+                    { this.props.user.type == 'moderate' ?  <SearchBox query={this.state.query} doSearch={this.doSearch.bind(this)} /> : '' }
                     <div className={style.chatContent} ref="chatListContent">
                         {this.props.chats.map(( chat ) => {
                             const id = chat.chatId
@@ -54,6 +77,29 @@ export default class ChatsList extends React.Component {
     }
 }
 
+class SearchBox extends React.Component {
+    constructor ( props ) {
+        super( props )
+    }
+
+    doSearch ( e ) {
+        this.props.doSearch(e.target.value)
+    }
+
+    render () {
+        return (
+            <div className={`input-group ${style.searchInput}`}>
+                <input
+                    className='form-control'
+                    value={this.props.query}
+                    onChange={this.doSearch.bind( this )}
+                    type='text'
+                    placeholder='Enter search keyword' />
+            </div>
+        )
+    }
+}
+
 const ChatContent = ( props ) => {
     return (
         <div className={style.chatItem}>
@@ -62,7 +108,7 @@ const ChatContent = ( props ) => {
                     {/*<img className={style.userImageContent} src={chat.user.avatar} />*/}
                 </div>
                 <div className={style.userName}>
-                    <p>{props.chat.user.name}</p>
+                    <p>{props.chat.user.name ? props.chat.user.name : 'User error'}</p>
                 </div>
             </div>
             {(() => {
