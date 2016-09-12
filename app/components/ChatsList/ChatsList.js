@@ -20,11 +20,12 @@ export default class ChatsList extends React.Component {
     }
 
     componentDidUpdate() {
-        this.refs.chatListContent.scrollTop = this.refs.chatListContent.scrollHeight;
+        this.refs.chatListContent.scrollTop = this.refs.chatListContent.scrollHeight
     }
 
     componentWillReceiveProps () {
         this.setState({
+            query: '',
             filteredData: this.props.chats
         })
     }

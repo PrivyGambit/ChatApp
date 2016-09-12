@@ -11,7 +11,7 @@ Results.propTypes = {
 
 export default function Results (props) {
   if (props.isFetching === true) {
-    return <Spinner />
+    return (<Spinner />)
   }
   return (
     <div>

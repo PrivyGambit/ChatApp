@@ -68,6 +68,12 @@ export function setAndHandleChatsListener (roomId) {
     }
 }
 
+// export function getSearchedQuery () {
+//     return function ( dispatch ) {
+//
+//     }
+// }
+
 const initialState = {
     isFetching: true,
     error: '',
