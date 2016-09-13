@@ -3,6 +3,9 @@ import { ChatInput } from 'components'
 import { AuthenticateContainer } from 'containers'
 import _ from 'lodash'
 import { filterText, formatChat, formatFile } from 'helpers/utils'
+import * as inputActionCreators from 'redux/modules/chatInput'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 export default class ChatInputContainer extends React.Component {
 
@@ -24,8 +27,8 @@ export default class ChatInputContainer extends React.Component {
                 avatar: this.props.user.avatar
             }
 
-            this.props.chatInputActions.initiateSaveChat(formatChat(chat), this.props.currentRoom, this.props.chatInput.quote)
-            // this.props.chatInputActions.updateChatText( '', '' )
+            this.props.initiateSaveChat(formatChat(chat), this.props.currentRoom, this.props.chatInput.quote)
+            // this.props.updateChatText( '', '' )
         } else {
             //pop up registration
             this.setState({ showModal: true })
@@ -33,7 +36,7 @@ export default class ChatInputContainer extends React.Component {
     }
 
     handleChange = ( e ) => {
-        this.props.chatInputActions.updateChatText( e.target.value, this.props.chatInput.quote )
+        this.props.updateChatText( e.target.value, this.props.chatInput.quote )
     }
 
     handleUpload = ( e ) => {
@@ -49,7 +52,7 @@ export default class ChatInputContainer extends React.Component {
                 user: this.props.user.name,
                 avatar: this.props.user.avatar
             }
-            this.props.chatInputActions.initiateUploadFile(image, formatFile(chat), this.props.currentRoom, this.props.chatInput.quote)
+            this.props.initiateUploadFile(image, formatFile(chat), this.props.currentRoom, this.props.chatInput.quote)
         }
     }
 
@@ -71,9 +74,28 @@ export default class ChatInputContainer extends React.Component {
     }
 }
 
+const mapStateToProps = ({ chatInput }) => {
+    return {
+        chatInput: {
+            chatText: chatInput.chatText,
+            quote: chatInput.quote
+        }
+    }
+}
+
+const mapDispatchToProps = ( dispatch ) => {
+    return bindActionCreators(inputActionCreators, dispatch)
+}
+
 ChatInputContainer.PropTypes = {
     roomId: PropTypes.string.isRequired,
     chatText: PropTypes.string.isRequired,
     updateChatText: PropTypes.func.isRequired,
     initiateSaveChat: PropTypes.func.isRequired
 }
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)( ChatInputContainer )

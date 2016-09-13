@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { ChatInput } from 'components'
 import { connect } from 'react-redux'
 import { ChatsList, Top } from 'components'
-import { RoomInputContainer } from 'containers'
+import { RoomInputContainer, RoomContainer } from 'containers'
 
 import { setAndHandleChatsListener, updateChats } from 'redux/modules/chatsList'
 
@@ -30,7 +30,7 @@ export default class ModerateContainer extends React.Component {
         return (
             <div>
                 <RoomInputContainer />
-                <Top />
+                <RoomContainer />
             </div>
         )
     }

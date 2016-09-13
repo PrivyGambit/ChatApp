@@ -1,12 +1,12 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { ChatsList, RoomsList } from 'components'
+import { ChatsList, SearchRoom } from 'components'
+import { ChatInputContainer, RoomsListContainer } from 'containers'
 import style from './styles.css'
 
-import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from 'redux/modules/chatsList'
-import * as inputActionCreators from 'redux/modules/chatInput'
-import * as roomsActionCreators from 'redux/modules/rooms'
+// import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from 'redux/modules/chatsList'
+// import * as roomsActionCreators from 'redux/modules/rooms'
 import { setAndHandleRoomsListener } from 'redux/modules/rooms'
 
 class RoomContainer extends Component {
@@ -22,17 +22,20 @@ class RoomContainer extends Component {
     render () {
         return (
             <div className={style.container}>
-                <RoomsList
+                <RoomsListContainer
                     user={this.props.user}
-                    rooms={this.props.rooms}
-                    error={this.props.error.rooms}
-                    {...this.props} />
-                <ChatsList
-                    user={this.props.user}
-                    chats={this.props.chats}
-                    error={this.props.error.chatsList}
-                    chatInputActions={this.props.actions.chatInputActions}
-                    {...this.props} />
+                    error={this.props.error.rooms} />
+                <div className={style.mainContainer}>
+                    <div className={style.chatListContainer}>
+                        <ChatsList
+                            chats={this.props.chats}
+                            user={this.props.user} />
+                    </div>
+                    { this.props.currentRoom
+                        && <ChatInputContainer
+                        currentRoom={this.props.currentRoom} user={this.props.user} />
+                    }
+                </div>
             </div>
         )
     }
@@ -43,17 +46,12 @@ const mapStateToProps = ({users, chatsList, chatInput, rooms}) => {
     const rms = rooms.rooms
     return {
         user: users[users.authedId] ? users[users.authedId].info : {},
-        isFetching: chatsList.isFetching,
+        // isFetching: chatsList.isFetching,
         error: {
             chatsList: chatsList.error,
             rooms: rooms.error,
         },
         chats: Object.keys(cts).map((id) => cts[id]),
-        rooms: Object.keys(rms).map((id) => rms[id]),
-        chatInput: {
-            chatText: chatInput.chatText,
-            quote: chatInput.quote
-        },
         currentRoom: chatsList.roomId
     }
 }
@@ -62,11 +60,6 @@ const mapDispatchToProps = ( dispatch ) => {
     return {
         actions: {
             setAndHandleRoomsListener: () => dispatch(setAndHandleRoomsListener()),
-            setAndHandleChatsListener: ( params ) => dispatch(setAndHandleChatsListener( params )),
-            updateChats: () => dispatch(updateChats()),
-            chatInputActions: bindActionCreators(inputActionCreators, dispatch),
-            removeChatsListener: (id) => dispatch(removeChatsListener(id)),
-            searchChat: (params) => dispatch(searchChat(params))
         }
     }
 }
