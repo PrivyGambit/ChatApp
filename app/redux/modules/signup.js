@@ -1,7 +1,7 @@
-import { saveRoom } from 'helpers/api'
+import { formatUserSave } from 'helpers/utils'
 import auth, { logout, createFirebaseUser, saveUserToDatabase } from 'helpers/auth'
 import assign from 'lodash.assign'
-import { authUser } from 'redux/modules/users'
+import { authUser, logoutAndUnauth } from 'redux/modules/users'
 
 const UPDATE_SIGNUP = 'UPDATE_SIGNUP'
 const SAVE_SIGNUP = 'SAVE_SIGNUP'
@@ -35,6 +35,8 @@ export function initiateSaveUser ( signup ) {
     return function (dispatch) {
         return createFirebaseUser( signup.email, signup.password1 )
             .then(() =>  saveUserToDatabase(signup))
+            // .then(() => logout())
+            // .then((user) => dispatch(logoutAndUnauth(user.uid))) //logout anonymous
             .then((user) => dispatch(signupUserSuccess(signup)))
             .then((user) => dispatch(authUser(user.uid)))
             .catch((error) => dispatch(signupUserFailure(error)))
@@ -53,17 +55,6 @@ export default function signup (state = initialState, action) {
                     [action.name]: action.signup
                 })
             })
-
-        case SAVE_SIGNUP:
-            return {
-                requestAddUser: true,
-                username: action.username,
-                firstName: action.firstName,
-                lastName: action.lastName,
-                password: action.password,
-                confirmPassword: action.confirmPassword,
-                type: 'normal'
-            }
 
         case SIGNUP_USER_FAILURE :
             return {

@@ -23,6 +23,8 @@ export function createFirebaseUser(email, password) {
 }
 
 export function saveUserToDatabase (user) {
+    user.banned = false;
+    user.type = 'normal';
     const userId = ref.child('users').push().key
     return ref.child(`users/${userId}/info`).set({...user, userId})
 }

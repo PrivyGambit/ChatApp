@@ -10,8 +10,7 @@ export default function Signup (props, context) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        props.initiateSaveUser(props.signup)
-            .then(() => context.router.replace('login'))
+        props.saveUser(props.signup)
     }
 
     return (
@@ -20,10 +19,6 @@ export default function Signup (props, context) {
                 <div className="form-group">
                     <label htmlFor="email">E-mail</label>
                     <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="name">Username</label>
-                    <input type="text" onChange={handleChangeValue} className="form-control" id="name" placeholder="Enter User Name" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="firstname">First Name</label>

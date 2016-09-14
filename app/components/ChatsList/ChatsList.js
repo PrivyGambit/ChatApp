@@ -32,12 +32,15 @@ export default class ChatsList extends React.Component  {
                     const id = chat.chatId
                     const type = chat.type
                     return (
-                        <ChatContent
-                            key={id}
-                            chat={chat}
-                            quoteChat={this.quoteChat.bind(this)}
-                            getQuote={this.getQuote.bind(this)}
-                            userType={this.props.user.type} />
+                        <div key={id}>
+                            <ChatContent
+                                chat={chat}
+                                quoteChat={this.quoteChat.bind(this)}
+                                getQuote={this.getQuote.bind(this)}
+                                userType={this.props.user.type}
+                                currentRoom={this.props.currentRoom}
+                                requestDeleteChat={this.props.requestDeleteChat} />
+                        </div>
                     )
                 })}
             </div>

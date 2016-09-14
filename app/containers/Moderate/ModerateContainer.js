@@ -2,10 +2,13 @@ import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { ChatInput } from 'components'
 import { connect } from 'react-redux'
-import { ChatsList, Top } from 'components'
-import { RoomInputContainer, RoomContainer } from 'containers'
+import { ChatsList, Top, UserList } from 'components'
+import { ChatInputContainer, RoomsListContainer } from 'containers'
+import style from './styles.css'
 
-import { setAndHandleChatsListener, updateChats } from 'redux/modules/chatsList'
+import { setAndHandleChatsListener, updateChats, requestDeleteChat } from 'redux/modules/chatsList'
+import { setAndHandleRoomsListener } from 'redux/modules/rooms'
+import { fetchUserList, callBanUser, callUnbanUser } from 'redux/modules/userlist'
 
 export default class ModerateContainer extends React.Component {
 
@@ -14,8 +17,25 @@ export default class ModerateContainer extends React.Component {
     }
 
     componentDidMount () {
+
         this.props.actions.updateChats()
-        this.props.actions.setAndHandleChatsListener(this.props.roomId)
+        // this.props.actions.setAndHandleChatsListener(this.props.roomId)
+        this.props.actions.setAndHandleRoomsListener()
+        this.props.actions.fetchUserList()
+    }
+
+    quoteChat = ( chat ) => {
+        this.props.chatInputActions.updateQuote(this.props.chatInput.chatText, chat.chatId)
+    }
+
+    getQuote = ( id ) => {
+        let value = {}
+        this.props.chats.map((chat)=> {
+            if ( chat.chatId == id ) {
+                value = chat;
+            }
+        })
+        return value;
     }
 
     componentWillReceiveProps () {
@@ -28,16 +48,35 @@ export default class ModerateContainer extends React.Component {
 
     render () {
         return (
-            <div>
-                <RoomInputContainer />
-                <RoomContainer />
+            <div className={style.container}>
+                <RoomsListContainer
+                    user={this.props.user}
+                    error={this.props.error} />
+                <div className={style.mainContainer}>
+                    <div className={style.chatListContainer}>
+                        <ChatsList
+                            chats={this.props.chats}
+                            user={this.props.user}
+                            currentRoom={this.props.currentRoom}
+                            requestDeleteChat={this.props.actions.requestDeleteChat} />
+                    </div>
+                    { this.props.currentRoom
+                        && <ChatInputContainer
+                        currentRoom={this.props.currentRoom} user={this.props.user} />
+                    }
+                </div>
+                <UserList
+                    userlist={this.props.userlist}
+                    banUser={this.props.actions.banUser}
+                    unBanUser={this.props.actions.unBanUser}/>
             </div>
         )
     }
 }
 
-const mapStateToProps = ({users, chatsList, chatInput}) => {
+const mapStateToProps = ({users, chatsList, chatInput, userlist}) => {
     const rms = chatsList.chats
+    const ulist = userlist.userlist
     if ( users[users.authedId] ) {
         if ( users[users.authedId].info.type == 'moderate' ) {
             // console.log(this.context);
@@ -51,7 +90,9 @@ const mapStateToProps = ({users, chatsList, chatInput}) => {
         chatInput: {
             chatText: chatInput.chatText,
             quote: chatInput.quote
-        }
+        },
+        currentRoom: chatsList.roomId,
+        userlist: Object.keys(ulist).map((id) => ulist[id])
     }
 }
 
@@ -60,6 +101,11 @@ const mapDispatchToProps = ( dispatch ) => {
         actions: {
             setAndHandleChatsListener: ( params ) => dispatch(setAndHandleChatsListener( params )),
             updateChats: () => dispatch(updateChats()),
+            setAndHandleRoomsListener: () => dispatch(setAndHandleRoomsListener()),
+            requestDeleteChat: (roomId, chatId) => dispatch(requestDeleteChat( roomId, chatId )),
+            fetchUserList: () => dispatch(fetchUserList()),
+            banUser: (uid) => dispatch(callBanUser(uid)),
+            unBanUser: (uid) => dispatch(callUnbanUser(uid))
         }
     }
 }

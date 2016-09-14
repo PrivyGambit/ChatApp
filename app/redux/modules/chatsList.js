@@ -1,4 +1,4 @@
-import { listenToChats, turnOffListener } from 'helpers/api'
+import { listenToChats, turnOffListener, deleteChat } from 'helpers/api'
 import { addListener, removeListener } from 'redux/modules/listeners'
 
 const SETTINGS_CHATS_LISTENER = 'SETTINGS_CHATS_LISTENER'
@@ -7,6 +7,9 @@ const SETTINGS_CHATS_LISTENER_SUCCESS = 'SETTINGS_CHATS_LISTENER_SUCCESS'
 const RESET_CHATSLIST = 'RESET_CHATSLIST'
 const SEARCH_CHATS = 'SEARCH_CHATS'
 const CHAT_CALL_QUERY = 'CHAT_CALL_QUERY'
+const DELETE_CHAT_REQUEST = 'DELETE_CHAT_REQUEST'
+const DELETE_CHAT_SUCCESS = 'DELETE_CHAT_SUCCESS'
+const DELETE_CHAT_ERROR = 'DELETE_CHAT_ERROR'
 
 function settingChatsListener () {
     return {
@@ -68,11 +71,36 @@ export function setAndHandleChatsListener (roomId) {
     }
 }
 
-// export function getSearchedQuery () {
-//     return function ( dispatch ) {
-//
-//     }
-// }
+
+function deleteChatRequest () {
+    return {
+        type: DELETE_CHAT_REQUEST,
+    }
+}
+
+function deleteChatRequestError (error) {
+    return {
+        type: DELETE_CHAT_ERROR,
+        error
+    }
+}
+
+function deleteChatSuccess () {
+    return {
+        type: DELETE_CHAT_SUCCESS
+    }
+}
+
+export function requestDeleteChat ( roomId, chatId ) {
+    return function ( dispatch, getState ) {
+
+        dispatch(deleteChatRequest())
+
+        deleteChat(roomId, chatId, (chats) => {
+            dispatch(deleteChatSuccess())
+        }, (error) => dispatch(deleteChatRequestError(error)))
+    }
+}
 
 const initialState = {
     isFetching: true,
@@ -83,6 +111,25 @@ const initialState = {
 
 export default function chatsList (state = initialState, action) {
     switch ( action.type ) {
+        case DELETE_CHAT_ERROR :
+            return {
+                ...state,
+                isFetching: false,
+                error: action.error
+            }
+        case DELETE_CHAT_REQUEST :
+            return {
+                ...state,
+                isDeleting: true
+            }
+        case DELETE_CHAT_SUCCESS:
+            return {
+                ...state,
+                isDeleting: false,
+                chats: {
+                    ...action.chats,
+                }
+            }
         case SETTINGS_CHATS_LISTENER :
             return {
                 ...state,
@@ -109,7 +156,6 @@ export default function chatsList (state = initialState, action) {
                 },
                 roomId: action.roomId
             }
-
         case SEARCH_CHATS :
             return {
                 isFetching: false,
@@ -117,7 +163,6 @@ export default function chatsList (state = initialState, action) {
                 chatList: queryResult,
                 query:action.query
             }
-
         case RESET_CHATSLIST:
             return {
                 ...state,

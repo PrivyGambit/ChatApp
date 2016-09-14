@@ -15,7 +15,7 @@ export function saveChat ( chat, roomId, quote ) {
         user: chat.user
     })
     const chatId = ref.child(`rooms/${roomId}/chats`).push().key
-    return ref.child(`rooms/${roomId}/chats`).push({
+    return ref.child(`rooms/${roomId}/chats/${ chatId }`).update({
         type: chat.type,
         content: chat.content,
         timestamp: chat.timestamp,
@@ -26,6 +26,22 @@ export function saveChat ( chat, roomId, quote ) {
         chatId: chatId,
         quote: quote
     })
+}
+
+export function banUser (userId) {
+    return ref.child(`users/${userId}/info`).update({
+        banned: true
+    })
+}
+
+export function unBanUser (userId) {
+    return ref.child(`users/${userId}/info`).update({
+        banned: false
+    })
+}
+
+export function deleteChat ( roomId, chatId ) {
+    return ref.child(`rooms/${ roomId }/chats/${ chatId }`).remove()
 }
 
 export function listenToRooms (cb, error) {
@@ -66,6 +82,12 @@ export function fetchRooms () {
 export function fetchUser (uid) {
     return ref.child(`users/${uid}`).once('value')
         .then((snapshot) => snapshot.val())
+}
+
+export function listenToUsersList (cb, error) {
+    return ref.child('users').on('value', (snapshot) => {
+        return cb(snapshot.val() || {})
+    }, error)
 }
 
 export function uploadFile ( file, chat, roomId, quote ) {
