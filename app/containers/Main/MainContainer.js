@@ -6,6 +6,7 @@ import { container, innerContainer } from './styles.css'
 import * as userActionCreators from 'redux/modules/users'
 import { firebaseAuth } from 'config/constants'
 import { formatUserInfo } from 'helpers/utils'
+import { fetchUser } from 'helpers/api'
 
 class MainContainer extends Component {
 
@@ -19,6 +20,8 @@ class MainContainer extends Component {
                 const userData = user.providerData[0]
                 const userInfo = formatUserInfo( userData.displayName, userData.photoURL, user.uid )
                 this.props.authUser(user.uid)
+                // const userDataInfo = fetchUser( user.uid )
+                // const userDataInfo = fetchUser( user.uid )
                 this.props.fetchingUserSuccess(user.uid, userInfo, Date.now())
                     .then(() => {
                         if ( this.props.location.pathname === '/' ) {
@@ -32,6 +35,7 @@ class MainContainer extends Component {
     }
 
     render () {
+        console.log(this.props);
         const authed = !this.props.user.type || this.props.user.type == 'anonymous' ? false : true;
         return (
             <div className={container}>

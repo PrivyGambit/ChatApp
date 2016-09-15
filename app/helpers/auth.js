@@ -13,6 +13,8 @@ export function logout () {
 }
 
 export function saveUser (user) {
+    user.banned = false;
+    user.type = 'normal';
     return ref.child(`users/${user.uid}/info`)
         .set(user)
         .then(() => user)
@@ -34,8 +36,8 @@ export function signInAnonymous () {
     //     return error.message;
     // })
 
-    let email = 'test@gmail.com';
-    let password = 'testpassword'
+    let email = 'anonymous@gmal.com';
+    let password = '123456'
 
     return firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         return error.message

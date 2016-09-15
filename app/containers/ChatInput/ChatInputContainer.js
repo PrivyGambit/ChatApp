@@ -19,8 +19,8 @@ export default class ChatInputContainer extends React.Component {
 
     handleSubmit = ( e )  => {
         //access denied on unregistered users
-        console.log(this.props.user);
-        return
+        // console.log(this.props.user);
+        // return
         if ( !_.isEmpty(this.props.user) && this.props.user.type !== 'anonymous' ) {
             let chat = {
                 type: 'text',

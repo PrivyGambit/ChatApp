@@ -81,7 +81,8 @@ export function fetchRooms () {
 
 export function fetchUser (uid) {
     return ref.child(`users/${uid}`).once('value')
-        .then((snapshot) => snapshot.val())
+        .then((snapshot) => snapshot.val() || {})
+        .catch((err) => console.warn('Error fetching the user', err))
 }
 
 export function listenToUsersList (cb, error) {
