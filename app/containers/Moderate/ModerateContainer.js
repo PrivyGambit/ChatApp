@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { ChatsList, Top, UserList } from 'components'
 import { ChatInputContainer, RoomsListContainer } from 'containers'
 import style from './styles.css'
+import _ from 'lodash'
 
 import { setAndHandleChatsListener, updateChats, requestDeleteChat } from 'redux/modules/chatsList'
 import { setAndHandleRoomsListener } from 'redux/modules/rooms'
@@ -17,7 +18,6 @@ export default class ModerateContainer extends React.Component {
     }
 
     componentDidMount () {
-
         this.props.actions.updateChats()
         // this.props.actions.setAndHandleChatsListener(this.props.roomId)
         this.props.actions.setAndHandleRoomsListener()
@@ -38,15 +38,15 @@ export default class ModerateContainer extends React.Component {
         return value;
     }
 
-    componentWillReceiveProps () {
-        if ( this.props.user.type !== 'moderate' ) {
-            // console.log('not moderate');
-        } else {
-            // console.log('bingo!!!');
-        }
-    }
-
     render () {
+        // if ( !_.isEmpty( this.props.chats ) ) {
+        //     this.props.chats.sort(function ( a, b ) {
+        //         if ( a.announcement == true ) {
+        //             return 1
+        //         }
+        //         return 0
+        //     })
+        // }
         return (
             <div className={style.container}>
                 <RoomsListContainer
@@ -77,16 +77,13 @@ export default class ModerateContainer extends React.Component {
 const mapStateToProps = ({users, chatsList, chatInput, userlist}) => {
     const rms = chatsList.chats
     const ulist = userlist.userlist
-    if ( users[users.authedId] ) {
-        if ( users[users.authedId].info.type == 'moderate' ) {
-            // console.log(this.context);
-        }
-    }
+
     return {
         user: users[users.authedId] ? users[users.authedId].info : {},
         isFetching: chatsList.isFetching,
         error: chatsList.error,
         chats: Object.keys(rms).map((id) => rms[id]),
+        // chats: rms.
         chatInput: {
             chatText: chatInput.chatText,
             quote: chatInput.quote

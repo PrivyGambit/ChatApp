@@ -1,0 +1,11 @@
+.signin {
+    padding: 40px;
+    margin-top: 20px;
+    background-color: #ccc;
+    width: 50%;
+    border-radius: 10px;
+}
+
+.signinForm {
+    width: 100%;
+}

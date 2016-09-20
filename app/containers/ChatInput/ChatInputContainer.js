@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { ChatInput } from 'components'
+import { ChatInput, Banned } from 'components'
 import { AuthenticateContainer } from 'containers'
 import _ from 'lodash'
 import { filterText, formatChat, formatFile } from 'helpers/utils'
@@ -13,27 +13,30 @@ export default class ChatInputContainer extends React.Component {
         super( props )
         const allowedFileTypes = ['jpeg', 'jpg', 'png', 'gif']
         this.state = {
-            showModal: false
+            showModalBanned: false,
+            showModalAnonymous: false
         }
     }
 
     handleSubmit = ( e )  => {
+        if ( this.props.user.banned ) {
+            this.setState({ showModalBanned: true })
+        }
         //access denied on unregistered users
-        // console.log(this.props.user);
-        // return
         if ( !_.isEmpty(this.props.user) && this.props.user.type !== 'anonymous' ) {
             let chat = {
                 type: 'text',
                 text: this.props.chatInput.chatText,
                 user: this.props.user.name,
-                avatar: this.props.user.avatar
+                avatar: this.props.user.avatar ? this.props.user.avatar : 'null',
+                announcement : this.props.user.type == 'moderate' ? true : false
             }
 
             this.props.initiateSaveChat(formatChat(chat), this.props.currentRoom, this.props.chatInput.quote)
             // this.props.updateChatText( '', '' )
         } else {
             //pop up registration
-            this.setState({ showModal: true })
+            this.setState({ showModalAnonymous: true })
         }
     }
 
@@ -58,8 +61,15 @@ export default class ChatInputContainer extends React.Component {
         }
     }
 
-    toggleModal () {
-        this.setState({ showModal: !this.state.showModal })
+    toggleModal (mode) {
+        if ( mode == 'anonymous' ) {
+            this.setState({ showModalAnonymous: !this.state.showModalAnonymous })
+        }
+
+        if ( mode == 'banned' ) {
+            this.setState({ showModalBanned: !this.state.showModalBanned })
+        }
+
     }
 
     render () {
@@ -69,14 +79,15 @@ export default class ChatInputContainer extends React.Component {
                     handleChange = { this.handleChange.bind( this ) }
                     handleUpload = { this.handleUpload.bind( this ) }
                     handleSubmit = { this.handleSubmit.bind( this ) }
-                    chatText = { this.props.chatText } />
-                { this.state.showModal ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
+                    chatText = { this.props.chatInput.chatText } />
+                { this.state.showModalAnonymous ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
             </div>
         )
     }
 }
 
 const mapStateToProps = ({ chatInput }) => {
+    // console.log(chatInput);
     return {
         chatInput: {
             chatText: chatInput.chatText,

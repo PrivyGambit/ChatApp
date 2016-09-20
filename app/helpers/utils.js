@@ -1,21 +1,13 @@
 import { decisionsExpirationLength } from 'config/constants'
 import restrictions from 'config/restrictions'
 
-export function formatUserInfo (name, avatar, uid, normal) {
-    // let type
-    // if (uid == "zE0bXJZozPSxlq2q0OG9oQ6r98Q2") {
-    //     type = 'moderate'
-    // } else if ( uid = "gVQudQQIqnMkIV7bM9TBUu8c1Pi1" ) {
-    //     type = 'anonymous'
-    // } else {
-    //     type = 'normal'
-    // }
-    // console.log(uid);
+export function formatUserInfo (uid, banned, name, avatar, type) {
     return {
+        uid,
+        banned,
         name,
         avatar,
-        uid,
-        // type: type
+        type,
     }
 }
 
@@ -65,7 +57,8 @@ export function formatChat ( chat ) {
         content: chat.text,
         user: chat.user,
         avatar: chat.avatar,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        announcement: chat.announcement
     }
 }
 

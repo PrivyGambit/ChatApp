@@ -21,12 +21,8 @@ export default function Signup (props, context) {
                     <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="firstname">First Name</label>
-                    <input type="text" onChange={handleChangeValue} className="form-control" id="firstname" placeholder="Enter First Name" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="lastname">Last Name</label>
-                    <input type="text" onChange={handleChangeValue} className="form-control" id="lastname" placeholder="Enter Last Name" />
+                    <label htmlFor="firstname">Name</label>
+                    <input type="text" onChange={handleChangeValue} className="form-control" id="name" placeholder="Enter Name" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="password1">Password</label>

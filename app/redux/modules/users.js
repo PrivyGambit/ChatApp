@@ -1,4 +1,4 @@
-import auth, { logout, saveUser } from 'helpers/auth'
+import auth, { logout, saveUserToDatabase } from 'helpers/auth'
 import { formatUserInfo } from 'helpers/utils'
 import { fetchUser, incrementSelectedCount, decrementSelectedCount } from 'helpers/api'
 
@@ -49,7 +49,7 @@ export function fetchingUserSuccess (uid, user, timestamp) {
     type: FETCHING_USER_SUCCESS,
     uid,
     user,
-    timestamp,
+    timestamp
   }
 }
 
@@ -59,6 +59,12 @@ export function removeFetchingUser () {
   }
 }
 
+export function fetchDatabaseUserInfo ( uid ) {
+    return function () {
+        return fetchUser ( uid )
+    }
+}
+
 export function fetchAndHandleAuthedUser () {
   logoutAndUnauth()
   return function (dispatch) {
@@ -66,9 +72,19 @@ export function fetchAndHandleAuthedUser () {
     return auth().then(({user, credential}) => {
       const userData = user.providerData[0]
       const userInfo = formatUserInfo(userData.displayName, userData.photoURL, user.uid, 'normal')
-      return dispatch(fetchingUserSuccess(user.uid, userInfo, Date.now()))
+      return this.props.fetchDatabaseUserInfo(user.uid)
+        .then(( dataInfo ) => {
+            return dispatch(fetchingUserSuccess(
+                dataInfo.uid,
+                dataInfo.banned,
+                dataInfo.name,
+                dataInfo.type,
+                Date.now()
+            ))
+        })
+
     })
-    .then(({user}) => saveUser(user))
+    .then(({user}) => saveUserToDatabase(user))
     .then((user) => dispatch(authUser(user.uid)))
     .catch((error) => dispatch(fetchingUserFailure(error)))
   }
@@ -93,6 +109,7 @@ const initialUserState = {
 function user (state = initialUserState, action) {
   switch (action.type) {
     case FETCHING_USER_SUCCESS :
+
       return {
         ...state,
         info: action.user,

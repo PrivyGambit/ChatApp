@@ -24,7 +24,8 @@ export function saveChat ( chat, roomId, quote ) {
             avatar: chat.avatar
         },
         chatId: chatId,
-        quote: quote
+        quote: quote,
+        announcement: chat.announcement
     })
 }
 

@@ -12,23 +12,30 @@ export function logout () {
     return firebaseAuth().signOut()
 }
 
-export function saveUser (user) {
-    user.banned = false;
-    user.type = 'normal';
-    return ref.child(`users/${user.uid}/info`)
-        .set(user)
-        .then(() => user)
-}
+// export function saveUser (user) {
+//     user.banned = false;
+//     user.type = 'normal';
+//     return ref.child(`users/${user.uid}/info`)
+//         .set(user)
+//         .then(() => user)
+// }
 
 export function createFirebaseUser(email, password) {
     return firebaseAuth().createUserWithEmailAndPassword(email, password)
 }
 
-export function saveUserToDatabase (user) {
-    user.banned = false;
-    user.type = 'normal';
-    const userId = ref.child('users').push().key
-    return ref.child(`users/${userId}/info`).set({...user, userId})
+export function saveUserToDatabase (id, user) {
+    user.banned = false
+    user.type = 'normal'
+    user.uid = id
+    return ref.child(`users/${id}/info`)
+        .set({...user})
+}
+
+export function signInUser ( signIn ) {
+    return firebase.auth().signInWithEmailAndPassword(signIn.email, signIn.password).catch(function(error) {
+        return error.message
+    })
 }
 
 export function signInAnonymous () {
@@ -36,8 +43,8 @@ export function signInAnonymous () {
     //     return error.message;
     // })
 
-    let email = 'anonymous@gmal.com';
-    let password = '123456'
+    let email = 'anonymous@anonymous.com';
+    let password = 'anonymous'
 
     return firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
         return error.message

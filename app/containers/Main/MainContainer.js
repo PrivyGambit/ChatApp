@@ -10,24 +10,40 @@ import { fetchUser } from 'helpers/api'
 
 class MainContainer extends Component {
 
-    constructor ( props ) {
-        super( props )
+    constructor ( props, context ) {
+        super( props, context )
+        context.router // context initiate
     }
 
     componentDidMount () {
         firebaseAuth().onAuthStateChanged((user) => {
             if ( user ) {
                 const userData = user.providerData[0]
-                const userInfo = formatUserInfo( userData.displayName, userData.photoURL, user.uid )
                 this.props.authUser(user.uid)
-                // const userDataInfo = fetchUser( user.uid )
-                // const userDataInfo = fetchUser( user.uid )
-                this.props.fetchingUserSuccess(user.uid, userInfo, Date.now())
-                    .then(() => {
-                        if ( this.props.location.pathname === '/' ) {
-                            this.context.router.replace('login')
+                this.props.fetchDatabaseUserInfo( user.uid )
+                    .then((dataInfo)=> {
+                        const newInfo = dataInfo.info
+                        const userInfo = formatUserInfo(
+                            newInfo.uid,
+                            newInfo.banned,
+                            newInfo.name,
+                            newInfo.avatar,
+                            newInfo.type
+                        ) //format user to desired object format
+                        this.props.fetchingUserSuccess(
+                            newInfo.uid,
+                            userInfo,
+                            Date.now()
+                        )
+
+                        if ( newInfo.type !== 'anonymous' ) {
+                            if ( this.props.location.pathname === '/' ) {
+                                context.router.replace('login')
+                            }
                         }
+
                     })
+
             } else {
                 this.props.removeFetchingUser()
             }
@@ -35,7 +51,6 @@ class MainContainer extends Component {
     }
 
     render () {
-        console.log(this.props);
         const authed = !this.props.user.type || this.props.user.type == 'anonymous' ? false : true;
         return (
             <div className={container}>
@@ -52,7 +67,11 @@ MainContainer.propTypes = {
     isAuthed: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     removeFetchingUser: PropTypes.func.isRequired,
-    fetchingUserSuccess: PropTypes.func.isRequired
+    fetchingUserSuccess: PropTypes.func.isRequired,
+}
+
+MainContainer.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }
 
 const mapStateToProps = ({ users }) => {

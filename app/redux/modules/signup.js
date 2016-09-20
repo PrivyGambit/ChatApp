@@ -34,7 +34,7 @@ function signupUserSuccess (error) {
 export function initiateSaveUser (signup) {
     return function (dispatch) {
         return createFirebaseUser(signup.email, signup.password1)
-            .then(() =>  saveUserToDatabase(signup))
+            .then((user) =>  saveUserToDatabase(user.uid, signup))
             // .then(() => logout())
             // .then((user) => dispatch(logoutAndUnauth(user.uid))) //logout anonymous
             .then((user) => dispatch(signupUserSuccess(signup)))

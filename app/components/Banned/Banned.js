@@ -1,10 +1,9 @@
 import React, { PropTypes, Component } from 'react'
 import { centeredContainer, largeHeader, errorMsg } from 'sharedStyles/styles.css'
-import { FacebookAuthButton, Signup } from 'components'
-import { SignupContainer, SignInContainer } from 'containers'
+import { SignupContainer } from 'containers'
 import { default as ReactModal } from 'react-modal'
 
-export default class Authenticate extends Component {
+export default class Banned extends Component {
 
     constructor( props ) {
         super( props )
@@ -19,7 +18,7 @@ export default class Authenticate extends Component {
 
     closeModal () {
         this.setState({modalIsOpen: false})
-        this.props.toggleModal('anonymous')
+        this.props.toggleModal('banned')
     }
 
     render () {
@@ -38,21 +37,9 @@ export default class Authenticate extends Component {
                 onRequestClose = { this.closeModal.bind( this ) }
                 style = { modalStyles }>
                 <div className = { centeredContainer }>
-                    <h1 className = { largeHeader }>{'Authenticate'}</h1>
-                    <FacebookAuthButton isFetching = { this.props.isFetching } onAuth = { this.props.onAuth } />
-                    <h1>OR</h1>
-                    <SignupContainer />
-                    <h1>OR</h1>
-                    <SignInContainer />
-                    {this.props.error ? <p className = { this.props.errorMsg }>{ this.props.error }</p> : null}
+                    <p>Current user is banned on this chatApp.</p>
                 </div>
             </ReactModal>
         )
     }
-}
-
-Authenticate.PropTypes = {
-    error: PropTypes.string.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    onAuth: PropTypes.func.isRequired,
 }
