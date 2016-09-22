@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import style from './styles.css'
+// import style from './styles.css'
 
 export default class UserList extends React.Component {
 

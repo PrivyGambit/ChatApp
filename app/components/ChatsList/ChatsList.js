@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
-import style, { container, title } from './styles.css'
-import { ChatContent } from 'components'
+// import style, { container, title } from './styles.css'
+import { ChatContent } from '../../components'
 
 export default class ChatsList extends React.Component  {
     constructor ( props ) {
@@ -27,7 +27,7 @@ export default class ChatsList extends React.Component  {
 
     render () {
         return (
-            <div className={style.chatContent} ref="chatListContent">
+            <div className='chatContent' ref="chatListContent">
                 {this.props.chats.map(( chat ) => {
                     const id = chat.chatId
                     const type = chat.type

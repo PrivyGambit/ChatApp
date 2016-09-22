@@ -1,4 +1,4 @@
-import { ref, storageRef, firebaseAuth } from 'config/constants'
+import { ref, storageRef, firebaseAuth } from '../config/constants'
 import { signInAnonymous, checkIfSigned } from './auth'
 
 export function saveRoom (room) {
@@ -49,9 +49,18 @@ export function listenToRooms (cb, error) {
     //check if user is logged or not
     firebaseAuth().onAuthStateChanged((user) => {
         if ( !user ) {
-            signInAnonymous() //sign in as anonymous
+            // signInAnonymous() //sign in as anonymous
+            let email = 'anonymous@anonymous.com'
+            let password = 'anonymous'
+            firebaseAuth().signInWithEmailAndPassword(email, password).catch(function(error) {
+                return error.message
+            });
         }
     })
+
+    // firebaseAuth().onAuthStateChanged((user) => {
+    //     console.log(user);
+    // })
 
     return ref.child('rooms').on('value', (snapshot) => {
         return cb(snapshot.val() || {})

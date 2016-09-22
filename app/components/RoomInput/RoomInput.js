@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { formatRoomName } from 'helpers/utils'
+import { formatRoomName } from '../../helpers/utils'
 
 export default function RoomInput ( props ) {
 

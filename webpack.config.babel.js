@@ -9,7 +9,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'dist'),
+  build: path.join(__dirname, '/public'),
 }
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
@@ -24,12 +24,15 @@ const productionPlugin = new webpack.DefinePlugin({
 })
 
 const base = {
+  context: __dirname,
   entry: [
-    PATHS.app,
+    // PATHS.app,
+    './app/browser.js'
   ],
   output: {
     path: PATHS.build,
-    filename: 'index_bundle.js',
+    filename: 'bundle.js',
+    publicPath: '/public/'
   },
   module: {
     loaders: [
@@ -61,3 +64,43 @@ const productionConfig = {
 export default Object.assign({}, base,
   isProduction === true ? productionConfig : developmentConfig
 )
+
+
+// const path = require('path')
+//
+// module.exports = {
+//   context: __dirname,
+//   entry: './app/browser.js',
+//   output: {
+//     path: path.join(__dirname, '/public'),
+//     filename: 'bundle.js',
+//     publicPath: '/public/'
+//   },
+//   resolve: {
+//     extensions: ['', '.js', '.jsx', '.json']
+//   },
+//   stats: {
+//     colors: true,
+//     reasons: true,
+//     chunks: true
+//   },
+//   module: {
+//     preLoaders: [
+//       {
+//         test: /\.jsx?$/,
+//         loader: "eslint-loader",
+//         exclude: /node_modules/
+//       }
+//     ],
+//     loaders: [
+//       {
+//         test: /\.jsx?$/,
+//         loader: 'babel-loader'
+//       },
+//       {
+//         test: /\.json$/,
+//         loader: 'json-loader'
+//       }
+//     ]
+//   }
+// }

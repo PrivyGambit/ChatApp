@@ -1,5 +1,5 @@
-import { listenToRooms } from 'helpers/api'
-import { addListener } from 'redux/modules/listeners'
+import { listenToRooms } from '../../helpers/api'
+import { addListener } from './listeners'
 
 const SETTINGS_ROOMS_LISTENER = 'SETTINGS_ROOMS_LISTENER'
 const SETTINGS_ROOMS_LISTENER_ERROR = 'SETTINGS_ROOMS_LISTENER_ERROR'
@@ -15,7 +15,7 @@ function settingRoomsListener () {
 function settingRoomsListenerError (error) {
     return {
         type: SETTINGS_ROOMS_LISTENER_ERROR,
-        error: 'Error fetching Rooms',
+        error
     }
 }
 

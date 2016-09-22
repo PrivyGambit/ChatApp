@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react'
-import { ChatInput, Banned } from 'components'
-import { AuthenticateContainer } from 'containers'
+import { ChatInput, Banned } from '../../components'
+import { AuthenticateContainer } from '../../containers'
 import _ from 'lodash'
-import { filterText, formatChat, formatFile } from 'helpers/utils'
-import * as inputActionCreators from 'redux/modules/chatInput'
+import { filterText, formatChat, formatFile } from '../../helpers/utils'
+import * as inputActionCreators from '../../redux/modules/chatInput'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 

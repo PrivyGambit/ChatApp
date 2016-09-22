@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
-import { centeredContainer, largeHeader, errorMsg } from 'sharedStyles/styles.css'
-import { FacebookAuthButton, Signup } from 'components'
-import { SignupContainer } from 'containers'
+// import { centeredContainer, largeHeader, errorMsg } from 'sharedStyles/styles.css'
+import { FacebookAuthButton, Signup } from '../../components'
+import { SignupContainer } from '../../containers'
 
 Authenticate.propTypes = {
     error: PropTypes.string.isRequired,
@@ -21,8 +21,8 @@ export default function Login ({error, isFetching, manualLoginUser}) {
     }
 
     return (
-        <div className={centeredContainer, style.signup}>
-            <form className={style.signupForm}>
+        <div className='centeredContainer signup'>
+            <form className='signupForm'>
                 <div className="form-group">
                     <label htmlFor="email">E-mail</label>
                     <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
@@ -34,8 +34,8 @@ export default function Login ({error, isFetching, manualLoginUser}) {
                 <button type="submit" className="btn btn-default" onClick={handleSubmit}>Submit</button>
             </form>
             <div>
-                {props.error ? <p className={errorMsg}>{props.error}</p> : null}
-                {props.success ? <p className={successMsg}>{props.success}</p> : null}
+                {props.error ? <p className='errorMsg'>{props.error}</p> : null}
+                {props.success ? <p className='successMsg'>{props.success}</p> : null}
             </div>
         </div>
     )

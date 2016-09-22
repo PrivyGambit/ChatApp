@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import { centeredContainer, largeHeader, errorMsg, successMsg } from 'sharedStyles/styles.css'
-import style from './styles.css'
+// import { centeredContainer, largeHeader, errorMsg, successMsg } from 'sharedStyles/styles.css'
+// import style from './styles.css'
 
 export default function Signup (props, context) {
 
@@ -14,8 +14,8 @@ export default function Signup (props, context) {
     }
 
     return (
-        <div className={centeredContainer, style.signup}>
-            <form className={style.signupForm}>
+        <div className="centeredContainer signup">
+            <form className="signupForm">
                 <div className="form-group">
                     <label htmlFor="email">E-mail</label>
                     <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
@@ -34,8 +34,8 @@ export default function Signup (props, context) {
                 </div>
                 <button type="submit" className="btn btn-default" onClick={handleSubmit}>Submit</button>
             </form>
-            {props.error ? <p className={errorMsg}>{props.error}</p> : null}
-            {props.success ? <p className={successMsg}>{props.success}</p> : null}
+            {props.error ? <p className="errorMsg">{props.error}</p> : null}
+            {props.success ? <p className="successMsg">{props.success}</p> : null}
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import style, { container, title } from './styles.css'
-import { filterText } from 'helpers/utils'
+// import style, { container, title } from './styles.css'
+import { filterText } from '../../helpers/utils'
 
 export default class ChatContent extends React.Component {
 
@@ -24,38 +24,38 @@ export default class ChatContent extends React.Component {
 
     render () {
         return (
-            <div className={style.chatItem} onMouseEnter={ this.handleMouseEnter.bind( this ) } onMouseLeave={ this.handleMouseEnter.bind( this ) }>
-                <div className={style.userInfo}>
-                    <div className={style.userImage}>
+            <div className='chatItem' onMouseEnter={ this.handleMouseEnter.bind( this ) } onMouseLeave={ this.handleMouseEnter.bind( this ) }>
+                <div className='userInfo'>
+                    <div className='userImage'>
                         {/*<img className={style.userImageContent} src={chat.user.avatar} />*/}
                     </div>
-                    <div className={style.userName}>
+                    <div className='userName'>
                         <p>{this.props.chat.user.name ? this.props.chat.user.name : 'User error'}</p>
                     </div>
                 </div>
                 {(() => {
                     if (this.props.chat.type == 'text') {
                         return (
-                            <div className={style.content}>
+                            <div className='content'>
                                 {(() => {
                                     if ( this.props.chat.quote ) {
                                         let quoteContent = this.props.getQuote( this.props.chat.quote )
                                         if ( quoteContent.type == 'text' ) {
                                             return (
-                                                <div className={style.mainContent}>
-                                                    <div className={style.content, style.quoteContent}>
-                                                        <p className={style.quoteUser}>{quoteContent.user.name}</p>
+                                                <div className='mainContent'>
+                                                    <div className='content quoteContent'>
+                                                        <p className='quoteUser'>{quoteContent.user.name}</p>
                                                         <p>{filterText(quoteContent.content)}</p>
                                                     </div>
                                                 </div>
                                             )
                                         } else {
                                             return (
-                                                <div className={style.mainContent}>
-                                                    <div className={style.content, style.quoteContent}>
+                                                <div className='mainContent'>
+                                                    <div className='content quoteContent'>
                                                         <a href={quoteContent.url} target="_blank">
-                                                            <div className={style.chatImageWrapper}>
-                                                                <img className={style.image} src={`${quoteContent.url}`} />
+                                                            <div className='chatImageWrapper'>
+                                                                <img className='image' src={`${quoteContent.url}`} />
                                                             </div>
                                                         </a>
                                                     </div>
@@ -64,39 +64,39 @@ export default class ChatContent extends React.Component {
                                         }
                                     }
                                 })()}
-                                <div className={style.content}>
+                                <div className='content'>
                                     {this.props.userType == 'moderate'
                                         ? <p className="">{this.props.chat.content}</p>
                                         : <p>{filterText(this.props.chat.content)}</p>
                                     }
-                                    <div className={style.quote} onClick={() => this.props.quoteChat(this.props.chat)}>
-                                        <p className={style.quoteText}>Quote user</p>
+                                    <div className='quote' onClick={() => this.props.quoteChat(this.props.chat)}>
+                                        <p className='quoteText'>Quote user</p>
                                     </div>
                                 </div>
                             </div>
                         )
                     } else {
                         return (
-                            <div className={style.content}>
+                            <div className='content'>
                                 {(() => {
                                     if ( this.props.chat.quote ) {
                                         let quoteContent = this.props.getQuote( this.props.chat.quote )
                                         if ( quoteContent.type == 'text' ) {
                                             return (
-                                                <div className={style.mainContent}>
-                                                    <div className={style.content, style.quoteContent}>
-                                                        <p className={style.quoteUser}>{quoteContent.user.name}</p>
+                                                <div className='mainContent'>
+                                                    <div className='content quoteContent'>
+                                                        <p className='quoteUser'>{quoteContent.user.name}</p>
                                                         <p>{filterText(quoteContent.content)}</p>
                                                     </div>
                                                 </div>
                                             )
                                         } else {
                                             return (
-                                                <div className={style.mainContent}>
-                                                    <div className={style.content, style.quoteContent}>
+                                                <div className='mainContent'>
+                                                    <div className='content quoteContent'>
                                                         <a href={quoteContent.url} target="_blank">
-                                                            <div className={style.chatImageWrapper}>
-                                                                <img className={style.image} src={`${quoteContent.url}`} />
+                                                            <div className='chatImageWrapper'>
+                                                                <img className='image' src={`${quoteContent.url}`} />
                                                             </div>
                                                         </a>
                                                     </div>
@@ -105,14 +105,14 @@ export default class ChatContent extends React.Component {
                                         }
                                     }
                                 })()}
-                                <div className={style.content}>
+                                <div className='content'>
                                     <Link to={this.props.chat.url} target="_blank">
-                                        <div className={style.chatImageWrapper}>
-                                            <img className={style.image} src={`${this.props.chat.url}`} />
+                                        <div className='chatImageWrapper'>
+                                            <img className='image' src={`${this.props.chat.url}`} />
                                         </div>
                                     </Link>
-                                    <div className={style.quote} onClick={() => this.props.quoteChat(this.props.chat)}>
-                                        <p className={style.quoteText}>Quote user</p>
+                                    <div className='quote' onClick={() => this.props.quoteChat(this.props.chat)}>
+                                        <p className='quoteText'>Quote user</p>
                                     </div>
                                 </div>
                             </div>

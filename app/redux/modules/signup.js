@@ -1,7 +1,7 @@
-import { formatUserSave } from 'helpers/utils'
-import auth, { logout, createFirebaseUser, saveUserToDatabase } from 'helpers/auth'
+import { formatUserSave } from '../../helpers/utils'
+import auth, { logout, createFirebaseUser, saveUserToDatabase } from '../../helpers/auth'
 import assign from 'lodash.assign'
-import { authUser, logoutAndUnauth } from 'redux/modules/users'
+import { authUser, logoutAndUnauth } from './users'
 
 const UPDATE_SIGNUP = 'UPDATE_SIGNUP'
 const SAVE_SIGNUP = 'SAVE_SIGNUP'

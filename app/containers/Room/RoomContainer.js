@@ -1,13 +1,13 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { ChatsList, SearchRoom } from 'components'
-import { ChatInputContainer, RoomsListContainer } from 'containers'
-import style from './styles.css'
+import { ChatsList, SearchRoom } from '../../components'
+import { ChatInputContainer, RoomsListContainer } from '../../containers'
+// import style from './styles.css'
 
 // import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from 'redux/modules/chatsList'
 // import * as roomsActionCreators from 'redux/modules/rooms'
-import { setAndHandleRoomsListener } from 'redux/modules/rooms'
+import { setAndHandleRoomsListener } from '../../redux/modules/rooms'
 
 class RoomContainer extends Component {
 
@@ -21,12 +21,12 @@ class RoomContainer extends Component {
 
     render () {
         return (
-            <div className={style.container}>
+            <div className="container">
                 <RoomsListContainer
                     user={this.props.user}
                     error={this.props.error.rooms} />
-                <div className={style.mainContainer}>
-                    <div className={style.chatListContainer}>
+                <div className="mainContainer">
+                    <div className="chatListContainer">
                         <ChatsList
                             chats={this.props.chats}
                             user={this.props.user} />

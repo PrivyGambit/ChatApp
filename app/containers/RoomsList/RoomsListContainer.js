@@ -1,12 +1,12 @@
 import React, { PropTypes, Component } from 'react'
-import { formatRoomName, formatTimestamp } from 'helpers/utils'
+import { formatRoomName, formatTimestamp } from '../../helpers/utils'
 import { Link } from 'react-router'
 // import style from './styles.css'
-import { RoomsList } from 'components'
+import { RoomsList } from '../../components'
 import { connect } from 'react-redux'
-import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from 'redux/modules/chatsList'
-import * as roomsActionCreators from 'redux/modules/rooms'
-import { setAndHandleRoomsListener } from 'redux/modules/rooms'
+import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from '../../redux/modules/chatsList'
+import * as roomsActionCreators from '../../redux/modules/rooms'
+import { setAndHandleRoomsListener } from '../../redux/modules/rooms'
 
 class RoomsListContainer extends Component {
 
@@ -87,6 +87,7 @@ class RoomsListContainer extends Component {
 
     render () {
         // detect error property this.props.error
+        console.log(this.props);
         return (
             <RoomsList
                 isPressed={this.state.isPressed}

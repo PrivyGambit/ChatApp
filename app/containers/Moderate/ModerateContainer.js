@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
-import { ChatInput } from 'components'
+import { ChatInput } from '../../components'
 import { connect } from 'react-redux'
-import { ChatsList, Top, UserList } from 'components'
-import { ChatInputContainer, RoomsListContainer } from 'containers'
-import style from './styles.css'
+import { ChatsList, Top, UserList } from '../../components'
+import { ChatInputContainer, RoomsListContainer } from '../../containers'
+// import style from './styles.css'
 import _ from 'lodash'
 
-import { setAndHandleChatsListener, updateChats, requestDeleteChat } from 'redux/modules/chatsList'
-import { setAndHandleRoomsListener } from 'redux/modules/rooms'
-import { fetchUserList, callBanUser, callUnbanUser } from 'redux/modules/userlist'
+import { setAndHandleChatsListener, updateChats, requestDeleteChat } from '../../redux/modules/chatsList'
+import { setAndHandleRoomsListener } from '../../redux/modules/rooms'
+import { fetchUserList, callBanUser, callUnbanUser } from '../../redux/modules/userlist'
 
 export default class ModerateContainer extends React.Component {
 
@@ -48,12 +48,12 @@ export default class ModerateContainer extends React.Component {
         //     })
         // }
         return (
-            <div className={style.container}>
+            <div className="container">
                 <RoomsListContainer
                     user={this.props.user}
                     error={this.props.error} />
-                <div className={style.mainContainer}>
-                    <div className={style.chatListContainer}>
+                <div className="mainContainer">
+                    <div className="chatListContainer">
                         <ChatsList
                             chats={this.props.chats}
                             user={this.props.user}

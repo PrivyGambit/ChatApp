@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import { centeredContainer, largeHeader, errorMsg, successMsg } from 'sharedStyles/styles.css'
-import style from './styles.css'
+// import { centeredContainer, largeHeader, errorMsg, successMsg } from 'sharedStyles/styles.css'
+// import style from './styles.css'
 
 export default function SignIn (props, context) {
 
@@ -14,8 +14,8 @@ export default function SignIn (props, context) {
     }
 
     return (
-        <div className={centeredContainer, style.Signin}>
-            <form className={style.SigninForm}>
+        <div className="centeredContainer Signin">
+            <form className="SigninForm">
                 <div className="form-group">
                     <label htmlFor="email">E-mail</label>
                     <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import { Top } from 'components'
+import { Top } from '../../components'
 
 class HomeContainer extends Component {
 

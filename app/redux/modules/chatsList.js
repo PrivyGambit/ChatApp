@@ -1,5 +1,5 @@
-import { listenToChats, turnOffListener, deleteChat } from 'helpers/api'
-import { addListener, removeListener } from 'redux/modules/listeners'
+import { listenToChats, turnOffListener, deleteChat } from '../../helpers/api'
+import { addListener, removeListener } from './listeners'
 
 const SETTINGS_CHATS_LISTENER = 'SETTINGS_CHATS_LISTENER'
 const SETTINGS_CHATS_LISTENER_ERROR = 'SETTINGS_CHATS_LISTENER_ERROR'

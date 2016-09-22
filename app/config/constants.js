@@ -1,4 +1,6 @@
-import firebase from 'firebase'
+const firebase  = require('firebase')
+require('firebase/auth')
+require('firebase/database')
 
 const config = {
   apiKey: "AIzaSyAaqThRTv3mr83thnI-mN3xSfD2mWgDUhY",
@@ -7,10 +9,18 @@ const config = {
   storageBucket: "chatapp-acc25.appspot.com",
 }
 
+// firebase.initializeApp({
+//     serviceAccount: __dirname + "/ChatApp.json",
+//     databaseURL: "https://chatapp-acc25.firebaseio.com/"
+// });
+
 firebase.initializeApp(config)
 
-export const ref = firebase.database().ref()
-export const firebaseAuth = firebase.auth
-export const storageRef = firebase.storage().ref()
+const ref = firebase.database().ref()
+const firebaseAuth = firebase.auth
+// const storageRef = firebase.storage().ref()
 
-export const decisionsExpirationLength = 50000
+
+const decisionsExpirationLength = 50000
+
+module.exports = { ref, firebaseAuth, decisionsExpirationLength }

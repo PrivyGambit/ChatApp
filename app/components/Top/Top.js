@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
-import { formatTimestamp } from 'helpers/utils'
-import { Spinner } from 'components'
-import { RoomContainer } from 'containers'
-import style from './styles.css'
+import { formatTimestamp } from '../../helpers/utils'
+import { Spinner } from '../../components'
+import { RoomContainer } from '../../containers'
+// import style from './styles.css'
 
 Results.propTypes = {
   // isFetching: PropTypes.bool.isRequired,

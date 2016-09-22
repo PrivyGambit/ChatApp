@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
-import { container, navContainer, link } from './styles.css'
-import { AuthenticateContainer } from 'containers'
+// import { container, navContainer, link } from './styles.css'
+import { AuthenticateContainer } from '../../containers'
 
 class NavLinks extends Component {
 
@@ -12,7 +12,7 @@ class NavLinks extends Component {
     render () {
         return this.props.isAuthed === true
             ? <ul>
-                    <li><Link className={link} to='/'>{'Home'}</Link></li>
+                    <li><Link className='link' to='/'>{'Home'}</Link></li>
                 </ul>
             : null
     }
@@ -33,10 +33,10 @@ class ActionLinks extends Component {
     render () {
         return this.props.isAuthed === true
             ? <ul>
-                <li><Link className={link} to='/logout'>{'Logout'}</Link></li>
+                <li><Link className='link' to='/logout'>{'Logout'}</Link></li>
             </ul>
             : <ul>
-                <li><Link className={link} to='/'>{'Home'}</Link></li>
+                <li><Link className='link' to='/'>{'Home'}</Link></li>
                 <li><button className='btn default' onClick={this.toggleModal.bind( this )}>Authenticate</button></li>
                 { this.state.showModal ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
             </ul>
@@ -50,8 +50,8 @@ export default class Navigation extends Component {
 
     render () {
         return (
-            <div className={container}>
-                <nav className={navContainer}>
+            <div className='container'>
+                <nav className='navContainer'>
                     <NavLinks isAuthed={this.props.isAuthed}/>
                     <ActionLinks isAuthed={this.props.isAuthed}/>
                 </nav>

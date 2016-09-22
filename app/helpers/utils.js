@@ -1,5 +1,5 @@
-import { decisionsExpirationLength } from 'config/constants'
-import restrictions from 'config/restrictions'
+import { decisionsExpirationLength } from '../config/constants'
+import restrictions from '../config/restrictions'
 
 export function formatUserInfo (uid, banned, name, avatar, type) {
     return {

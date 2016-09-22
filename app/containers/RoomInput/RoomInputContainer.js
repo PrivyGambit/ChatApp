@@ -1,8 +1,8 @@
 import { bindActionCreators } from 'redux'
-import { RoomInput } from 'components'
+import { RoomInput } from '../../components'
 import { connect } from 'react-redux'
 
-import * as inputActionCreators from 'redux/modules/roomInput'
+import * as inputActionCreators from '../../redux/modules/roomInput'
 
 function mapStateToProps ({users, roomInput}) {
     return {

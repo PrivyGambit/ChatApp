@@ -1,12 +1,12 @@
 import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Navigation } from 'components'
+import { Navigation } from '../../components'
 import { connect } from 'react-redux'
-import { container, innerContainer } from './styles.css'
-import * as userActionCreators from 'redux/modules/users'
-import { firebaseAuth } from 'config/constants'
-import { formatUserInfo } from 'helpers/utils'
-import { fetchUser } from 'helpers/api'
+// import { container, innerContainer } from './styles.css'
+import * as userActionCreators from '../../redux/modules/users'
+import { firebaseAuth } from '../../config/constants'
+import { formatUserInfo } from '../../helpers/utils'
+import { fetchUser } from '../../helpers/api'
 
 class MainContainer extends Component {
 
@@ -51,11 +51,12 @@ class MainContainer extends Component {
     }
 
     render () {
+        // console.log(this.props);
         const authed = !this.props.user.type || this.props.user.type == 'anonymous' ? false : true;
         return (
-            <div className={container}>
+            <div className="container">
                 <Navigation isAuthed={authed} />
-                <div className={innerContainer}>
+                <div className="innerContainer">
                     {this.props.children}
                 </div>
             </div>
@@ -71,7 +72,7 @@ MainContainer.propTypes = {
 }
 
 MainContainer.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object
 }
 
 const mapStateToProps = ({ users }) => {
@@ -87,7 +88,10 @@ const mapDispatchToProps = ( dispatch ) => {
     return bindActionCreators(userActionCreators, dispatch)
 }
 
-export default connect(
+
+// module.exports = MainContainer
+//
+module.exports = connect(
     mapStateToProps,
     mapDispatchToProps
 )( MainContainer )

@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react'
-import { formatChat, formatFile } from 'helpers/utils'
-import style from './styles.css'
+import { formatChat, formatFile } from '../../helpers/utils'
+// import style from './styles.css'
 import string from 'lodash/string'
 import _ from 'lodash'
-import restrictions from 'config/restrictions'
+import restrictions from '../../config/restrictions'
 
 export default class ChatInput extends Component {
     constructor ( props ) {
@@ -27,7 +27,7 @@ export default class ChatInput extends Component {
                         <span className="glyphicon glyphicon-upload"></span>
                         <input
                             type="file"
-                            className={`btn btn-default ${style.noDisplay}`}
+                            className='btn btn-default noDisplay'
                             onChange={ this.props.handleUpload }/>
                     </label>
                     <button

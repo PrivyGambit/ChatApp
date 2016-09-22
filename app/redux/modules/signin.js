@@ -1,6 +1,6 @@
-import auth, { signInUser } from 'helpers/auth'
+import auth, { signInUser } from '../../helpers/auth'
 import assign from 'lodash.assign'
-import { authUser, logoutAndUnauth } from 'redux/modules/users'
+import { authUser, logoutAndUnauth } from './users'
 
 const UPDATE_SIGNIN = 'UPDATE_SIGNIN'
 const SIGNIN_USER_FAILURE = 'SIGNIN_USER_FAILURE'

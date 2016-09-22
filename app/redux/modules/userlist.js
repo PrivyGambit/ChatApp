@@ -1,5 +1,5 @@
-import { listenToUsersList, banUser, unBanUser } from 'helpers/api'
-import { addListener } from 'redux/modules/listeners'
+import { listenToUsersList, banUser, unBanUser } from '../../helpers/api'
+import { addListener } from './listeners'
 
 const REQUEST_FETCH_USERLIST = 'REQUEST_FETCH_USERLIST'
 const REQUEST_FETCH_USERLIST_ERROR = 'REQUEST_FETCH_USERLIST_ERROR'

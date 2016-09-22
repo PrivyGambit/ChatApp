@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import style from './styles.css'
+// import style from './styles.css'
 
 export default class SearchRoom extends React.Component {
     constructor ( props ) {
@@ -12,7 +12,7 @@ export default class SearchRoom extends React.Component {
 
     render () {
         return (
-            <div className={`input-group ${style.searchInput}`}>
+            <div className="input-group searchInput">
                 <input
                     className='form-control'
                     value={this.props.query}
