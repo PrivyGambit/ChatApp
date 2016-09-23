@@ -107,7 +107,7 @@ const mapDispatchToProps = ( dispatch ) => {
     }
 }
 
-export default connect(
+module.exports = connect(
     mapStateToProps,
     mapDispatchToProps,
 )( ModerateContainer )

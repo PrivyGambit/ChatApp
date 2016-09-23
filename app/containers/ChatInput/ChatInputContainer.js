@@ -7,7 +7,7 @@ import * as inputActionCreators from '../../redux/modules/chatInput'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-export default class ChatInputContainer extends React.Component {
+class ChatInputContainer extends React.Component {
 
     constructor ( props ) {
         super( props )
@@ -108,7 +108,7 @@ ChatInputContainer.PropTypes = {
 }
 
 
-export default connect(
+module.exports = connect(
     mapStateToProps,
     mapDispatchToProps
 )( ChatInputContainer )

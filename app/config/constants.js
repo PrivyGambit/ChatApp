@@ -23,4 +23,4 @@ const firebaseAuth = firebase.auth
 
 const decisionsExpirationLength = 50000
 
-module.exports = { ref, firebaseAuth, decisionsExpirationLength }
+module.exports = { ref, firebaseAuth, decisionsExpirationLength, firebase }

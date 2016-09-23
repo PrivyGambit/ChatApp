@@ -83,11 +83,11 @@ export function fetchRooms () {
         .catch((err) => console.warn('Error fetching rooms', err))
 }
 
-export function fetchRooms () {
-    return ref.child('rooms/')
-        .then((snapshot) => snapshot.val() || {})
-        .catch((err) => console.warn('Error fetching rooms', err))
-}
+// export function fetchRooms () {
+//     return ref.child('rooms/')
+//         .then((snapshot) => snapshot.val() || {})
+//         .catch((err) => console.warn('Error fetching rooms', err))
+// }
 
 export function fetchUser (uid) {
     return ref.child(`users/${uid}`).once('value')
