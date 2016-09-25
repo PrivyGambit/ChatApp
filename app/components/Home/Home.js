@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
-// import { container, title } from './styles.css'
+import withStyles from 'isomorphic-style-loader/lib/withStyles'
+import s from './styles.scss'
 import { RoomInputContainer, RoomContainer } from '../../containers'
 
-export default function Home (props) {
+const Home = (props) => {
     return (
         <div className='container'>
             <p className='title'>{'ChatApp'}</p>
@@ -11,3 +12,6 @@ export default function Home (props) {
         </div>
     )
 }
+
+
+export default withStyles(s)(Home);

@@ -38,7 +38,7 @@ class MainContainer extends Component {
 
                         if ( newInfo.type !== 'anonymous' ) {
                             if ( this.props.location.pathname === '/' ) {
-                                context.router.replace('login')
+                                this.context.router.replace('login')
                             }
                         }
 
@@ -88,9 +88,6 @@ const mapDispatchToProps = ( dispatch ) => {
     return bindActionCreators(userActionCreators, dispatch)
 }
 
-
-// module.exports = MainContainer
-//
 module.exports = connect(
     mapStateToProps,
     mapDispatchToProps

@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
-// import { container, navContainer, link } from './styles.css'
+import withStyles from 'isomorphic-style-loader/lib/withStyles'
+import s from './styles.scss'
 import { AuthenticateContainer } from '../../containers'
 
 class NavLinks extends Component {
@@ -43,34 +44,23 @@ class ActionLinks extends Component {
     }
 }
 
-export default class Navigation extends Component {
-    constructor ( props ) {
-        super( props )
-    }
-
-    render () {
-        return (
-            <div className='container'>
-                <nav className='navContainer'>
-                    <NavLinks isAuthed={this.props.isAuthed}/>
-                    <ActionLinks isAuthed={this.props.isAuthed}/>
-                </nav>
-            </div>
-        )
-    }
+const Navigation = ( props, context ) => {
+    return (
+        <div className="container">
+            <nav className='navContainer'>
+                <NavLinks isAuthed={props.isAuthed}/>
+                <ActionLinks isAuthed={props.isAuthed}/>
+            </nav>
+        </div>
+    )
 }
 
 Navigation.propTypes = ActionLinks.propTypes = NavLinks.propTypes = {
     isAuthed: PropTypes.bool.isRequired,
 }
 
-// export default function Navigation ({isAuthed}) {
-//     return (
-//         <div className={container}>
-//             <nav className={navContainer}>
-//                 <NavLinks isAuthed={isAuthed}/>
-//                 <ActionLinks isAuthed={isAuthed}/>
-//             </nav>
-//         </div>
-//     )
-// }
+export default Navigation
+
+// export default withStyles(Navigation, s)
+
+// export default withStyles(s)(Navigation);

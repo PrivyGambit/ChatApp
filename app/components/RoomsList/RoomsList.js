@@ -6,7 +6,6 @@ import { SearchRoom, DisplayRoomsList } from '../../components'
 
 export default function RoomsList (props) {
     let list = ''
-    console.log(props);
     if ( props.isPressed )
         list = <DisplayRoomsList data={props.filteredData} {...props}/>
     return (

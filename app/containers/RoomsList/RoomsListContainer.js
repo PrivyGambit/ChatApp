@@ -87,7 +87,6 @@ class RoomsListContainer extends Component {
 
     render () {
         // detect error property this.props.error
-        console.log(this.props);
         return (
             <RoomsList
                 isPressed={this.state.isPressed}
