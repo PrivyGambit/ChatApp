@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
-import withStyles from 'isomorphic-style-loader/lib/withStyles'
-import s from './styles.scss'
+// import withStyles from 'isomorphic-style-loader/lib/withStyles'
+// import s from './styles.scss'
 import { AuthenticateContainer } from '../../containers'
 
 class NavLinks extends Component {

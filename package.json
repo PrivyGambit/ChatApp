@@ -4,17 +4,19 @@
   "description": "chatapp",
   "main": "index.js",
   "scripts": {
-     "start": "webpack && babel-node server.js",
-    "dev": "node src/server/index.js",
+    "start": "webpack && babel-node server.js",
     "production": "webpack -p",
     "build": "webpack",
     "watch": "webpack --watch",
-    "test": "mocha --require test/helpers/setup.js"
+    "test": "mocha --require test/helpers/setup.js",
+    "dev": "webpack-dev-server --config webpack-dev.config.js --hot --progress --colors --port 2992 --inline",
+    "prod": "NODE_ENV=production webpack -p --config webpack/webpack-prod.config.js"
   },
   "keywords": [],
   "author": "Sheenan Tenepre",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.14.0",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-polyfill": "^6.13.0",
@@ -31,11 +33,13 @@
     "isomorphic-style-loader": "^1.0.0",
     "jsdom": "^9.5.0",
     "mocha": "^3.0.2",
+    "path": "^0.12.7",
     "postcss-loader": "^0.13.0",
     "react-timeago": "^3.1.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-node-externals": "^1.4.3"
   },
   "dependencies": {
     "babel-register": "^6.14.0",

@@ -34,9 +34,11 @@ function checkAuth (nextState, replace) {
     }
 }
 
-ReactDOM.render(
+const App = ReactDOM.render(
     <Provider store={store}>
         {getRoutes(checkAuth, history)}
     </Provider>,
     document.getElementById('app')
 )
+
+module.exports = App

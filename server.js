@@ -21,7 +21,7 @@ const store = Store.store
 const _ = require('lodash')
 const fs = require('fs')
 const port = 5000
-const baseTemplate = fs.readFileSync('./index.html')
+const baseTemplate = fs.readFileSync('./app/index.html')
 const template = _.template(baseTemplate)
 const ClientApp = require('./app/ClientApp.js')
 const Routes = ClientApp.Routes
@@ -37,15 +37,13 @@ app.use((req, res) => {
         } else if (redirectLocation) {
             res.redirect(302, redirectLocation.pathname + redirectLocation.search)
         } else if (renderProps) {
-            const css = []; // CSS for all rendered React components
-            const context = { insertCss: (styles) => css.push(styles._getCss()) };
             const body = ReactDOMServer.renderToString(
                 React.createElement(Provider,
                     { store },
                     React.createElement(RouterContext, renderProps)
                 )
             )
-            res.status(200).send(template({ body, css }))
+            res.status(200).send(template({ body }))
         } else {
             res.status(404).send('Not found')
         }

@@ -1,6 +1,7 @@
 import path from 'path'
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     template: __dirname + '/app/index.html',
@@ -9,6 +10,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 const PATHS = {
+    styles: path.join(__dirname, '/app/styles/main.js'),
     app: path.join(__dirname, 'app'),
     build: path.join(__dirname, '/public')
 }
@@ -24,13 +26,36 @@ const productionPlugin = new webpack.DefinePlugin({
     }
 })
 
+const styles = {
+  name: 'client',
+  entry: [ PATHS.styles ],
+  output: {
+    path: path.join(__dirname, 'public/'),
+    filename: 'client.js',
+    publicPath: '/public/'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css')
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css-loader')
+      }
+    ]
+  },
+  plugins: [new ExtractTextPlugin('styles.css')],
+  resolve: {
+    root: __dirname
+  }
+}
+
 const base = {
     name: 'js',
     context: __dirname,
-    entry: [
-        // PATHS.app,
-        './app/browser.js'
-    ],
+    entry: [ './app/browser.js' ],
     output: {
         path: PATHS.build,
         filename: 'bundle.js',
@@ -42,24 +67,11 @@ const base = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
-            },
-            {
-                test: /\.scss$/,
-                loaders: [
-                    'isomorphic-style-loader',
-                    'css-loader?modules&localIdentName=[name]_[local]_[hash:base64:3]',
-                    'postcss-loader'
-                ]
             }
         ]
     },
     resolve: {
         root: path.resolve('./app')
-    },
-    stats: {
-        colors: true,
-        reasons: true,
-        chunks: false
     }
 }
 
@@ -85,6 +97,8 @@ const productionConfig = {
     ]
 }
 
-export default Object.assign({}, base,
+const server = Object.assign({}, base,
     isProduction === true ? productionConfig : developmentConfig
 )
+
+module.exports = [ styles, server ]
