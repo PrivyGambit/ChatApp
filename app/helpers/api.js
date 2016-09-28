@@ -71,8 +71,8 @@ export function turnOffListener (roomId) {
     return ref.child(`rooms/${roomId}/chats`).off();
 }
 
-export function listenToChats (roomId, cb, error) {
-    return ref.child(`rooms/${roomId}/chats`).on('value', (snapshot) => {
+export function listenToChats (itemCount, roomId, cb, error) {
+    return ref.child(`rooms/${roomId}/chats`).limitToLast( itemCount ).on('value', ( snapshot ) => {
         return cb(snapshot.val() || {})
     }, error)
 }

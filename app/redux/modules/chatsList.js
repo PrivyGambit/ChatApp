@@ -1,6 +1,9 @@
 import { listenToChats, turnOffListener, deleteChat } from '../../helpers/api'
 import { addListener, removeListener } from './listeners'
 
+const SETTINGS_LOAD_NEW_CHATS_LISTENER = 'SETTINGS_LOAD_NEW_CHATS_LISTENER'
+const SETTINGS_LOAD_NEW_CHATS_ERROR = 'SETTINGS_LOAD_NEW_CHATS_ERROR'
+const SETTINGS_LOAD_NEW_CHATS_SUCCESS = 'SETTINGS_LOAD_NEW_CHATS_SUCCESS'
 const SETTINGS_CHATS_LISTENER = 'SETTINGS_CHATS_LISTENER'
 const SETTINGS_CHATS_LISTENER_ERROR = 'SETTINGS_CHATS_LISTENER_ERROR'
 const SETTINGS_CHATS_LISTENER_SUCCESS = 'SETTINGS_CHATS_LISTENER_SUCCESS'
@@ -39,6 +42,27 @@ function settingChatsListenerSuccess (chats, roomId) {
     }
 }
 
+function settingsLoadNewChatsListener () {
+    return {
+        type: SETTINGS_LOAD_NEW_CHATS_LISTENER
+    }
+}
+
+function settingsLoadNewChatsError (error) {
+    return {
+        type: SETTINGS_LOAD_NEW_CHATS_ERROR,
+        error: 'Error fetching Chats',
+    }
+}
+
+function settingsLoadNewChatsErrorSuccess (chats, roomId) {
+    return {
+        type: SETTINGS_CHATS_LISTENER_SUCCESS,
+        chats,
+        roomId,
+    }
+}
+
 function displaySearchChats (query) {
     return {
         type: SEARCH_CHATS,
@@ -60,15 +84,27 @@ export function removeChatsListener ( roomId ) {
     }
 }
 
-export function setAndHandleChatsListener (roomId) {
+export function setAndHandleChatsListener ( roomId ) {
     return function (dispatch, getState) {
+        let chatCount = 5
         dispatch(addListener('chats'))
         dispatch(settingChatsListener())
 
-        listenToChats(roomId, (chats) => {
-            dispatch(settingChatsListenerSuccess(chats, roomId))
-        }, (error) => dispatch(settingChatListenerError(error)))
+        handleListenToChats( itemCount, roomId, dispatch )
     }
+}
+
+export function handleLoadNewChats ( roomId ) {
+    return function ( dispatch, getState ) {
+        let chatCount = Object.keys( getState().chatsList.chats ).length + 5
+        handleListenToChats( itemCount, roomId, dispatch )
+    }
+}
+
+const handleListenToChats = ( itemCount, roomId, dispatch ) => {
+    return listenToChats(itemCount, roomId,  (chats) => {
+        dispatch(settingChatsListenerSuccess(chats, roomId))
+    }, (error) => dispatch(settingChatListenerError(error)))
 }
 
 
@@ -163,13 +199,37 @@ export default function chatsList (state = initialState, action) {
                 chatList: queryResult,
                 query:action.query
             }
-        case RESET_CHATSLIST:
+        case RESET_CHATSLIST:SETTINGS_LOAD_NEW_CHATS_LISTENER
             return {
                 ...state,
                 isFetching: false,
                 error: '',
                 chats: {},
                 roomId: ''
+            }
+
+        case SETTINGS_LOAD_NEW_CHATS_LISTENER :
+            return {
+                ...state,
+                isFetching: true,
+            }
+
+        case SETTINGS_LOAD_NEW_CHATS_ERROR :
+            return {
+                ...state,
+                isFetching: false,
+                error: action.error,
+            }
+
+        case SETTINGS_LOAD_NEW_CHATS_SUCCESS :
+            return {
+                ...state,
+                isFetching: false,
+                error: '',
+                chats: {
+                    ...action.chats,
+                },
+                roomId: action.roomId
             }
 
         default:

@@ -42,12 +42,12 @@ if (typeof module !== 'undefined' && module.require) {
 
 const rootRoute = (  ) => (
     <Route path='/' component={MainContainer}>
-        <Route path='moderate' component={ModerateContainer} />
-        <Route path='auth' component={AuthenticateContainer} />
-        <Route path='login' component={LoginContainer} />
-        <Route path='rooms/:roomId' component={RoomContainer} />
+        <Route path='moderate' component={ModerateContainer} onEnter={ checkAuth }/>
+        <Route path='auth' component={AuthenticateContainer} onEnter={ checkAuth }/>
+        <Route path='login' component={LoginContainer} onEnter={ checkAuth }/>
+        <Route path='rooms/:roomId' component={RoomContainer} onEnter={ checkAuth }/>
         <Route path='logout' component={LogoutContainer} />
-        <IndexRoute component={HomeContainer} />
+        <IndexRoute component={HomeContainer} onEnter={checkAuth}/>
     </Route>
 )
 //
@@ -110,10 +110,8 @@ const App = React.createClass({
     render () {
         return (
             <Provider store={store}>
-                {/*<Router history={browserHistory} routes={rootRoute} />*/}
                 <Router history={history}>
                     {rootRoute(  )}
-                    {/*<Route path='/' component={MainContainer} />*/}
                 </Router>
             </Provider>
         )
