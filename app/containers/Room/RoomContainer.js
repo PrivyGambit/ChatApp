@@ -5,9 +5,8 @@ import { ChatsList, SearchRoom } from '../../components'
 import { ChatInputContainer, RoomsListContainer } from '../../containers'
 // import style from './styles.css'
 
-// import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from 'redux/modules/chatsList'
-// import * as roomsActionCreators from 'redux/modules/rooms'
 import { setAndHandleRoomsListener } from '../../redux/modules/rooms'
+import { handleLoadNewChats, handleSearchChats } from '../../redux/modules/chatsList'
 
 class RoomContainer extends Component {
 
@@ -19,6 +18,14 @@ class RoomContainer extends Component {
         this.props.actions.setAndHandleRoomsListener()
     }
 
+    doSearchChat = ( roomId, e ) => {
+        this.props.actions.handleSearchChats( roomId, e.target.value )
+    }
+
+    loadNewChats = ( roomId ) => {
+        this.props.actions.handleLoadNewChats( roomId )
+    }
+
     render () {
         return (
             <div className="container">
@@ -27,7 +34,19 @@ class RoomContainer extends Component {
                     error={this.props.error.rooms} />
                 <div className="mainContainer">
                     <div className="chatListContainer">
+                        <div className="input-group searchInput">
+                            <input
+                                className='form-control'
+                                onChange={this.doSearchChat.bind( this, this.props.currentRoom )}
+                                type='text'
+                                placeholder='Enter search keyword' />
+                            {/*<button  onClick={()=> {this.handleSearch(id)}}>tester</button>*/}
+                        </div>
+                        {/*<p className="load-more"
+                            onClick={this.loadNewChats.bind( this, this.props.currentRoom )}>load older messages</p>*/}
                         <ChatsList
+                            currentRoom={this.props.currentRoom}
+                            handleLoadNewChats={ this.props.actions.handleLoadNewChats }
                             chats={this.props.chats}
                             user={this.props.user} />
                     </div>
@@ -60,6 +79,8 @@ const mapDispatchToProps = ( dispatch ) => {
     return {
         actions: {
             setAndHandleRoomsListener: () => dispatch(setAndHandleRoomsListener()),
+            handleLoadNewChats: ( roomId ) => dispatch( handleLoadNewChats( roomId ) ),
+            handleSearchChats: ( roomId, query ) => dispatch( handleSearchChats( roomId, query ) )
         }
     }
 }

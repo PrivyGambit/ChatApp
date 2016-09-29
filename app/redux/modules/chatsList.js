@@ -1,9 +1,8 @@
-import { listenToChats, turnOffListener, deleteChat } from '../../helpers/api'
+import _ from 'lodash'
+import { listenToChats, turnOffListener, deleteChat, searchChats } from '../../helpers/api'
 import { addListener, removeListener } from './listeners'
 
 const SETTINGS_LOAD_NEW_CHATS_LISTENER = 'SETTINGS_LOAD_NEW_CHATS_LISTENER'
-const SETTINGS_LOAD_NEW_CHATS_ERROR = 'SETTINGS_LOAD_NEW_CHATS_ERROR'
-const SETTINGS_LOAD_NEW_CHATS_SUCCESS = 'SETTINGS_LOAD_NEW_CHATS_SUCCESS'
 const SETTINGS_CHATS_LISTENER = 'SETTINGS_CHATS_LISTENER'
 const SETTINGS_CHATS_LISTENER_ERROR = 'SETTINGS_CHATS_LISTENER_ERROR'
 const SETTINGS_CHATS_LISTENER_SUCCESS = 'SETTINGS_CHATS_LISTENER_SUCCESS'
@@ -13,6 +12,7 @@ const CHAT_CALL_QUERY = 'CHAT_CALL_QUERY'
 const DELETE_CHAT_REQUEST = 'DELETE_CHAT_REQUEST'
 const DELETE_CHAT_SUCCESS = 'DELETE_CHAT_SUCCESS'
 const DELETE_CHAT_ERROR = 'DELETE_CHAT_ERROR'
+const SETTINGS_SEARCH_CHATS_LISTENER = 'SETTINGS_SEARCH_CHATS_LISTENER'
 
 function settingChatsListener () {
     return {
@@ -48,21 +48,6 @@ function settingsLoadNewChatsListener () {
     }
 }
 
-function settingsLoadNewChatsError (error) {
-    return {
-        type: SETTINGS_LOAD_NEW_CHATS_ERROR,
-        error: 'Error fetching Chats',
-    }
-}
-
-function settingsLoadNewChatsErrorSuccess (chats, roomId) {
-    return {
-        type: SETTINGS_CHATS_LISTENER_SUCCESS,
-        chats,
-        roomId,
-    }
-}
-
 function displaySearchChats (query) {
     return {
         type: SEARCH_CHATS,
@@ -70,43 +55,11 @@ function displaySearchChats (query) {
     }
 }
 
-export function searchChat ( params ) {
-    return function (dispatch, getState) {
-        dispatch( displaySearchChats(params.query) )
+function settingsSearchChatsListener () {
+    return {
+        type: SETTINGS_SEARCH_CHATS_LISTENER,
     }
 }
-
-export function removeChatsListener ( roomId ) {
-    return function ( dispatch, getState ) {
-        dispatch(removeListener('chats'))
-        turnOffListener(roomId)
-        updateChats()
-    }
-}
-
-export function setAndHandleChatsListener ( roomId ) {
-    return function (dispatch, getState) {
-        let chatCount = 5
-        dispatch(addListener('chats'))
-        dispatch(settingChatsListener())
-
-        handleListenToChats( itemCount, roomId, dispatch )
-    }
-}
-
-export function handleLoadNewChats ( roomId ) {
-    return function ( dispatch, getState ) {
-        let chatCount = Object.keys( getState().chatsList.chats ).length + 5
-        handleListenToChats( itemCount, roomId, dispatch )
-    }
-}
-
-const handleListenToChats = ( itemCount, roomId, dispatch ) => {
-    return listenToChats(itemCount, roomId,  (chats) => {
-        dispatch(settingChatsListenerSuccess(chats, roomId))
-    }, (error) => dispatch(settingChatListenerError(error)))
-}
-
 
 function deleteChatRequest () {
     return {
@@ -127,6 +80,50 @@ function deleteChatSuccess () {
     }
 }
 
+export function removeChatsListener ( roomId ) {
+    return function ( dispatch, getState ) {
+        dispatch(removeListener('chats'))
+        turnOffListener(roomId)
+        updateChats()
+    }
+}
+
+export function setAndHandleChatsListener ( roomId ) {
+    return function (dispatch, getState) {
+        dispatch(addListener('chats'))
+        dispatch(settingChatsListener())
+        handleListenToChats( roomId, dispatch )
+    }
+}
+
+export function handleLoadNewChats ( roomId ) {
+    return function ( dispatch, getState ) {
+        dispatch(addListener('chats'))
+        dispatch(settingsLoadNewChatsListener())
+        let chatCount = Object.keys( getState().chatsList.chats ).length + 5
+        handleListenToChats( chatCount, roomId, dispatch )
+    }
+}
+
+export function handleSearchChats ( roomId, query ) {
+    return function ( dispatch, getState ) {
+        dispatch(settingsSearchChatsListener())
+        let currChats = getState().chatsList.chats
+        let queryResult = []
+
+        Object.keys( currChats ).map(( chat ) => {
+            if ( currChats[chat].content.toLocaleLowerCase().indexOf(query) !=-1 )
+                queryResult.push(currChats[chat])
+        })
+
+        if ( !_.isEmpty( queryResult ) ) {
+            dispatch(settingChatsListenerSuccess(queryResult, roomId))
+        } else {
+            dispatch(settingChatListenerError('Invalid Query.'))
+        }
+    }
+}
+
 export function requestDeleteChat ( roomId, chatId ) {
     return function ( dispatch, getState ) {
 
@@ -136,6 +133,12 @@ export function requestDeleteChat ( roomId, chatId ) {
             dispatch(deleteChatSuccess())
         }, (error) => dispatch(deleteChatRequestError(error)))
     }
+}
+
+const handleListenToChats = ( roomId, dispatch ) => {
+    return listenToChats( roomId,  (chats) => {
+        dispatch(settingChatsListenerSuccess(chats, roomId))
+    }, (error) => dispatch(settingChatListenerError(error)))
 }
 
 const initialState = {
@@ -199,7 +202,7 @@ export default function chatsList (state = initialState, action) {
                 chatList: queryResult,
                 query:action.query
             }
-        case RESET_CHATSLIST:SETTINGS_LOAD_NEW_CHATS_LISTENER
+        case RESET_CHATSLIST:
             return {
                 ...state,
                 isFetching: false,
@@ -212,24 +215,6 @@ export default function chatsList (state = initialState, action) {
             return {
                 ...state,
                 isFetching: true,
-            }
-
-        case SETTINGS_LOAD_NEW_CHATS_ERROR :
-            return {
-                ...state,
-                isFetching: false,
-                error: action.error,
-            }
-
-        case SETTINGS_LOAD_NEW_CHATS_SUCCESS :
-            return {
-                ...state,
-                isFetching: false,
-                error: '',
-                chats: {
-                    ...action.chats,
-                },
-                roomId: action.roomId
             }
 
         default:

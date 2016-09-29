@@ -9,7 +9,7 @@ import _ from 'lodash'
 
 import { setAndHandleChatsListener, updateChats, requestDeleteChat } from '../../redux/modules/chatsList'
 import { setAndHandleRoomsListener } from '../../redux/modules/rooms'
-import { fetchUserList, callBanUser, callUnbanUser } from '../../redux/modules/userlist'
+import { fetchUserList, callBanUser, callUnbanUser, handleSearchUser } from '../../redux/modules/userlist'
 
 export default class ModerateContainer extends React.Component {
 
@@ -36,6 +36,10 @@ export default class ModerateContainer extends React.Component {
             }
         })
         return value;
+    }
+
+    doSearchChat = ( e ) => {
+        this.props.actions.handleSearchUser( e.target.value )
     }
 
     render () {
@@ -65,6 +69,11 @@ export default class ModerateContainer extends React.Component {
                         currentRoom={this.props.currentRoom} user={this.props.user} />
                     }
                 </div>
+                <input
+                    className='form-control'
+                    onChange={this.doSearchChat.bind( this )}
+                    type='text'
+                    placeholder='Enter search keyword' />
                 <UserList
                     userlist={this.props.userlist}
                     banUser={this.props.actions.banUser}
@@ -102,7 +111,8 @@ const mapDispatchToProps = ( dispatch ) => {
             requestDeleteChat: (roomId, chatId) => dispatch(requestDeleteChat( roomId, chatId )),
             fetchUserList: () => dispatch(fetchUserList()),
             banUser: (uid) => dispatch(callBanUser(uid)),
-            unBanUser: (uid) => dispatch(callUnbanUser(uid))
+            unBanUser: (uid) => dispatch(callUnbanUser(uid)),
+            handleSearchUser: ( query ) => dispatch( handleSearchUser( query ) )
         }
     }
 }

@@ -45,7 +45,7 @@ export default class DisplayRoomsList extends React.Component {
                             </div>
                             </Link>*/}
                             <div className='anchor list-group-item' onClick={()=> {this.handleChangeRoom(id)}}>
-                                <button  onClick={()=> {this.handleSearch(id)}}>tester</button>
+                                {/*<button  onClick={()=> {this.handleSearch(id)}}>tester</button>*/}
                                 {room.roomName}
                                 <div className='updateGroup'>
                                     <p className='updateLabel author'>{room.newContent.user ? room.newContent.user : 'Anonymous'}: </p>

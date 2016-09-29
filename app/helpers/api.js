@@ -71,8 +71,8 @@ export function turnOffListener (roomId) {
     return ref.child(`rooms/${roomId}/chats`).off();
 }
 
-export function listenToChats (itemCount, roomId, cb, error) {
-    return ref.child(`rooms/${roomId}/chats`).limitToLast( itemCount ).on('value', ( snapshot ) => {
+export function listenToChats (roomId, cb, error) {
+    return ref.child(`rooms/${roomId}/chats`).on('value', ( snapshot ) => {
         return cb(snapshot.val() || {})
     }, error)
 }
@@ -82,12 +82,6 @@ export function fetchRooms () {
         .then((snapshot) => snapshot.val() || {})
         .catch((err) => console.warn('Error fetching rooms', err))
 }
-
-// export function fetchRooms () {
-//     return ref.child('rooms/')
-//         .then((snapshot) => snapshot.val() || {})
-//         .catch((err) => console.warn('Error fetching rooms', err))
-// }
 
 export function fetchUser (uid) {
     return ref.child(`users/${uid}`).once('value')
