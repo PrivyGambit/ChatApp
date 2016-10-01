@@ -39,79 +39,29 @@ if (typeof module !== 'undefined' && module.require) {
     }
 }
 
+function checkModerate (nextState, replace) {
+    const { type } = store.getState().users
+    if ( type !== 'moderate' ) replace('/login')
+}
+
 
 const rootRoute = (  ) => (
     <Route path='/' component={MainContainer}>
-        <Route path='moderate' component={ModerateContainer} onEnter={ checkAuth }/>
+        <Route path='moderate' component={ModerateContainer} onEnter={ checkModerate }/>
         <Route path='auth' component={AuthenticateContainer} onEnter={ checkAuth }/>
         <Route path='login' component={LoginContainer} onEnter={ checkAuth }/>
         <Route path='rooms/:roomId' component={RoomContainer} onEnter={ checkAuth }/>
         <Route path='logout' component={LogoutContainer} />
-        <IndexRoute component={HomeContainer} onEnter={checkAuth}/>
+        <IndexRoute component={HomeContainer} onEnter={ checkAuth }/>
     </Route>
 )
-//
-// const rootRoute = {
-//     component: MainContainer,
-//     path: '/',
-//     indexRoute: {
-//         getComponent (location, cb) {
-//             require.ensure([], () => {
-//                 cb(null, require('./containers/Main/MainContainer'))
-//             })
-//         }
-//     },
-//     childRoutes: [
-//         {
-//             path: 'moderate',
-//             getComponent (location, cb) {
-//                 require.ensure([], () => {
-//                     cb(null, require('./containers/Moderate/ModerateContainer'))
-//                 })
-//             }
-//         },
-//         {
-//             path: 'auth',
-//             getComponent (location, cb) {
-//                 require.ensure([], () => {
-//                     cb(null, require('./containers/Auth/AuthContainer'))
-//                 })
-//             }
-//         },
-//         {
-//             path: 'login',
-//             getComponent (location, cb) {
-//                 require.ensure([], () => {
-//                     cb(null, require('./containers/Login/LoginContainer'))
-//                 })
-//             }
-//         },
-//         {
-//             path: 'rooms/:roomId',
-//             getComponent (location, cb) {
-//                 require.ensure([], () => {
-//                     cb(null, require('./containers/Room/RoomContainer'))
-//                 })
-//             }
-//         },
-//         {
-//             path: 'logout',
-//             getComponent (location, cb) {
-//                 require.ensure([], () => {
-//                     cb(null, require('./containers/Logout/LogoutContainer'))
-//                 })
-//             }
-//         }
-//     ]
-// }
-
 
 const App = React.createClass({
     render () {
         return (
             <Provider store={store}>
                 <Router history={history}>
-                    {rootRoute(  )}
+                    {rootRoute()}
                 </Router>
             </Provider>
         )

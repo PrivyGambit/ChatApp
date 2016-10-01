@@ -52,7 +52,7 @@ export default class ModerateContainer extends React.Component {
         //     })
         // }
         return (
-            <div className="container">
+            <div className="Moderate">
                 <RoomsListContainer
                     user={this.props.user}
                     error={this.props.error} />

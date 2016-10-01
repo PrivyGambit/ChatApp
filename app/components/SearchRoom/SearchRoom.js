@@ -12,13 +12,15 @@ export default class SearchRoom extends React.Component {
 
     render () {
         return (
-            <div className="input-group searchInput">
-                <input
-                    className='form-control'
-                    value={this.props.query}
-                    onChange={this.doSearch.bind( this )}
-                    type='text'
-                    placeholder='Enter search keyword' />
+            <div className="SearchRoom">
+                <div className="input-group searchInput">
+                    <input
+                        className='form-control'
+                        value={this.props.query}
+                        onChange={this.doSearch.bind( this )}
+                        type='text'
+                        placeholder='Enter search keyword' />
+                </div>
             </div>
         )
     }

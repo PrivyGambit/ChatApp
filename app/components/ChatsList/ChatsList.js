@@ -27,22 +27,24 @@ export default class ChatsList extends React.Component  {
 
     render () {
         return (
-            <div className='chatContent' ref="chatListContent">
-                {this.props.chats.map(( chat ) => {
-                    const id = chat.chatId
-                    const type = chat.type
-                    return (
-                        <div key={id}>
-                            <ChatContent
-                                chat={chat}
-                                quoteChat={this.quoteChat.bind(this)}
-                                getQuote={this.getQuote.bind(this)}
-                                userType={this.props.user.type}
-                                currentRoom={this.props.currentRoom}
-                                requestDeleteChat={this.props.requestDeleteChat} />
-                        </div>
-                    )
-                })}
+            <div className="ChatList">
+                <div className='chatContent' ref="chatListContent">
+                    {this.props.chats.map(( chat ) => {
+                        const id = chat.chatId
+                        const type = chat.type
+                        return (
+                            <div key={id}>
+                                <ChatContent
+                                    chat={chat}
+                                    quoteChat={this.quoteChat.bind(this)}
+                                    getQuote={this.getQuote.bind(this)}
+                                    userType={this.props.user.type}
+                                    currentRoom={this.props.currentRoom}
+                                    requestDeleteChat={this.props.requestDeleteChat} />
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         )
     }

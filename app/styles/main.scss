@@ -1,3 +1,16 @@
-.container {
-    background-color: gray;
-}
+
+//load dependencies
+@import "dependencies/reset";
+
+//load components
+@import  "components/ChatContent";
+@import  "components/ChatInput";
+@import  "components/ChatList";
+@import  "components/DisplayRoomList";
+@import  "components/FacebookButton";
+@import  "components/Navigation";
+@import  "components/RoomsList";
+@import  "components/SearchRoom";
+@import  "components/Signup";
+@import  "components/SignIn";
+@import  "components/Moderate";

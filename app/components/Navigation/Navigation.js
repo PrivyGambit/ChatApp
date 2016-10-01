@@ -46,11 +46,13 @@ class ActionLinks extends Component {
 
 const Navigation = ( props, context ) => {
     return (
-        <div className="container">
-            <nav className='navContainer'>
-                <NavLinks isAuthed={props.isAuthed}/>
-                <ActionLinks isAuthed={props.isAuthed}/>
-            </nav>
+        <div className="Navigation">
+            <div className="container">
+                <nav className='navContainer'>
+                    <NavLinks isAuthed={props.isAuthed}/>
+                    <ActionLinks isAuthed={props.isAuthed}/>
+                </nav>
+            </div>
         </div>
     )
 }

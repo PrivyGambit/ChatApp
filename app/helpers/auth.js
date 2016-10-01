@@ -25,7 +25,7 @@ export function saveUserToDatabase (id, user) {
 }
 
 export function signInUser ( signIn ) {
-    return firebase.auth().signInWithEmailAndPassword(signIn.email, signIn.password).catch(function(error) {
+    return firebaseAuth().signInWithEmailAndPassword(signIn.email, signIn.password).catch(function(error) {
         return error.message
     })
 }

@@ -51,7 +51,6 @@ class MainContainer extends Component {
     }
 
     render () {
-        // console.log(this.props);
         const authed = !this.props.user.type || this.props.user.type == 'anonymous' ? false : true;
         return (
             <div className="container">

@@ -14,28 +14,30 @@ export default function Signup (props, context) {
     }
 
     return (
-        <div className="centeredContainer signup">
-            <form className="signupForm">
-                <div className="form-group">
-                    <label htmlFor="email">E-mail</label>
-                    <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="firstname">Name</label>
-                    <input type="text" onChange={handleChangeValue} className="form-control" id="name" placeholder="Enter Name" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password1">Password</label>
-                    <input type="password" onChange={handleChangeValue} className="form-control" id="password1" placeholder="Enter password" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password2">Confirm Password</label>
-                    <input type="password" onChange={handleChangeValue} className="form-control" id="password2" placeholder="Confirm password" />
-                </div>
-                <button type="submit" className="btn btn-default" onClick={handleSubmit}>Submit</button>
-            </form>
-            {props.error ? <p className="errorMsg">{props.error}</p> : null}
-            {props.success ? <p className="successMsg">{props.success}</p> : null}
+        <div className="Signup">
+            <div className="centeredContainer Signup-wrapper">
+                <form className="signupForm">
+                    <div className="form-group">
+                        <label htmlFor="email">E-mail</label>
+                        <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="firstname">Name</label>
+                        <input type="text" onChange={handleChangeValue} className="form-control" id="name" placeholder="Enter Name" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password1">Password</label>
+                        <input type="password" onChange={handleChangeValue} className="form-control" id="password1" placeholder="Enter password" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password2">Confirm Password</label>
+                        <input type="password" onChange={handleChangeValue} className="form-control" id="password2" placeholder="Confirm password" />
+                    </div>
+                    <button type="submit" className="btn btn-default" onClick={handleSubmit}>Submit</button>
+                </form>
+                {props.error ? <p className="errorMsg">{props.error}</p> : null}
+                {props.success ? <p className="successMsg">{props.success}</p> : null}
+            </div>
         </div>
     )
 }

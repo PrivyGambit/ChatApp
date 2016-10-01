@@ -36,14 +36,10 @@ const styles = {
   },
   module: {
     loaders: [
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', 'css')
-      },
-      {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css-loader')
-      }
+        {
+            test: /\.scss$/,
+            loader: ExtractTextPlugin.extract( "style", "css!sass")
+        }
     ]
   },
   plugins: [new ExtractTextPlugin('styles.css')],

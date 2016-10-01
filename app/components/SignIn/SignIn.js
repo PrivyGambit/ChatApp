@@ -14,19 +14,21 @@ export default function SignIn (props, context) {
     }
 
     return (
-        <div className="centeredContainer Signin">
-            <form className="SigninForm">
-                <div className="form-group">
-                    <label htmlFor="email">E-mail</label>
-                    <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password1">Password</label>
-                    <input type="password" onChange={handleChangeValue} className="form-control" id="password" placeholder="Enter password" />
-                </div>
-                <button type="submit" className="btn btn-default" onClick={handleSubmit}>Submit</button>
-            </form>
+        <div className="SignIn">
+            <div className="centeredContainer SignIn-wrapper">
+                <form className="SigninForm">
+                    <div className="form-group">
+                        <label htmlFor="email">E-mail</label>
+                        <input type="email" onChange={handleChangeValue} className="form-control" id="email" placeholder="Enter Email" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password1">Password</label>
+                        <input type="password" onChange={handleChangeValue} className="form-control" id="password" placeholder="Enter password" />
+                    </div>
+                    <button type="submit" className="btn btn-default" onClick={handleSubmit}>Submit</button>
+                </form>
 
+            </div>
         </div>
     )
 }
