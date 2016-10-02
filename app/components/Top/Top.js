@@ -9,13 +9,13 @@ Results.propTypes = {
   // error: PropTypes.string.isRequired,
 }
 
-export default function Results (props) {
-  if (props.isFetching === true) {
-    return (<Spinner />)
-  }
-  return (
-    <div>
-        <RoomContainer />
-    </div>
-  )
+export default function Top (props) {
+    if (props.isFetching === true) {
+        return (<Spinner />)
+    }
+    return (
+        <div>
+            <RoomContainer />
+        </div>
+    )
 }

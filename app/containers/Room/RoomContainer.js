@@ -1,8 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { ChatsList, SearchRoom } from '../../components'
-import { ChatInputContainer, RoomsListContainer } from '../../containers'
+import { ChatsList, SearchRoom, Spinner } from '../../components'
+import { ChatInputContainer, RoomsListContainer, RoomInputContainer } from '../../containers'
 // import style from './styles.css'
 
 import { setAndHandleRoomsListener } from '../../redux/modules/rooms'
@@ -27,8 +27,12 @@ class RoomContainer extends Component {
     }
 
     render () {
+        // if (this.props.isFetching === true) {
+        //     return (<Spinner />)
+        // }
         return (
             <div className="container">
+                <RoomInputContainer />
                 <RoomsListContainer
                     user={this.props.user}
                     error={this.props.error.rooms} />
@@ -40,7 +44,6 @@ class RoomContainer extends Component {
                                 onChange={this.doSearchChat.bind( this, this.props.currentRoom )}
                                 type='text'
                                 placeholder='Enter search keyword' />
-                            {/*<button  onClick={()=> {this.handleSearch(id)}}>tester</button>*/}
                         </div>
                         {/*<p className="load-more"
                             onClick={this.loadNewChats.bind( this, this.props.currentRoom )}>load older messages</p>*/}

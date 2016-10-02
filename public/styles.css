@@ -415,22 +415,26 @@ html, body {
 .SearchRoom .searchInput {
   width: 100%; }
 
-.Signup-wrapper {
-  padding: 40px;
-  margin-top: 20px;
-  background-color: #ccc;
-  width: 50%;
-  border-radius: 10px; }
-  .Signup-wrapper .signupForm {
-    width: 100%; }
+.Signup {
+  width: 80%; }
+  .Signup-wrapper {
+    width: 100%;
+    padding: 40px;
+    margin-top: 20px;
+    background-color: #ccc;
+    border-radius: 10px; }
+    .Signup-wrapper .signupForm {
+      width: 100%; }
 
-.SignIn-wrapper {
-  padding: 40px;
-  margin-top: 20px;
-  background-color: #ccc;
-  width: 50%;
-  border-radius: 10px; }
-  .SignIn-wrapper .signinForm {
+.SignIn {
+  width: 80%; }
+  .SignIn-wrapper {
+    width: 100%;
+    padding: 40px;
+    margin-top: 20px;
+    background-color: #ccc;
+    border-radius: 10px; }
+  .SignIn .SigninForm {
     width: 100%; }
 
 .Moderate {

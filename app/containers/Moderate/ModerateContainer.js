@@ -51,6 +51,7 @@ export default class ModerateContainer extends React.Component {
         //         return 0
         //     })
         // }
+        console.log(this.props);
         return (
             <div className="Moderate">
                 <RoomsListContainer

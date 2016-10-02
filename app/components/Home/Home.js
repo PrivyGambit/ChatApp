@@ -5,8 +5,8 @@ const Home = (props) => {
     return (
         <div className='container'>
             <p className='title'>{'ChatApp'}</p>
-            {/*<RoomInputContainer />}
-            <RoomContainer />*/}
+            {/*<RoomInputContainer />*/}
+            {/*<RoomContainer />*/}
         </div>
     )
 }
