@@ -8,21 +8,17 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     inject: 'body',
 })
 
+const productionPlugin = new webpack.DefinePlugin({
+    'process.env': {
+        NODE_ENV: JSON.stringify('production')
+    }
+})
 
 const productionConfig = {
-    output: {
-        path: path.join(__dirname, '/public'),
-        filename: 'bundle.js',
-        publicPath: '/public/'
-    },
     devtool: 'cheap-module-source-map',
     plugins: [
         HtmlWebpackPluginConfig,
-        new webpack.DefinePlugin({
-          'process.env': {
-              NODE_ENV: JSON.stringify('production')
-          }
-        })
+        productionPlugin
     ]
 }
 

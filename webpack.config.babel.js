@@ -3,11 +3,9 @@ import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-    template: __dirname + '/app/index.html',
-    filename: 'index.html',
-    inject: 'body',
-})
+//types of webpack config (partial)
+import productionConfig from './webpack-prod.config.babel'
+import developmentConfig from './webpack-dev.config.babel'
 
 const PATHS = {
     styles: path.join(__dirname, '/app/styles/main.js'),
@@ -19,12 +17,6 @@ const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 
 const isProduction = LAUNCH_COMMAND === 'production'
 process.env.BABEL_ENV = LAUNCH_COMMAND
-
-const productionPlugin = new webpack.DefinePlugin({
-    'process.env': {
-        NODE_ENV: JSON.stringify('production')
-    }
-})
 
 const styles = {
   name: 'client',
@@ -71,27 +63,6 @@ const base = {
     }
 }
 
-const developmentConfig = {
-    devtool: 'cheap-module-inline-source-map',
-    devServer: {
-        contentBase: PATHS.build,
-        hot: true,
-        inline: true,
-        progress: true,
-    },
-    plugins: [
-        HtmlWebpackPluginConfig,
-        new webpack.HotModuleReplacementPlugin()
-    ]
-}
-
-const productionConfig = {
-    devtool: 'cheap-module-source-map',
-    plugins: [
-        HtmlWebpackPluginConfig,
-        productionPlugin
-    ]
-}
 
 const server = Object.assign({}, base,
     isProduction === true ? productionConfig : developmentConfig
