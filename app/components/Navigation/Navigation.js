@@ -32,15 +32,36 @@ class ActionLinks extends Component {
     }
 
     render () {
-        return this.props.isAuthed === true
-            ? <ul>
-                <li><Link className='link' to='/logout'>{'Logout'}</Link></li>
-            </ul>
-            : <ul>
-                <li><Link className='link' to='/'>{'Home'}</Link></li>
-                <li><button className='btn default' onClick={this.toggleModal.bind( this )}>Authenticate</button></li>
-                { this.state.showModal ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
-            </ul>
+        let markup
+        if ( this.props.isAuthed === true ) {
+            if ( this.props.isModerate == true ) {
+                markup = (
+                    <ul>
+                        <li><Link className='link' to='/logout'>{'Logout'}</Link></li>
+                    </ul>
+                )
+            } else {
+                markup = (
+                    <ul>
+                        <li><Link className='link' to='/moderate'>{'Moderate'}</Link></li>
+                        <li><Link className='link' to='/logout'>{'Logout'}</Link></li>
+                    </ul>
+                )
+            }
+        } else {
+            markup = (
+                <ul>
+                    <li><Link className='link' to='/'>{'Home'}</Link></li>
+                    <li><button className='btn default' onClick={this.toggleModal.bind( this )}>Authenticate</button></li>
+                    { this.state.showModal ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
+                </ul>
+            )
+        }
+        return (
+            <div>
+                { markup }
+            </div>
+        )
     }
 }
 
@@ -49,7 +70,7 @@ const Navigation = ( props, context ) => {
         <div className="Navigation">
             <div className="container">
                 <nav className='navContainer'>
-                    <NavLinks isAuthed={props.isAuthed}/>
+                    <NavLinks isAuthed={props.isAuthed} isModerate={props.isModerate}/>
                     <ActionLinks isAuthed={props.isAuthed}/>
                 </nav>
             </div>
@@ -62,7 +83,3 @@ Navigation.propTypes = ActionLinks.propTypes = NavLinks.propTypes = {
 }
 
 export default Navigation
-
-// export default withStyles(Navigation, s)
-
-// export default withStyles(s)(Navigation);

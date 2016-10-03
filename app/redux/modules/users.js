@@ -1,6 +1,6 @@
 import auth, { logout, saveUserToDatabase } from '../../helpers/auth'
 import { formatUserInfo } from '../../helpers/utils'
-import { fetchUser, incrementSelectedCount, decrementSelectedCount } from '../../helpers/api'
+import { fetchUser, incrementSelectedCount, decrementSelectedCount, saveToLocalStorage, clearLocalStorage } from '../../helpers/api'
 
 const AUTH_USER = 'AUTH_USER'
 const UNAUTH_USER = 'UNAUTH_USER'
@@ -67,6 +67,7 @@ export function fetchDatabaseUserInfo ( uid ) {
 
 export function fetchAndHandleAuthedUser () {
   logoutAndUnauth()
+  clearLocalStorage()
   return function (dispatch) {
     dispatch(fetchingUser())
     return auth().then(({user, credential}) => {
@@ -85,6 +86,7 @@ export function fetchAndHandleAuthedUser () {
 
     })
     .then(({user}) => saveUserToDatabase(user))
+    .then((user) => saveToLocalStorage(user))
     .then((user) => dispatch(authUser(user.uid)))
     .catch((error) => dispatch(fetchingUserFailure(error)))
   }
@@ -92,6 +94,7 @@ export function fetchAndHandleAuthedUser () {
 
 export function logoutAndUnauth () {
   return function (dispatch) {
+    clearLocalStorage()
     logout()
     dispatch(unauthUser())
   }

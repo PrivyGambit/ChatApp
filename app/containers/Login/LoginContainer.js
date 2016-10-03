@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { RoomContainer } from 'containers'
-import { Spinner } from 'components'
-import * as userActionCreators from 'redux/modules/users'
+import { RoomContainer } from '../../containers'
+import { Spinner } from '../../components'
+import * as userActionCreators from '../../redux/modules/users'
 
 class LoginContainer extends React.Component {
     constructor ( props ) {

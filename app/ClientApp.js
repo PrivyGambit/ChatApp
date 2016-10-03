@@ -40,8 +40,9 @@ if (typeof module !== 'undefined' && module.require) {
 }
 
 function checkModerate (nextState, replace) {
-    const { type } = store.getState().users
-    if ( type !== 'moderate' ) replace('/login')
+    // const { type } = store.getState().users
+    // let type = localStorage.getItem('type')
+    // if ( type !== 'moderate' ) replace('/login')
 }
 
 

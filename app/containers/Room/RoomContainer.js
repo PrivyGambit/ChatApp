@@ -32,7 +32,6 @@ class RoomContainer extends Component {
         // }
         return (
             <div className="container">
-                <RoomInputContainer />
                 <RoomsListContainer
                     user={this.props.user}
                     error={this.props.error.rooms} />

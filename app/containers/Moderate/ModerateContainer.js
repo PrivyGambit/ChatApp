@@ -2,9 +2,8 @@ import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { ChatInput } from '../../components'
 import { connect } from 'react-redux'
-import { ChatsList, Top, UserList } from '../../components'
-import { ChatInputContainer, RoomsListContainer } from '../../containers'
-// import style from './styles.css'
+import { ChatsList, Top, UserList, Spinner } from '../../components'
+import { ChatInputContainer, RoomsListContainer, RoomInputContainer } from '../../containers'
 import _ from 'lodash'
 
 import { setAndHandleChatsListener, updateChats, requestDeleteChat } from '../../redux/modules/chatsList'
@@ -52,8 +51,14 @@ export default class ModerateContainer extends React.Component {
         //     })
         // }
         console.log(this.props);
+        if ( this.props.isFetching.userList == true ) {
+            return (
+                    <Spinner />
+            )
+        }
         return (
             <div className="Moderate">
+                <RoomInputContainer />
                 <RoomsListContainer
                     user={this.props.user}
                     error={this.props.error} />
@@ -90,8 +95,14 @@ const mapStateToProps = ({users, chatsList, chatInput, userlist}) => {
 
     return {
         user: users[users.authedId] ? users[users.authedId].info : {},
-        isFetching: chatsList.isFetching,
-        error: chatsList.error,
+        isFetching: {
+            chatList: chatsList.isFetching,
+            userList: userlist.isFetching
+        },
+        error: {
+            chatsList: chatsList.error,
+            userlist: userlist.error
+        },
         chats: Object.keys(rms).map((id) => rms[id]),
         // chats: rms.
         chatInput: {

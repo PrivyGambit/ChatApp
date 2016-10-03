@@ -16,6 +16,7 @@ export default class UserList extends React.Component {
     }
 
     render () {
+        // console.log(this.props);
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">User List</div>

@@ -129,9 +129,9 @@ export default function userlist (state = initialState, action) {
             }
         case REQUEST_FETCH_USERLIST:
             return {
+                ...state,
                 isFetching: true,
-                error: '',
-                ...state
+                error: ''
             }
         case REQUEST_FETCH_USERLIST_ERROR:
             return {
