@@ -18,9 +18,9 @@ firebase.initializeApp(config)
 
 const ref = firebase.database().ref()
 const firebaseAuth = firebase.auth
-// const storageRef = firebase.storage().ref()
+const storageRef = firebase.storage().ref()
 
 
 const decisionsExpirationLength = 50000
 
-module.exports = { ref, firebaseAuth, decisionsExpirationLength, firebase }
+module.exports = { ref, firebaseAuth, decisionsExpirationLength, firebase, storageRef }

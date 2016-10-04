@@ -1,4 +1,4 @@
-import { ref, storageRef, firebaseAuth } from '../config/constants'
+import { ref, storageRef, firebaseAuth, firebase } from '../config/constants'
 import { signInAnonymous, checkIfSigned } from './auth'
 
 export function saveRoom (room) {
@@ -93,7 +93,6 @@ export function uploadFile ( file, chat, roomId, quote ) {
     let metadata = {
         contentType: 'image/jpeg'
     };
-
     // Upload file and metadata to the object 'images/mountains.jpg'
     let uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
 

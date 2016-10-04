@@ -204,12 +204,14 @@ html, body {
 .ChatContent .quoteUser {
   font-weight: bold; }
 
-.ChatInput .noDisplay {
-  display: none !important; }
-
-.ChatInput .image {
-  width: 150px;
-  height: 150px; }
+.ChatInput {
+  position: relative;
+  z-index: 0; }
+  .ChatInput .noDisplay {
+    display: none !important; }
+  .ChatInput .image {
+    width: 150px;
+    height: 150px; }
 
 .ChatList .mainContainer {
   position: relative; }

@@ -13,7 +13,7 @@ export default class ChatsList extends React.Component  {
     }
 
     quoteChat = ( chat ) => {
-        this.props.chatInputActions.updateQuote(this.props.chatInput.chatText, chat.chatId)
+        this.props.updateQuote(this.props.chatInput.chatText, chat.chatId)
     }
 
     getQuote = ( id ) => {

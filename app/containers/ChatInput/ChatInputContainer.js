@@ -46,7 +46,7 @@ class ChatInputContainer extends React.Component {
 
     handleUpload = ( e ) => {
         let image = e.target.files[0];
-        if ( !image.type.match('image.*') ) {
+        if ( _.isEmpty(image.type.match("image.*")) ) {
             let error = {
                 message: 'File type not allowed.'
             }
@@ -55,9 +55,10 @@ class ChatInputContainer extends React.Component {
             let chat = {
                 type: 'image',
                 user: this.props.user.name,
-                avatar: this.props.user.avatar
+                avatar: this.props.user.avatar ? this.props.user.avatar : ''
             }
-            this.props.initiateUploadFile(image, formatFile(chat), this.props.currentRoom, this.props.chatInput.quote)
+            let quote = this.props.chatInput.quote ? this.props.chatInput.quote : '';
+            this.props.initiateUploadFile(image, formatFile(chat), this.props.currentRoom, quote)
         }
     }
 
