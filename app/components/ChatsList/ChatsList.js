@@ -27,8 +27,13 @@ export default class ChatsList extends React.Component  {
     }
 
     render () {
+
         let show = _.isEmpty( this.props.chats ) ? 'no-show' : 'show'
         let message = _.isEmpty( this.props.chats ) ? <p>No contents to be displayed.</p> : ''
+        let showQuote = ''
+        if ( !_.isEmpty(this.props.chatInput.quote) ) {
+            showQuote = <p>Quoting ID number { this.props.chatInput.quote }</p>
+        }
         return (
             <div className="ChatList">
                 { message }
@@ -49,6 +54,7 @@ export default class ChatsList extends React.Component  {
                         )
                     })}
                 </div>
+                { showQuote }
             </div>
         )
     }
