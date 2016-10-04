@@ -1,0 +1,111 @@
+.ChatList {
+    .mainContainer {
+        position: relative;
+    }
+
+    .chatContent {
+        background: #ececec;
+        padding: 20px;
+        max-height: 600px;
+        overflow-y: scroll;
+    }
+
+    .image {
+        width: 100%;
+        max-height: 100%;
+        display: block;
+    }
+
+    .chatItem {
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 1px dotted #ccc;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .content {
+        position: relative;
+        flex: 1;
+        padding: 10px 0 40px 20px;
+    }
+
+    .userInfo {
+
+    }
+
+    .userImage {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        margin: 0 auto;
+        background-color: #ccc;
+    }
+
+    .userName {
+        font-size: 11px;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .userImageContent {
+        width: 100%;
+        max-height: 100%;
+    }
+
+    .chatImageWrapper {
+        display: block;
+        width: 150px;
+        max-height: 150px;
+    }
+
+    .quote {
+        position: absolute;
+        bottom: 0;
+        left: 20px;
+    }
+
+    .quote:hover {
+        cursor: pointer;
+    }
+
+    .quoteText {
+        font-size: 10px;
+        color: #337ab7;
+        font-style: italic;
+    }
+
+    .noDisplay {
+        display: none !important;
+    }
+
+    .image {
+        width: 150px;
+        height: 150px;
+    }
+
+    .quoteWrapper {
+        padding: 10px 5px;
+        background-color: #ccc;
+    }
+
+    .quoteContent {
+        background-color: #b7b7b7;
+        padding: 10px 10px;
+        font-size: 10px;
+        font-style: italic;
+        border-radius: 5px;
+    }
+
+    .mainContent {
+        flex: 1;
+        padding: 10px 0 10px 20px;
+        position: relative;
+    }
+
+    .quoteUser {
+        font-weight: bold;
+    }
+}

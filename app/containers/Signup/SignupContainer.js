@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Signup } from 'components'
+import { Signup } from '../../components'
 
-import * as inputActionCreators from 'redux/modules/signup'
+import * as inputActionCreators from '../../redux/modules/signup'
 
 class SignupContainer extends Component {
     constructor ( props, context ) {

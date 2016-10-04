@@ -1,6 +1,8 @@
-import { listenToUsersList, banUser, unBanUser } from 'helpers/api'
-import { addListener } from 'redux/modules/listeners'
+import { listenToUsersList, banUser, unBanUser } from '../../helpers/api'
+import { addListener } from './listeners'
+import _ from 'lodash'
 
+const REQUEST_SEARCH_USERLIST = 'REQUEST_SEARCH_USERLIST'
 const REQUEST_FETCH_USERLIST = 'REQUEST_FETCH_USERLIST'
 const REQUEST_FETCH_USERLIST_ERROR = 'REQUEST_FETCH_USERLIST_ERROR'
 const REQUEST_FETCH_USERLIST_SUCCESS = 'REQUEST_FETCH_USERLIST_SUCCESS'
@@ -48,6 +50,12 @@ function requestBanUserError (error) {
     }
 }
 
+function requestSearchUserlist () {
+    return {
+        type: REQUEST_SEARCH_USERLIST
+    }
+}
+
 export function fetchUserList () {
     return function (dispatch, getState) {
         if (getState().listeners.users === true) {
@@ -62,7 +70,6 @@ export function fetchUserList () {
         }, (error) => dispatch(requestUserListError(error)))
     }
 }
-
 
 export function callBanUser (userId) {
     return function (dispatch) {
@@ -82,6 +89,30 @@ export function callUnbanUser (userId) {
     }
 }
 
+export function handleSearchUser ( query ) {
+    return function ( dispatch, getState ) {
+        dispatch(requestSearchUserlist())
+        let currUsers = getState().userlist.userlist
+        let queryResult = []
+        console.log(currUsers);
+        Object.keys( currUsers ).map(( user ) => {
+            if (
+                // currUsers[user].info.email.toLocaleLowerCase().indexOf(query) !=-1 ||
+                currUsers[user].info.name.toLocaleLowerCase().indexOf(query) !=-1 ||
+                currUsers[user].info.uid.toLocaleLowerCase().indexOf(query) !=-1
+            )
+                queryResult.push(currUsers[user])
+        })
+
+        if ( !_.isEmpty( queryResult ) ) {
+            dispatch(requestUserListSuccess(queryResult))
+        } else {
+            dispatch(requestUserListError('Invalid query.'))
+        }
+
+    }
+}
+
 const initialState = {
     isFetching: false,
     error: '',
@@ -90,11 +121,17 @@ const initialState = {
 
 export default function userlist (state = initialState, action) {
     switch ( action.type ) {
-        case REQUEST_FETCH_USERLIST:
+        case REQUEST_SEARCH_USERLIST:
             return {
                 isFetching: true,
                 error: '',
                 ...state
+            }
+        case REQUEST_FETCH_USERLIST:
+            return {
+                ...state,
+                isFetching: true,
+                error: ''
             }
         case REQUEST_FETCH_USERLIST_ERROR:
             return {

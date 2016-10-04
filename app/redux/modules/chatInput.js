@@ -1,4 +1,4 @@
-import { saveChat, uploadFile } from 'helpers/api'
+import { saveChat, uploadFile } from '../../helpers/api'
 
 const UPDATE_CHAT_TEXT = 'UPDATE_CHAT_TEXT';
 const UPDATE_QUOTE = 'UPDATE_QUOTE';

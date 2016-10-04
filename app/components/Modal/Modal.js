@@ -1,9 +1,5 @@
 import React, { PropTypes } from 'react'
 import { default as ReactModal } from 'react-modal'
-import {
-    newDecisionTop, pointer, newDecisionInputContainer,
-    newDecisionInput, submitDecisionBtn, darkBtn, or, titleInput,
-    titleContainer } from './styles.css'
 import { formatDecision } from 'helpers/utils'
 
 const modalStyles = {
@@ -14,6 +10,7 @@ const modalStyles = {
         borderRadius: 5,
         background: '#EBEBEB',
         padding: 0,
+        background-color: rgba(0,0,0,0.8)
     }
 }
 
@@ -37,43 +34,43 @@ export default function Modal ( props ) {
     }
 
     return (
-        <span className={darkBtn} onClick={props.openModal}>
+        <span className='darkBtn' onClick={props.openModal}>
             {'New Decision'}
             <ReactModal style={modalStyles} isOpen={props.isOpen} onRequestClose={props.closeModal}>
-                <div className={newDecisionTop}>
+                <div className='newDecisionTop'>
                     <span>{'Would you rather...'}</span>
-                    <span onClick={props.closeModal} className={pointer}>{'X'}</span>
+                    <span onClick={props.closeModal} className='pointer'>{'X'}</span>
                 </div>
-                <div className={titleContainer}>
+                <div className='titleContainer'>
                     <input
                         onChange={(e) => props.updateDecisionText('titleText', e.target.value)}
                         value={props.titleText}
                         maxLength={80}
                         type='text'
-                        className={titleInput}
+                        className='titleInput'
                         placeholder="Title" />
                 </div>
-                <div className={newDecisionInputContainer}>
+                <div className='newDecisionInputContainer'>
                     <textarea
                         onChange={(e) => props.updateDecisionText('firstDecisionText', e.target.value)}
                         value={props.firstDecisionText}
                         maxLength={140}
                         type='text'
-                        className={newDecisionInput}
+                        className='newDecisionInput'
                         placeholder="First Decision" />
                 </div>
-                <div className={or}>OR</div>
-                <div className={newDecisionInputContainer}>
+                <div className='or'>OR</div>
+                <div className='newDecisionInputContainer'>
                     <textarea
                         onChange={(e) => props.updateDecisionText('secondDecisionText', e.target.value)}
                         value={props.secondDecisionText}
                         maxLength={140}
                         type='text'
-                        className={newDecisionInput}
+                        className='newDecisionInput'
                         placeholder="Second Decision" />
                 </div>
                 <button
-                    className={submitDecisionBtn}
+                    className='submitDecisionBtn'
                     disabled={props.isSubmitDisabled}
                     onClick={submitDecision}>
                     {'Submit'}

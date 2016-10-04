@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import getRoutes from 'config/routes'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
@@ -19,7 +18,7 @@ const store = createStore(
     )
 )
 
-const history = syncHistoryWithStore(hashHistory, store)
+const history = syncHistoryWithStore(browserHistory, store)
 
 function checkAuth (nextState, replace) {
     const { isAuthed, isFetching } = store.getState().users
@@ -34,9 +33,29 @@ function checkAuth (nextState, replace) {
     }
 }
 
-ReactDOM.render(
+function checkModerate (nextState, replace) {
+    const { type } = store.getState().users
+    if ( type !== 'moderate' ) replace('/login')
+}
+
+const rootRoute = (  ) => (
+    <Route path='/' component={MainContainer}>
+        <Route path='moderate' component={ModerateContainer} onEnter={ checkModerate }/>
+        <Route path='auth' component={AuthenticateContainer} onEnter={ checkAuth }/>
+        <Route path='login' component={LoginContainer} onEnter={ checkAuth }/>
+        <Route path='rooms/:roomId' component={RoomContainer} onEnter={ checkAuth }/>
+        <Route path='logout' component={LogoutContainer} />
+        <IndexRoute component={HomeContainer} onEnter={ checkAuth }/>
+    </Route>
+)
+
+const App = ReactDOM.render(
     <Provider store={store}>
-        {getRoutes(checkAuth, history)}
+        <Router history={history}>
+            {rootRoute()}
+        </Router>
     </Provider>,
     document.getElementById('app')
 )
+
+module.exports = App

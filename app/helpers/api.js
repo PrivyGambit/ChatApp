@@ -1,4 +1,4 @@
-import { ref, storageRef, firebaseAuth } from 'config/constants'
+import { ref, storageRef, firebaseAuth, firebase } from '../config/constants'
 import { signInAnonymous, checkIfSigned } from './auth'
 
 export function saveRoom (room) {
@@ -46,16 +46,19 @@ export function deleteChat ( roomId, chatId ) {
 }
 
 export function listenToRooms (cb, error) {
-    //check if user is logged or not
-    firebaseAuth().onAuthStateChanged((user) => {
-        if ( !user ) {
-            signInAnonymous() //sign in as anonymous
-        }
-    })
-
     return ref.child('rooms').on('value', (snapshot) => {
         return cb(snapshot.val() || {})
     }, error)
+}
+
+export function saveToLocalStorage ( info ) {
+    localStorage.setItem('uid', info.info.uid)
+    localStorage.setItem('type', info.info.type)
+}
+
+export function clearLocalStorage () {
+    localStorage.removeItem('uid')
+    localStorage.removeItem('type')
 }
 
 export function turnOffListener (roomId) {
@@ -63,15 +66,9 @@ export function turnOffListener (roomId) {
 }
 
 export function listenToChats (roomId, cb, error) {
-    return ref.child(`rooms/${roomId}/chats`).on('value', (snapshot) => {
+    return ref.child(`rooms/${roomId}/chats`).on('value', ( snapshot ) => {
         return cb(snapshot.val() || {})
     }, error)
-}
-
-export function fetchRooms () {
-    return ref.child('rooms/')
-        .then((snapshot) => snapshot.val() || {})
-        .catch((err) => console.warn('Error fetching rooms', err))
 }
 
 export function fetchRooms () {
@@ -96,7 +93,6 @@ export function uploadFile ( file, chat, roomId, quote ) {
     let metadata = {
         contentType: 'image/jpeg'
     };
-
     // Upload file and metadata to the object 'images/mountains.jpg'
     let uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
 

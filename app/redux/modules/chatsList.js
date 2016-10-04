@@ -1,6 +1,8 @@
-import { listenToChats, turnOffListener, deleteChat } from 'helpers/api'
-import { addListener, removeListener } from 'redux/modules/listeners'
+import _ from 'lodash'
+import { listenToChats, turnOffListener, deleteChat, searchChats } from '../../helpers/api'
+import { addListener, removeListener } from './listeners'
 
+const SETTINGS_LOAD_NEW_CHATS_LISTENER = 'SETTINGS_LOAD_NEW_CHATS_LISTENER'
 const SETTINGS_CHATS_LISTENER = 'SETTINGS_CHATS_LISTENER'
 const SETTINGS_CHATS_LISTENER_ERROR = 'SETTINGS_CHATS_LISTENER_ERROR'
 const SETTINGS_CHATS_LISTENER_SUCCESS = 'SETTINGS_CHATS_LISTENER_SUCCESS'
@@ -10,6 +12,7 @@ const CHAT_CALL_QUERY = 'CHAT_CALL_QUERY'
 const DELETE_CHAT_REQUEST = 'DELETE_CHAT_REQUEST'
 const DELETE_CHAT_SUCCESS = 'DELETE_CHAT_SUCCESS'
 const DELETE_CHAT_ERROR = 'DELETE_CHAT_ERROR'
+const SETTINGS_SEARCH_CHATS_LISTENER = 'SETTINGS_SEARCH_CHATS_LISTENER'
 
 function settingChatsListener () {
     return {
@@ -39,6 +42,12 @@ function settingChatsListenerSuccess (chats, roomId) {
     }
 }
 
+function settingsLoadNewChatsListener () {
+    return {
+        type: SETTINGS_LOAD_NEW_CHATS_LISTENER
+    }
+}
+
 function displaySearchChats (query) {
     return {
         type: SEARCH_CHATS,
@@ -46,31 +55,11 @@ function displaySearchChats (query) {
     }
 }
 
-export function searchChat ( params ) {
-    return function (dispatch, getState) {
-        dispatch( displaySearchChats(params.query) )
+function settingsSearchChatsListener () {
+    return {
+        type: SETTINGS_SEARCH_CHATS_LISTENER,
     }
 }
-
-export function removeChatsListener ( roomId ) {
-    return function ( dispatch, getState ) {
-        dispatch(removeListener('chats'))
-        turnOffListener(roomId)
-        updateChats()
-    }
-}
-
-export function setAndHandleChatsListener (roomId) {
-    return function (dispatch, getState) {
-        dispatch(addListener('chats'))
-        dispatch(settingChatsListener())
-
-        listenToChats(roomId, (chats) => {
-            dispatch(settingChatsListenerSuccess(chats, roomId))
-        }, (error) => dispatch(settingChatListenerError(error)))
-    }
-}
-
 
 function deleteChatRequest () {
     return {
@@ -91,6 +80,50 @@ function deleteChatSuccess () {
     }
 }
 
+export function removeChatsListener ( roomId ) {
+    return function ( dispatch, getState ) {
+        dispatch(removeListener('chats'))
+        turnOffListener(roomId)
+        updateChats()
+    }
+}
+
+export function setAndHandleChatsListener ( roomId ) {
+    return function (dispatch, getState) {
+        dispatch(addListener('chats'))
+        dispatch(settingChatsListener())
+        handleListenToChats( roomId, dispatch )
+    }
+}
+
+export function handleLoadNewChats ( roomId ) {
+    return function ( dispatch, getState ) {
+        dispatch(addListener('chats'))
+        dispatch(settingsLoadNewChatsListener())
+        let chatCount = Object.keys( getState().chatsList.chats ).length + 5
+        handleListenToChats( chatCount, roomId, dispatch )
+    }
+}
+
+export function handleSearchChats ( roomId, query ) {
+    return function ( dispatch, getState ) {
+        dispatch(settingsSearchChatsListener())
+        let currChats = getState().chatsList.chats
+        let queryResult = []
+
+        Object.keys( currChats ).map(( chat ) => {
+            if ( currChats[chat].content.toLocaleLowerCase().indexOf(query) !=-1 )
+                queryResult.push(currChats[chat])
+        })
+
+        if ( !_.isEmpty( queryResult ) ) {
+            dispatch(settingChatsListenerSuccess(queryResult, roomId))
+        } else {
+            dispatch(settingChatListenerError('Invalid Query.'))
+        }
+    }
+}
+
 export function requestDeleteChat ( roomId, chatId ) {
     return function ( dispatch, getState ) {
 
@@ -100,6 +133,12 @@ export function requestDeleteChat ( roomId, chatId ) {
             dispatch(deleteChatSuccess())
         }, (error) => dispatch(deleteChatRequestError(error)))
     }
+}
+
+const handleListenToChats = ( roomId, dispatch ) => {
+    return listenToChats( roomId,  (chats) => {
+        dispatch(settingChatsListenerSuccess(chats, roomId))
+    }, (error) => dispatch(settingChatListenerError(error)))
 }
 
 const initialState = {
@@ -170,6 +209,12 @@ export default function chatsList (state = initialState, action) {
                 error: '',
                 chats: {},
                 roomId: ''
+            }
+
+        case SETTINGS_LOAD_NEW_CHATS_LISTENER :
+            return {
+                ...state,
+                isFetching: true,
             }
 
         default:

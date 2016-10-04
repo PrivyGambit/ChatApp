@@ -1,0 +1,14 @@
+.SignIn {
+    width: 80%;
+    &-wrapper {
+        width: 100%;
+        padding: 40px;
+        margin-top: 20px;
+        background-color: #ccc;
+        border-radius: 10px;
+
+    }
+    .SigninForm {
+        width: 100%;
+    }
+}

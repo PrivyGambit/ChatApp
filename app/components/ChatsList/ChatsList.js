@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
-import style, { container, title } from './styles.css'
-import { ChatContent } from 'components'
+// import style, { container, title } from './styles.css'
+import { ChatContent } from '../../components'
+import _ from 'lodash'
 
 export default class ChatsList extends React.Component  {
     constructor ( props ) {
@@ -12,7 +13,7 @@ export default class ChatsList extends React.Component  {
     }
 
     quoteChat = ( chat ) => {
-        this.props.chatInputActions.updateQuote(this.props.chatInput.chatText, chat.chatId)
+        this.props.updateQuote(this.props.chatInput.chatText, chat.chatId)
     }
 
     getQuote = ( id ) => {
@@ -26,23 +27,34 @@ export default class ChatsList extends React.Component  {
     }
 
     render () {
+
+        let show = _.isEmpty( this.props.chats ) ? 'no-show' : 'show'
+        let message = _.isEmpty( this.props.chats ) ? <p>No contents to be displayed.</p> : ''
+        let showQuote = ''
+        if ( !_.isEmpty(this.props.chatInput.quote) ) {
+            showQuote = <p>Quoting ID number { this.props.chatInput.quote }</p>
+        }
         return (
-            <div className={style.chatContent} ref="chatListContent">
-                {this.props.chats.map(( chat ) => {
-                    const id = chat.chatId
-                    const type = chat.type
-                    return (
-                        <div key={id}>
-                            <ChatContent
-                                chat={chat}
-                                quoteChat={this.quoteChat.bind(this)}
-                                getQuote={this.getQuote.bind(this)}
-                                userType={this.props.user.type}
-                                currentRoom={this.props.currentRoom}
-                                requestDeleteChat={this.props.requestDeleteChat} />
-                        </div>
-                    )
-                })}
+            <div className="ChatList">
+                { message }
+                <div className={`chatContent ${ show }`} ref="chatListContent">
+                    {this.props.chats.map(( chat ) => {
+                        const id = chat.chatId
+                        const type = chat.type
+                        return (
+                            <div key={id}>
+                                <ChatContent
+                                    chat={chat}
+                                    quoteChat={this.quoteChat.bind(this)}
+                                    getQuote={this.getQuote.bind(this)}
+                                    userType={this.props.user.type}
+                                    currentRoom={this.props.currentRoom}
+                                    requestDeleteChat={this.props.requestDeleteChat} />
+                            </div>
+                        )
+                    })}
+                </div>
+                { showQuote }
             </div>
         )
     }

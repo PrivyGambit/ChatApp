@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
-import { container, navContainer, link } from './styles.css'
-import { AuthenticateContainer } from 'containers'
+// import withStyles from 'isomorphic-style-loader/lib/withStyles'
+// import s from './styles.scss'
+import { AuthenticateContainer } from '../../containers'
 
 class NavLinks extends Component {
 
@@ -12,7 +13,7 @@ class NavLinks extends Component {
     render () {
         return this.props.isAuthed === true
             ? <ul>
-                    <li><Link className={link} to='/'>{'Home'}</Link></li>
+                    <li><Link className='link' to='/'>{'Home'}</Link></li>
                 </ul>
             : null
     }
@@ -31,46 +32,54 @@ class ActionLinks extends Component {
     }
 
     render () {
-        return this.props.isAuthed === true
-            ? <ul>
-                <li><Link className={link} to='/logout'>{'Logout'}</Link></li>
-            </ul>
-            : <ul>
-                <li><Link className={link} to='/'>{'Home'}</Link></li>
-                <li><button className='btn default' onClick={this.toggleModal.bind( this )}>Authenticate</button></li>
-                { this.state.showModal ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
-            </ul>
-    }
-}
-
-export default class Navigation extends Component {
-    constructor ( props ) {
-        super( props )
-    }
-
-    render () {
+        let markup
+        if ( this.props.isAuthed === true ) {
+            if ( this.props.isModerate == true ) {
+                markup = (
+                    <ul>
+                        <li><Link className='link' to='/logout'>{'Logout'}</Link></li>
+                    </ul>
+                )
+            } else {
+                markup = (
+                    <ul>
+                        <li><Link className='link' to='/moderate'>{'Moderate'}</Link></li>
+                        <li><Link className='link' to='/logout'>{'Logout'}</Link></li>
+                    </ul>
+                )
+            }
+        } else {
+            markup = (
+                <ul>
+                    <li><Link className='link' to='/'>{'Home'}</Link></li>
+                    <li><button className='btn default' onClick={this.toggleModal.bind( this )}>Register / Login</button></li>
+                    { this.state.showModal ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
+                </ul>
+            )
+        }
         return (
-            <div className={container}>
-                <nav className={navContainer}>
-                    <NavLinks isAuthed={this.props.isAuthed}/>
-                    <ActionLinks isAuthed={this.props.isAuthed}/>
-                </nav>
+            <div>
+                { markup }
             </div>
         )
     }
+}
+
+const Navigation = ( props, context ) => {
+    return (
+        <div className="Navigation">
+            <div className="container">
+                <nav className='navContainer'>
+                    <NavLinks isAuthed={props.isAuthed} isModerate={props.isModerate}/>
+                    <ActionLinks isAuthed={props.isAuthed}/>
+                </nav>
+            </div>
+        </div>
+    )
 }
 
 Navigation.propTypes = ActionLinks.propTypes = NavLinks.propTypes = {
     isAuthed: PropTypes.bool.isRequired,
 }
 
-// export default function Navigation ({isAuthed}) {
-//     return (
-//         <div className={container}>
-//             <nav className={navContainer}>
-//                 <NavLinks isAuthed={isAuthed}/>
-//                 <ActionLinks isAuthed={isAuthed}/>
-//             </nav>
-//         </div>
-//     )
-// }
+export default Navigation

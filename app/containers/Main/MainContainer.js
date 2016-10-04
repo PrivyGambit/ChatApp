@@ -1,12 +1,13 @@
 import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Navigation } from 'components'
+import { Navigation } from '../../components'
 import { connect } from 'react-redux'
-import { container, innerContainer } from './styles.css'
-import * as userActionCreators from 'redux/modules/users'
-import { firebaseAuth } from 'config/constants'
-import { formatUserInfo } from 'helpers/utils'
-import { fetchUser } from 'helpers/api'
+// import { container, innerContainer } from './styles.css'
+import * as userActionCreators from '../../redux/modules/users'
+import { firebaseAuth } from '../../config/constants'
+import { formatUserInfo } from '../../helpers/utils'
+import { fetchUser, saveToLocalStorage, clearLocalStorage } from '../../helpers/api'
+import _ from 'lodash'
 
 class MainContainer extends Component {
 
@@ -36,9 +37,12 @@ class MainContainer extends Component {
                             Date.now()
                         )
 
+                        // clearLocalStorage()
+                        saveToLocalStorage( dataInfo ) //save to local storage
+
                         if ( newInfo.type !== 'anonymous' ) {
                             if ( this.props.location.pathname === '/' ) {
-                                context.router.replace('login')
+                                this.context.router.replace('login')
                             }
                         }
 
@@ -46,16 +50,37 @@ class MainContainer extends Component {
 
             } else {
                 this.props.removeFetchingUser()
+                let email = 'anonymous@anonymous.com'
+                let password = 'anonymous'
+                return firebaseAuth()
+                    .signInWithEmailAndPassword(email, password)
+                    .catch(function(error) {
+                        return error.message
+                })
+                .then(() => clearLocalStorage())
+                .then((user) => saveToLocalStorage(user))
             }
         })
     }
 
     render () {
-        const authed = !this.props.user.type || this.props.user.type == 'anonymous' ? false : true;
+        let type
+        let isModerate
+        type = !this.props.user.type || this.props.user.type == 'anonymous' ? false : true
+        isModerate = this.props.user.type == 'moderate' ? true : false
+        // console.log(localStorage);
+        // if ( window.localStorage ) {
+            // if ( localStorage.getItem('type') ) {
+            //     type = localStorage.getItem('type') == 'anonymous' ? false : true;
+            // }
+        // }
+
         return (
-            <div className={container}>
-                <Navigation isAuthed={authed} />
-                <div className={innerContainer}>
+            <div className="container">
+                <Navigation
+                    isAuthed={type}
+                    isModerate={isModerate} />
+                <div className="innerContainer">
                     {this.props.children}
                 </div>
             </div>
@@ -71,7 +96,7 @@ MainContainer.propTypes = {
 }
 
 MainContainer.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object
 }
 
 const mapStateToProps = ({ users }) => {
@@ -87,7 +112,7 @@ const mapDispatchToProps = ( dispatch ) => {
     return bindActionCreators(userActionCreators, dispatch)
 }
 
-export default connect(
+module.exports = connect(
     mapStateToProps,
     mapDispatchToProps
 )( MainContainer )

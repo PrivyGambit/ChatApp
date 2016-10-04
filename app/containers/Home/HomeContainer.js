@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import { Top } from 'components'
+import { RoomContainer } from '../../containers'
 
 class HomeContainer extends Component {
 
@@ -10,7 +10,7 @@ class HomeContainer extends Component {
 
     render () {
         return (
-            <Top />
+            <RoomContainer />
         )
     }
 }

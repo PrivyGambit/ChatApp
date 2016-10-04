@@ -1,8 +1,8 @@
 import React, { PropTypes, contextTypes } from 'react'
-import { Authenticate } from 'components'
+import { Authenticate } from '../../components'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as userActionCreators from 'redux/modules/users'
+import * as userActionCreators from '../../redux/modules/users'
 
 class AuthenticateContainer extends React.Component {
 

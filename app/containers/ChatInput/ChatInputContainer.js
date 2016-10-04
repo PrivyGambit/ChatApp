@@ -1,13 +1,13 @@
 import React, { PropTypes, Component } from 'react'
-import { ChatInput, Banned } from 'components'
-import { AuthenticateContainer } from 'containers'
+import { ChatInput, Banned } from '../../components'
+import { AuthenticateContainer } from '../../containers'
 import _ from 'lodash'
-import { filterText, formatChat, formatFile } from 'helpers/utils'
-import * as inputActionCreators from 'redux/modules/chatInput'
+import { filterText, formatChat, formatFile } from '../../helpers/utils'
+import * as inputActionCreators from '../../redux/modules/chatInput'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-export default class ChatInputContainer extends React.Component {
+class ChatInputContainer extends React.Component {
 
     constructor ( props ) {
         super( props )
@@ -46,7 +46,7 @@ export default class ChatInputContainer extends React.Component {
 
     handleUpload = ( e ) => {
         let image = e.target.files[0];
-        if ( !image.type.match('image.*') ) {
+        if ( _.isEmpty(image.type.match("image.*")) ) {
             let error = {
                 message: 'File type not allowed.'
             }
@@ -55,9 +55,10 @@ export default class ChatInputContainer extends React.Component {
             let chat = {
                 type: 'image',
                 user: this.props.user.name,
-                avatar: this.props.user.avatar
+                avatar: this.props.user.avatar ? this.props.user.avatar : ''
             }
-            this.props.initiateUploadFile(image, formatFile(chat), this.props.currentRoom, this.props.chatInput.quote)
+            let quote = this.props.chatInput.quote ? this.props.chatInput.quote : '';
+            this.props.initiateUploadFile(image, formatFile(chat), this.props.currentRoom, quote)
         }
     }
 
@@ -108,7 +109,7 @@ ChatInputContainer.PropTypes = {
 }
 
 
-export default connect(
+module.exports = connect(
     mapStateToProps,
     mapDispatchToProps
 )( ChatInputContainer )

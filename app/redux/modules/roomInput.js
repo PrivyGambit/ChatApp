@@ -1,4 +1,4 @@
-import { saveRoom } from 'helpers/api'
+import { saveRoom } from '../../helpers/api'
 
 const UPDATE_ROOM_NAME = 'UPDATE_ROOM_NAME';
 

@@ -1,0 +1,41 @@
+.Modal {
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    .newDecisionInput {
+        border-width: 0;
+    }
+
+    .darkBtn {
+        text-decoration: none;
+    }
+
+    .submitDecisionBtn {
+        margin: 0px auto;
+        width: 150px;
+        text-align: center;
+        display: block;
+    }
+
+    .submitDecisionBtn:disabled {
+        background-color: #C6C6C6;
+        border: 1px solid #C6C6C6;
+    }
+
+    .or {
+        text-align: center;
+        font-size: 25px;
+        color: #a4a4a4;
+    }
+
+    .titleInput {
+        height: 25px;
+        border-width: 0;
+    }
+
+    .titleContainer {
+        height: 40px;
+    }
+}
