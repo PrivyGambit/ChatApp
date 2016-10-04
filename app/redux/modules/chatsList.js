@@ -112,8 +112,11 @@ export function handleSearchChats ( roomId, query ) {
         let queryResult = []
 
         Object.keys( currChats ).map(( chat ) => {
-            if ( currChats[chat].content.toLocaleLowerCase().indexOf(query) !=-1 )
-                queryResult.push(currChats[chat])
+            if ( currChats[chat].type == 'text' ) {
+                if ( currChats[chat].content.toLocaleLowerCase().indexOf(query) !=-1 ) {
+                    queryResult.push(currChats[chat])
+                }
+            }
         })
 
         if ( !_.isEmpty( queryResult ) ) {
