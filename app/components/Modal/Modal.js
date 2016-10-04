@@ -1,9 +1,5 @@
 import React, { PropTypes } from 'react'
 import { default as ReactModal } from 'react-modal'
-// import {
-//     newDecisionTop, pointer, newDecisionInputContainer,
-//     newDecisionInput, submitDecisionBtn, darkBtn, or, titleInput,
-//     titleContainer } from './styles.css'
 import { formatDecision } from 'helpers/utils'
 
 const modalStyles = {
@@ -14,6 +10,7 @@ const modalStyles = {
         borderRadius: 5,
         background: '#EBEBEB',
         padding: 0,
+        background-color: rgba(0,0,0,0.8)
     }
 }
 

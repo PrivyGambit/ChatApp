@@ -25,6 +25,7 @@
         padding: 2px 20px 2px 2px;
         position: relative;
         height: 40px;
+        z-index: 0;
     }
 
     .toggle::before {

@@ -37,13 +37,7 @@ class RoomContainer extends Component {
                     error={this.props.error.rooms} />
                 <div className="mainContainer">
                     <div className="chatListContainer">
-                        <div className="input-group searchInput">
-                            <input
-                                className='form-control'
-                                onChange={this.doSearchChat.bind( this, this.props.currentRoom )}
-                                type='text'
-                                placeholder='Enter search keyword' />
-                        </div>
+
                         {/*<p className="load-more"
                             onClick={this.loadNewChats.bind( this, this.props.currentRoom )}>load older messages</p>*/}
                         <ChatsList

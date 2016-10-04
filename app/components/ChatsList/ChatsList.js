@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 // import style, { container, title } from './styles.css'
 import { ChatContent } from '../../components'
+import _ from 'lodash'
 
 export default class ChatsList extends React.Component  {
     constructor ( props ) {
@@ -26,9 +27,12 @@ export default class ChatsList extends React.Component  {
     }
 
     render () {
+        let show = _.isEmpty( this.props.chats ) ? 'no-show' : 'show'
+        let message = _.isEmpty( this.props.chats ) ? <p>No contents to be displayed.</p> : ''
         return (
             <div className="ChatList">
-                <div className='chatContent' ref="chatListContent">
+                { message }
+                <div className={`chatContent ${ show }`} ref="chatListContent">
                     {this.props.chats.map(( chat ) => {
                         const id = chat.chatId
                         const type = chat.type

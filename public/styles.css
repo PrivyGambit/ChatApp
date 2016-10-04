@@ -107,6 +107,15 @@ html, body {
   left: 0;
   background: white; }
 
+.input-group {
+  width: 100%; }
+
+.no-show {
+  display: none; }
+
+.show {
+  display: block; }
+
 .ChatContent .mainContainer {
   position: relative; }
 
@@ -392,7 +401,8 @@ html, body {
   width: 100% !important;
   padding: 2px 20px 2px 2px;
   position: relative;
-  height: 40px; }
+  height: 40px;
+  z-index: 0; }
 
 .RoomsList .toggle::before {
   content: 'Reveal room list';
@@ -453,3 +463,6 @@ html, body {
     padding: 20px;
     max-height: 600px;
     overflow-y: scroll; }
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.8) !important; }

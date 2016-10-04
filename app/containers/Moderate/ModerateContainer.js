@@ -50,7 +50,8 @@ export default class ModerateContainer extends React.Component {
         //         return 0
         //     })
         // }
-        console.log(this.props);
+        let show = _.isEmpty( this.props.chats ) ? 'no-show' : 'show'
+
         if ( this.props.isFetching.userList == true ) {
             return (
                     <Spinner />
@@ -64,6 +65,13 @@ export default class ModerateContainer extends React.Component {
                     error={this.props.error} />
                 <div className="mainContainer">
                     <div className="chatListContainer">
+                        <div className={`input-group searchInput ${ show }`}>
+                            <input
+                                className='form-control'
+                                onChange={this.doSearchChat.bind( this, this.props.currentRoom )}
+                                type='text'
+                                placeholder='Enter search keyword' />
+                        </div>
                         <ChatsList
                             chats={this.props.chats}
                             user={this.props.user}
