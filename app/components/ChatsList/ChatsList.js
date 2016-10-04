@@ -27,7 +27,7 @@ export default class ChatsList extends React.Component  {
     }
 
     render () {
-
+        console.log(this.props);
         let show = _.isEmpty( this.props.chats ) ? 'no-show' : 'show'
         let message = _.isEmpty( this.props.chats ) ? <p>No contents to be displayed.</p> : ''
         let showQuote = ''

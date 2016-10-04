@@ -73,10 +73,12 @@ export default class ModerateContainer extends React.Component {
                                 placeholder='Enter search keyword' />
                         </div>
                         <ChatsList
+                            currentRoom={this.props.currentRoom}
+                            handleLoadNewChats={ this.props.actions.handleLoadNewChats }
                             chats={this.props.chats}
                             user={this.props.user}
-                            currentRoom={this.props.currentRoom}
-                            requestDeleteChat={this.props.actions.requestDeleteChat} />
+                            chatInput={this.props.chatInput}
+                            updateQuote={this.props.actions.updateQuote}/>
                     </div>
                     { this.props.currentRoom
                         && <ChatInputContainer
@@ -113,10 +115,7 @@ const mapStateToProps = ({users, chatsList, chatInput, userlist}) => {
         },
         chats: Object.keys(rms).map((id) => rms[id]),
         // chats: rms.
-        chatInput: {
-            chatText: chatInput.chatText,
-            quote: chatInput.quote
-        },
+        chatInput: chatInput,
         currentRoom: chatsList.roomId,
         userlist: Object.keys(ulist).map((id) => ulist[id])
     }
