@@ -27,7 +27,7 @@ function checkAuth (nextState, replace) {
 
     const nextPathName = nextState.location.pathname
     if (nextPathName === '/' || nextPathName === '/auth') {
-        if (isAuthed === true) replace('/login')
+        // if (isAuthed === true) replace('/login')
     } else {
         if (isAuthed !== true) replace('/auth')
     }
@@ -53,7 +53,7 @@ const rootRoute = (  ) => (
         <Route path='login' component={LoginContainer} onEnter={ checkAuth }/>
         <Route path='rooms/:roomId' component={RoomContainer} onEnter={ checkAuth }/>
         <Route path='logout' component={LogoutContainer} />
-        <IndexRoute component={HomeContainer} onEnter={ checkAuth }/>
+        <IndexRoute component={LoginContainer} onEnter={ checkAuth }/>
     </Route>
 )
 

@@ -52,7 +52,7 @@ class ActionLinks extends Component {
             markup = (
                 <ul>
                     <li><Link className='link' to='/'>{'Home'}</Link></li>
-                    <li><button className='btn default' onClick={this.toggleModal.bind( this )}>Authenticate</button></li>
+                    <li><button className='btn default' onClick={this.toggleModal.bind( this )}>Register / Login</button></li>
                     { this.state.showModal ? <AuthenticateContainer toggleModal = { this.toggleModal.bind( this ) } /> : null }
                 </ul>
             )
