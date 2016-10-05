@@ -1,4 +1,4 @@
-import { ref, storageRef, firebaseAuth, firebase } from '../config/constants'
+import { ref, firebaseAuth, decisionsExpirationLength, firebase, storageRef } from '../config/constants'
 import { signInAnonymous, checkIfSigned } from './auth'
 
 export function saveRoom (room) {
