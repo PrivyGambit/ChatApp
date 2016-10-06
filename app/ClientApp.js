@@ -50,7 +50,7 @@ const rootRoute = (  ) => (
     <Route path='/' component={MainContainer}>
         <Route path='moderate' component={ ModerateContainer } onEnter={ checkModerate } />
         <Route path='auth' component={ AuthenticateContainer } onEnter={ checkAuth } />
-        <Route path='login' component={ LoginContainer } onEnter={ checkAuth } />
+        <Route path='/' component={ LoginContainer } onEnter={ checkAuth } />
         <Route path='rooms/:roomId' component={ RoomContainer } onEnter={ checkAuth } />
         <Route path='logout' component={ LogoutContainer } />
         <IndexRoute component={ LoginContainer } onEnter={ checkAuth } />
