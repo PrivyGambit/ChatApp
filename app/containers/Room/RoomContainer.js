@@ -2,20 +2,28 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ChatsList, SearchRoom, Spinner } from '../../components'
-import { ChatInputContainer, RoomsListContainer, RoomInputContainer } from '../../containers'
+import { ChatInputContainer, RoomsListContainer } from '../../containers'
 import { setAndHandleRoomsListener } from '../../redux/modules/rooms'
+import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from '../../redux/modules/chatsList'
 import { handleLoadNewChats, handleSearchChats } from '../../redux/modules/chatsList'
 import { updateQuote } from '../../redux/modules/chatInput'
 import _ from 'lodash'
 
 class RoomContainer extends Component {
 
-    constructor ( props ) {
+    constructor ( props, context ) {
         super ( props )
+        context.router
     }
 
     componentDidMount () {
         this.props.actions.setAndHandleRoomsListener()
+        // removeChatsListener( this.props.params.roomId )
+        // setAndHandleChatsListener( this.props.params.roomId )
+        if ( !_.isEmpty( this.props.params ) ) {
+            this.props.actions.removeChatsListener()
+            this.props.actions.setAndHandleChatsListener()
+        }
     }
 
     doSearchChat = ( roomId, e ) => {
@@ -26,10 +34,21 @@ class RoomContainer extends Component {
         this.props.actions.handleLoadNewChats( roomId )
     }
 
+    componentDidUpdate ( prevProps, nextProps ) {
+        //errors here
+        if ( !_.isEmpty( this.props.params ) ) {
+            this.props.actions.removeChatsListener()
+            this.props.actions.setAndHandleChatsListener()
+            // removeChatsListener( this.props.params.roomId )
+            // setAndHandleChatsListener( this.props.params.roomId )
+        }
+    }
+
     render () {
         // if (this.props.isFetching === true) {
         //     return (<Spinner />)
         // }
+
         let show = _.isEmpty( this.props.chats ) ? 'no-show' : 'show'
         return (
             <div className="container">
@@ -53,7 +72,7 @@ class RoomContainer extends Component {
                             chats={this.props.chats}
                             user={this.props.user}
                             chatInput={this.props.chatInput}
-                            updateQuote={this.props.actions.updateQuote}/>
+                            updateQuote={this.props.actions.updateQuote} />
                     </div>
                     { this.props.currentRoom
                         && <ChatInputContainer
@@ -66,7 +85,7 @@ class RoomContainer extends Component {
     }
 }
 
-const mapStateToProps = ({users, chatsList, chatInput, rooms}) => {
+const mapStateToProps = ({users, chatsList, chatInput, rooms}, { routeParams }) => {
     const cts = chatsList.chats
     const rms = rooms.rooms
     return {
@@ -82,13 +101,15 @@ const mapStateToProps = ({users, chatsList, chatInput, rooms}) => {
     }
 }
 
-const mapDispatchToProps = ( dispatch ) => {
+const mapDispatchToProps = ( dispatch, { routeParams } ) => {
     return {
         actions: {
             setAndHandleRoomsListener: () => dispatch(setAndHandleRoomsListener()),
             handleLoadNewChats: ( roomId ) => dispatch( handleLoadNewChats( roomId ) ),
             handleSearchChats: ( roomId, query ) => dispatch( handleSearchChats( roomId, query ) ),
-            updateQuote: ( chatText, chatId ) => dispatch( updateQuote( chatText, chatId ) )
+            updateQuote: ( chatText, chatId ) => dispatch( updateQuote( chatText, chatId ) ),
+            setAndHandleChatsListener : (roomId) => dispatch( setAndHandleChatsListener( routeParams.roomId ) ),
+            removeChatsListener: (roomId) => dispatch ( removeChatsListener( routeParams.roomId ) )
         }
     }
 }

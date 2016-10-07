@@ -14,7 +14,7 @@ class AuthenticateContainer extends React.Component {
     handleAuth (e) {
         e.preventDefault()
         this.props.fetchAndHandleAuthedUser()
-            .then(() => this.context.router.replace('login'))
+            .then(() => this.context.router.replace('/'))
     }
 
     render () {

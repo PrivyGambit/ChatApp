@@ -13,7 +13,7 @@ class SignInContainer extends Component {
 
     signInUser ( user ) {
         this.props.initiateSignInUser(user)
-            .then(() => this.context.router.replace('login'))
+            .then(() => this.context.router.replace('/'))
     }
 
     render () {

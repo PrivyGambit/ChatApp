@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 // import style from './styles.css'
 import TimeAgo from 'react-timeago'
 
@@ -44,7 +45,9 @@ export default class DisplayRoomsList extends React.Component {
                             <TimeAgo date={room.latestUpdateTime} className={style.timeAgo}/>
                             </div>
                             </Link>*/}
-                            <div className='anchor list-group-item' onClick={()=> {this.handleChangeRoom(id)}}>
+
+                            <Link to={`/rooms/${id}`} className='anchor list-group-item'>
+                            {/*<div className='anchor list-group-item' onClick={this.handleChangeRoom.bind(this, id)}>*/}
                                 {/*<button  onClick={()=> {this.handleSearch(id)}}>tester</button>*/}
                                 {room.roomName}
                                 <div className='updateGroup'>
@@ -52,7 +55,8 @@ export default class DisplayRoomsList extends React.Component {
                                     <p className='updateLabel'>{room.newContent.chat ? this.formatContentChat( room.newContent.chat ) : 'Text here'} - </p>
                                     <TimeAgo date={room.latestUpdateTime} className='timeAgo'/>
                                 </div>
-                            </div>
+                            </Link>
+                            {/*</div>*/}
                         </li>
                     )
                 })}

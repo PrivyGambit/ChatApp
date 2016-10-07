@@ -27,7 +27,7 @@ function checkAuth (nextState, replace) {
 
     const nextPathName = nextState.location.pathname
     if (nextPathName === '/' || nextPathName === '/auth') {
-        if (isAuthed === true) replace('/login')
+        if (isAuthed === true) replace('/')
     } else {
         if (isAuthed !== true) replace('/auth')
     }

@@ -90,6 +90,9 @@ export function removeChatsListener ( roomId ) {
 
 export function setAndHandleChatsListener ( roomId ) {
     return function (dispatch, getState) {
+        // if ( !_.isEmpty( getState().chatsList.chats ) ) {
+        //     return
+        // }
         dispatch(addListener('chats'))
         dispatch(settingChatsListener())
         handleListenToChats( roomId, dispatch )

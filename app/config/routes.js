@@ -11,7 +11,7 @@ export default function getRoutes (checkAuth, history) {
             <Route path='/' component={MainContainer}>
                 <Route path='moderate' component={ModerateContainer} onEnter={checkAuth}/>
                 <Route path='auth' component={AuthenticateContainer} onEnter={checkAuth}/>
-                <Route path='login' component={LoginContainer} onEnter={checkAuth}/>
+                <Route path='/' component={LoginContainer} onEnter={checkAuth}/>
                 <Route path='rooms/:roomId' component={RoomContainer} onEnter={checkAuth} />
                 <Route path='logout' component={LogoutContainer} />
                 <IndexRoute component={HomeContainer} />

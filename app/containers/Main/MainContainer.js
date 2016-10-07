@@ -42,7 +42,7 @@ class MainContainer extends Component {
 
                         if ( newInfo.type !== 'anonymous' ) {
                             if ( this.props.location.pathname === '/' ) {
-                                this.context.router.replace('login')
+                                this.context.router.replace('/')
                             }
                         }
 
