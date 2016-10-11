@@ -37,8 +37,8 @@ class RoomContainer extends Component {
     componentDidUpdate ( prevProps, nextProps ) {
         //errors here
         if ( !_.isEmpty( this.props.params ) ) {
-            this.props.actions.removeChatsListener()
-            this.props.actions.setAndHandleChatsListener()
+            // this.props.actions.removeChatsListener()
+            // this.props.actions.setAndHandleChatsListener()
             // removeChatsListener( this.props.params.roomId )
             // setAndHandleChatsListener( this.props.params.roomId )
         }

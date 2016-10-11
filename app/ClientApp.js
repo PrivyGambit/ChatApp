@@ -46,7 +46,7 @@ function checkModerate (nextState, replace) {
 }
 
 
-const rootRoute = (  ) => (
+const rootRoute = () => (
     <Route path='/' component={MainContainer}>
         <Route path='moderate' component={ ModerateContainer } onEnter={ checkModerate } />
         <Route path='auth' component={ AuthenticateContainer } onEnter={ checkAuth } />
