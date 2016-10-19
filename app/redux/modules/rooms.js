@@ -1,5 +1,5 @@
 import { listenToRooms } from '../../helpers/api'
-import { addListener } from './listeners'
+import { addListener, removeListener } from './listeners'
 
 const SETTINGS_ROOMS_LISTENER = 'SETTINGS_ROOMS_LISTENER'
 const SETTINGS_ROOMS_LISTENER_ERROR = 'SETTINGS_ROOMS_LISTENER_ERROR'

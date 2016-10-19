@@ -23,12 +23,18 @@ class ChatListContainer extends Component {
         }
     }
 
-    componentDidUpdate () {
-        // this.props.actions.setAndHandleRoomsListener()
-        // if ( !_.isEmpty( this.props.routeParams ) ) {
+    componentDidUpdate (prevProps, prevState) {
+        // if ( this.props.isFetching === false ) {
         //     this.props.actions.removeChatsListener( this.props.routeParams )
         //     this.props.actions.setAndHandleChatsListener( this.props.routeParams )
         // }
+    }
+
+    componentWillReceiveProps ( nextProps ) {
+        if ( nextProps.routeParams !== this.props.routeParams) {
+            this.props.actions.removeChatsListener( this.props.routeParams )
+            this.props.actions.setAndHandleChatsListener( nextProps.routeParams )
+        }
     }
 
     render () {
@@ -46,18 +52,19 @@ class ChatListContainer extends Component {
 }
 
 const mapStateToProps = ({users, chatsList, chatInput}) => {
+    const isFetching = chatsList.isFetching
     const cts = chatsList.chats
     return {
         user: users[users.authedId] ? users[users.authedId].info : {},
         chats: Object.keys(cts).map((id) => cts[id]),
         currentRoom: chatsList.roomId,
-        chatInput: chatInput
+        chatInput: chatInput,
+        isFetching: isFetching
     }
 }
 
 
 const mapDispatchToProps = ( dispatch ) => {
-    // return bindActionCreators(userActionCreators, dispatch)
     return {
         actions: {
             setAndHandleRoomsListener: () => dispatch(setAndHandleRoomsListener()),

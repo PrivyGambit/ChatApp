@@ -26,16 +26,6 @@ class RoomContainer extends Component {
         this.props.actions.handleLoadNewChats( roomId )
     }
 
-    componentDidUpdate ( prevProps, nextProps ) {
-        //errors here
-        if ( !_.isEmpty( this.props.params ) ) {
-            // this.props.actions.removeChatsListener()
-            // this.props.actions.setAndHandleChatsListener()
-            // removeChatsListener( this.props.params.roomId )
-            // setAndHandleChatsListener( this.props.params.roomId )
-        }
-    }
-
     render () {
         // if (this.props.isFetching === true) {
         //     return (<Spinner />)
@@ -58,13 +48,6 @@ class RoomContainer extends Component {
                         </div>
                         {/*<p className="load-more"
                             onClick={this.loadNewChats.bind( this, this.props.currentRoom )}>load older messages</p>*/}
-                        {/* <ChatsList
-                            currentRoom={this.props.currentRoom}
-                            handleLoadNewChats={ this.props.actions.handleLoadNewChats }
-                            chats={this.props.chats}
-                            user={this.props.user}
-                            chatInput={this.props.chatInput}
-                            updateQuote={this.props.actions.updateQuote} /> */}
                             <ChatListContainer routeParams={ this.props.params.roomId }/>
                     </div>
                     { this.props.currentRoom
@@ -83,7 +66,6 @@ const mapStateToProps = ({users, chatsList, chatInput, rooms}, { routeParams }) 
     const rms = rooms.rooms
     return {
         user: users[users.authedId] ? users[users.authedId].info : {},
-        // isFetching: chatsList.isFetching,
         error: {
             chatsList: chatsList.error,
             rooms: rooms.error,
@@ -97,12 +79,7 @@ const mapStateToProps = ({users, chatsList, chatInput, rooms}, { routeParams }) 
 const mapDispatchToProps = ( dispatch, { routeParams } ) => {
     return {
         actions: {
-            setAndHandleRoomsListener: () => dispatch(setAndHandleRoomsListener()),
-            handleLoadNewChats: ( roomId ) => dispatch( handleLoadNewChats( roomId ) ),
             handleSearchChats: ( roomId, query ) => dispatch( handleSearchChats( roomId, query ) ),
-            updateQuote: ( chatText, chatId ) => dispatch( updateQuote( chatText, chatId ) ),
-            setAndHandleChatsListener : (roomId) => dispatch( setAndHandleChatsListener( routeParams.roomId ) ),
-            removeChatsListener: (roomId) => dispatch ( removeChatsListener( routeParams.roomId ) )
         }
     }
 }
