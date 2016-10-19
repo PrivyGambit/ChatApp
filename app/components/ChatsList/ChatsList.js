@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 // import style, { container, title } from './styles.css'
 import { ChatContent } from '../../components'
+
 import _ from 'lodash'
 
 export default class ChatsList extends React.Component  {

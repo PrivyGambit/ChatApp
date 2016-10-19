@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ChatsList, SearchRoom, Spinner } from '../../components'
-import { ChatInputContainer, RoomsListContainer } from '../../containers'
+import { ChatInputContainer, RoomsListContainer, ChatListContainer } from '../../containers'
 import { setAndHandleRoomsListener } from '../../redux/modules/rooms'
 import { setAndHandleChatsListener, updateChats, removeChatsListener, searchChat } from '../../redux/modules/chatsList'
 import { handleLoadNewChats, handleSearchChats } from '../../redux/modules/chatsList'
@@ -16,15 +16,7 @@ class RoomContainer extends Component {
         context.router
     }
 
-    componentDidMount () {
-        this.props.actions.setAndHandleRoomsListener()
-        // removeChatsListener( this.props.params.roomId )
-        // setAndHandleChatsListener( this.props.params.roomId )
-        if ( !_.isEmpty( this.props.params ) ) {
-            this.props.actions.removeChatsListener()
-            this.props.actions.setAndHandleChatsListener()
-        }
-    }
+    componentDidMount () {}
 
     doSearchChat = ( roomId, e ) => {
         this.props.actions.handleSearchChats( roomId, e.target.value )
@@ -66,13 +58,14 @@ class RoomContainer extends Component {
                         </div>
                         {/*<p className="load-more"
                             onClick={this.loadNewChats.bind( this, this.props.currentRoom )}>load older messages</p>*/}
-                        <ChatsList
+                        {/* <ChatsList
                             currentRoom={this.props.currentRoom}
                             handleLoadNewChats={ this.props.actions.handleLoadNewChats }
                             chats={this.props.chats}
                             user={this.props.user}
                             chatInput={this.props.chatInput}
-                            updateQuote={this.props.actions.updateQuote} />
+                            updateQuote={this.props.actions.updateQuote} /> */}
+                            <ChatListContainer routeParams={ this.props.params.roomId }/>
                     </div>
                     { this.props.currentRoom
                         && <ChatInputContainer
