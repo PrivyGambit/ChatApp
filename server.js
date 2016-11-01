@@ -20,7 +20,7 @@ const Store = require('./app/config/store.js')
 const store = Store.store
 const _ = require('lodash')
 const fs = require('fs')
-const port = 5000
+const port = 5001
 const baseTemplate = fs.readFileSync('./app/index.html')
 const template = _.template(baseTemplate)
 const ClientApp = require('./app/ClientApp.js')
@@ -31,6 +31,7 @@ const app = express()
 app.use('/public', express.static('./public'))
 
 app.use((req, res) => {
+// app.get('/', (req, res) => {
     match({ routes: Routes(), location: req.url }, (error, redirectLocation, renderProps) => {
         if (error) {
             res.status(500).send(error.message)
