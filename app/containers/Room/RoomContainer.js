@@ -16,7 +16,9 @@ class RoomContainer extends Component {
         context.router
     }
 
-    componentDidMount () {}
+    componentDidMount () {
+
+    }
 
     doSearchChat = ( roomId, e ) => {
         this.props.actions.handleSearchChats( roomId, e.target.value )
@@ -27,11 +29,8 @@ class RoomContainer extends Component {
     }
 
     render () {
-        // if (this.props.isFetching === true) {
-        //     return (<Spinner />)
-        // }
-
         let show = _.isEmpty( this.props.chats ) ? 'no-show' : 'show'
+        let roomId = this.props.hasOwnProperty("params") ? this.props.params.roomId : null;
         return (
             <div className="container">
                 <RoomsListContainer
@@ -48,7 +47,7 @@ class RoomContainer extends Component {
                         </div>
                         {/*<p className="load-more"
                             onClick={this.loadNewChats.bind( this, this.props.currentRoom )}>load older messages</p>*/}
-                            <ChatListContainer routeParams={ this.props.params.roomId }/>
+                            <ChatListContainer routeParams={ roomId }/>
                     </div>
                     { this.props.currentRoom
                         && <ChatInputContainer
@@ -65,6 +64,7 @@ const mapStateToProps = ({users, chatsList, chatInput, rooms}, { routeParams }) 
     const cts = chatsList.chats
     const rms = rooms.rooms
     return {
+        isFetching: chatsList.isFetching,
         user: users[users.authedId] ? users[users.authedId].info : {},
         error: {
             chatsList: chatsList.error,

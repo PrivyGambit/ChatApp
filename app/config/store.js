@@ -8,9 +8,8 @@ const store = createStore(
     combineReducers({...reducers, routing: routerReducer}),
     compose(
         applyMiddleware(thunk),
-        // window.devToolsExtension ? window.devToolsExtension() : (f) => f
+        process.env.NODE_ENV !== "production" ? window.devToolsExtension() : (f) => f
     )
 )
-
 
 module.exports = { store }

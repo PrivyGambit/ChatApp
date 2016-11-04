@@ -10,11 +10,11 @@ class LoginContainer extends React.Component {
         super( props )
     }
     render () {
-        if ( this.props.isFetching == true ) {
-            return (
-                <Spinner />
-            )
-        }
+        // if ( this.props.isFetching == true ) {
+        //     return (
+        //         <Spinner />
+        //     )
+        // }
         return (
             <RoomContainer />
         )

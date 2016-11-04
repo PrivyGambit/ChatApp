@@ -68,12 +68,6 @@ class MainContainer extends Component {
         let isModerate
         type = !this.props.user.type || this.props.user.type == 'anonymous' ? false : true
         isModerate = this.props.user.type == 'moderate' ? true : false
-        // console.log(localStorage);
-        // if ( window.localStorage ) {
-            // if ( localStorage.getItem('type') ) {
-            //     type = localStorage.getItem('type') == 'anonymous' ? false : true;
-            // }
-        // }
 
         return (
             <div className="container">

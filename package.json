@@ -4,11 +4,12 @@
   "description": "chatapp",
   "main": "index.js",
   "scripts": {
+    "webpack-server": "webpack-dev-server",
     "production": "webpack -p",
     "build": "webpack",
     "watch": "webpack --watch",
     "test": "mocha --require test/helpers/setup.js",
-    "serve": "babel-node server.js",
+    "serve": "NODE_ENV=production babel-node server.js",
     "server": "concurrently \"npm run watch\" \"npm run serve\"",
     "dev": "webpack-dev-server --config webpack-dev.config.js --colors --hot --progress --colors --port 2992 --inline",
     "prod": "NODE_ENV=production webpack -p --config webpack/webpack-prod.config.js"
